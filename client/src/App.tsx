@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
-import "./App.css";
+import { ReactElement } from 'react';
+import './App.css';
 
-function App(): ReactElement {
+const App = (): ReactElement => {
   return (
-    <div className="App">
+    <div className='App'>
       <h1>React Listify</h1>
     </div>
   );
-}
+};
 
 export default App;
