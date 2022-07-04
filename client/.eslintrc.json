@@ -52,20 +52,30 @@
     "react/react-in-jsx-scope": "off",
     "quotes": ["error", "single"],
     "import/order": [
-      "warn",
+      "error",
       {
+        "groups": ["builtin", "external", "internal"],
         "pathGroups": [
           {
-            "pattern": "~/**",
+            "pattern": "react",
             "group": "external",
-            "position": "after"
+            "position": "before"
           }
         ],
-        "newlines-between": "always-and-inside-groups",
+        "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
         }
+      }
+    ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "single", "multiple"]
       }
     ],
     "react/jsx-sort-props": [

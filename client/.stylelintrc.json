@@ -1,0 +1,23 @@
+{
+  "processors": ["stylelint-processor-styled-components"],
+  "extends": ["stylelint-config-standard", "stylelint-config-prettier", "stylelint-config-styled-components"],
+  "customSyntax": "@stylelint/postcss-css-in-js",
+  "rules": {
+    "selector-pseudo-class-no-unknown": true,
+    "property-no-unknown": true,
+    "comment-no-empty": true,
+    "color-named": "never",
+    "color-no-invalid-hex": true,
+    "shorthand-property-no-redundant-values": true,
+    "declaration-no-important": true,
+    "color-hex-case": "lower",
+    "function-comma-newline-after": "always-multi-line",
+    "block-no-empty": true,
+    "value-keyword-case": null,
+    "string-quotes": "single",
+    "selector-class-pattern": null,
+    "keyframes-name-pattern": null,
+    "declaration-colon-newline-after": null
+  },
+  "ignoreFiles": ["**/*.{js,jsx,ts,tsx}"]
+}
