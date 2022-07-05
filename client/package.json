@@ -21,7 +21,8 @@
     "@mui/material": "^5.0.6",
     "@mui/system": "^5.0.6",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-toastify": "^8.0.3"
   },
   "devDependencies": {
     "@stylelint/postcss-css-in-js": "^0.38.0",
