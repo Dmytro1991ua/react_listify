@@ -1,9 +1,9 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import 'react-toastify/dist/ReactToastify.css';
 
-import App from './app/app';
+import 'react-toastify/dist/ReactToastify.css';
+import App from './app/App';
 import { CUSTOM_THEME } from './app/cdk/theme/theme';
 import { CustomToastContainer } from './app/styles/toast.styled';
 
