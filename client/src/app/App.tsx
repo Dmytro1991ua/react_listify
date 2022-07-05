@@ -1,10 +1,11 @@
+import { Typography } from '@mui/material';
 import { ReactElement } from 'react';
 
 const App = (): ReactElement => {
   return (
-    <div className='App'>
-      <h1>React Listify</h1>
-    </div>
+    <Typography color='primary' variant='h1'>
+      React Listify
+    </Typography>
   );
 };
 
