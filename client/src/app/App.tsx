@@ -1,12 +1,9 @@
-import { Typography } from '@mui/material';
 import { ReactElement } from 'react';
 
+import Routes from './app-routes';
+
 const App = (): ReactElement => {
-  return (
-    <Typography color='primary' variant='h1'>
-      React Listify
-    </Typography>
-  );
+  return <Routes />;
 };
 
 export default App;

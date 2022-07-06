@@ -20,9 +20,12 @@
     "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.6",
     "@mui/system": "^5.0.6",
+    "@types/react-router-dom": "^5.3.3",
     "formik": "^2.2.9",
+    "history": "^5.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-toastify": "^8.0.3",
     "yup": "^0.32.11"
   },
