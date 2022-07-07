@@ -48,6 +48,9 @@ export const CUSTOM_THEME = createTheme({
           height: 'auto',
           display: 'block',
         },
+        figure: {
+          margin: 0,
+        },
       },
     },
   },

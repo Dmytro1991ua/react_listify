@@ -8,7 +8,6 @@
     "plugin:react/jsx-runtime",
     "plugin:import/recommended",
     "plugin:react-hooks/recommended",
-    "airbnb-typescript",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -24,7 +23,7 @@
   "rules": {
     "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/no-extraneous-dependencies": "off",
     "react/self-closing-comp": [
       "error",
       {
