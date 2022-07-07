@@ -5,7 +5,7 @@ export const LayoutContainer = styled('section')`
   min-height: 100vh;
   display: flex;
   color: ${({ theme }) => theme.palette.common.black};
-  background-color: ${({ theme }) => theme.palette.grey[200]};
+  background-color: ${({ theme }) => theme.palette.grey[100]};
 `;
 
 export const MainContent = styled('section')`
