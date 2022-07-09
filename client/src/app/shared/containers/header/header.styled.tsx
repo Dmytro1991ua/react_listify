@@ -4,7 +4,7 @@ import { CgProfile } from 'react-icons/cg';
 import { FaLeaf } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const CommonDropdownMenuIconStyles = `
+export const CommonDropdownMenuIconStyles = `
   fill: #fff;
   width: 2rem;
   height: 2rem;
@@ -15,6 +15,7 @@ export const HeaderWrapper = styled(AppBar)`
   padding: ${({ theme }) => `${theme.spacing(0)} ${theme.spacing(16)}`};
   background-color: ${({ theme }) => theme.palette.success.dark};
   z-index: ${({ theme }) => theme.zIndex.drawer + 1};
+  border: none;
 `;
 
 export const Logo = styled(Link)`
@@ -34,10 +35,12 @@ export const LogoIcon = styled(FaLeaf)`
   height: 1.5rem;
 `;
 
-export const ProfileImage = styled('img')`
-  width: 4rem;
-  height: 4rem;
-  background-color: ${({ theme }) => theme.palette.grey[300]};
+export const ProfileImage = styled('img', { shouldForwardProp: (prop) => prop !== 'isActive' })<{ isActive: boolean }>`
+  width: 4.5rem;
+  height: 4.5rem;
+  background-color: ${({ theme }) => theme.palette.grey[500]};
+  border: ${({ theme, isActive }) =>
+    isActive ? `2.5px solid ${theme.palette.common.white}` : '2.5px solid transparent'};
   border-radius: 50%;
   cursor: pointer;
 `;

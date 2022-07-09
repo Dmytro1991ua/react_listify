@@ -1,6 +1,7 @@
-export interface DropdownMenuConfigs {
+export interface DropdownMenuConfig {
   id: string;
-  title: string;
+  url?: string;
+  label: string;
   icon: JSX.Element;
   onClick: () => void;
 }

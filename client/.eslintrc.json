@@ -5,6 +5,7 @@
   },
   "extends": [
     "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/jsx-runtime",
     "plugin:import/recommended",
     "plugin:react-hooks/recommended",
@@ -68,6 +69,7 @@
         }
       }
     ],
+    "import/named": "off",
     "sort-imports": [
       "error",
       {
