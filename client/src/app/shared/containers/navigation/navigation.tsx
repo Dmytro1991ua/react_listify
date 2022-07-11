@@ -42,7 +42,7 @@ const Navigation = (): ReactElement => {
         <NavigationLogoSubTitle isExpanded={isExpanded}>Your smart shopping list</NavigationLogoSubTitle>
       </Box>
 
-      <ExpandButton onClick={handleDrawerExpandAndCollapse}>
+      <ExpandButton variant='raised' onClick={handleDrawerExpandAndCollapse}>
         {isExpanded ? <BsChevronLeft /> : <BsChevronRight />}
       </ExpandButton>
 
