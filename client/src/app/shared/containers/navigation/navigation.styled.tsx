@@ -1,8 +1,9 @@
-import { Button, Drawer, ListItemButton } from '@mui/material';
+import { Drawer, ListItemButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { RiUserSettingsLine } from 'react-icons/ri';
 
+import Button from '../../components/button/button';
 import { LogoIcon, LogoTitle } from '../header/header.styled';
 import { closedSidebarMixin, openedSidebarMixin } from './navigation.constants';
 
@@ -28,22 +29,14 @@ export const DrawerContainer = styled(Drawer, { shouldForwardProp: (prop) => pro
 `;
 
 export const ExpandButton = styled(Button)`
-  min-width: 0;
-  max-width: fit-content;
   position: absolute;
   top: 20%;
   right: -1.5rem;
-  border: ${({ theme }) => `2px solid ${theme.palette.primary.dark}`};
-  background-color: ${({ theme }) => theme.palette.primary.light};
 
   svg {
-    color: ${({ theme }) => theme.palette.common.white};
+    color: ${({ theme }) => theme.palette.common.black};
     width: 1.2rem;
     height: 1.2rem;
-  }
-
-  &:hover {
-    background-color: ${({ theme }) => theme.palette.primary.dark};
   }
 
   &::after {
