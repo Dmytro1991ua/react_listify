@@ -9,4 +9,10 @@ declare global {
       raised: true;
     }
   }
+
+  declare module '@mui/material/styles/createMixins' {
+    interface Mixins {
+      textInputCommonStylesMixin: (theme: Theme) => CSSObject;
+    }
+  }
 }
