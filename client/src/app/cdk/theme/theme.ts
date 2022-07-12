@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 import { CUSTOM_BUTTON_CONFIGS } from './button.configs';
 import { GLOBAL_STYLES_CONFIGS } from './global-styles.configs';
+import { MIXINS_OPTIONS } from './mixins';
 
 export const CUSTOM_THEME = createTheme({
   components: {
@@ -17,6 +18,7 @@ export const CUSTOM_THEME = createTheme({
       variants: CUSTOM_BUTTON_CONFIGS,
     },
   },
+  mixins: MIXINS_OPTIONS,
   typography: {
     fontFamily: '"Inter-Regular", sans-serif',
   },
