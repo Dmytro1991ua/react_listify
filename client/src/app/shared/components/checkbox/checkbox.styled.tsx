@@ -2,7 +2,7 @@ import { Checkbox } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const CustomCheckbox = styled(Checkbox, {
-  shouldForwardProp: (prop) => prop !== 'color' && prop !== 'size',
+  shouldForwardProp: (prop) => prop !== 'color' && prop !== 'customSize',
 })<{ color?: string; customSize?: string }>`
   padding: 0;
   color: ${({ theme, color }) => (color ? color : theme.palette.success.dark)};
