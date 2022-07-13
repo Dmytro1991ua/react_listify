@@ -2,6 +2,18 @@ import { CSSObject, Theme } from '@mui/material/styles';
 import { MixinsOptions } from '@mui/material/styles/createMixins';
 
 export const MIXINS_OPTIONS: MixinsOptions = {
+  commonBoxShadowMixin: {
+    boxShadow: '0 16px 32px 0 rgba(15, 65, 107, 8%), 0 2px 8px 0 rgba(15, 65, 107, 9%)',
+  },
+  buttonBoxShadowMixin: {
+    boxShadow: 'inset 0 -2px 0 0 rgba(35, 31, 32, 0.15)',
+  },
+  transparentButtonShadowMixin: {
+    boxShadow: 'inset 0 0 6px 0 rgba(0, 0, 0, 0.12)',
+  },
+  switcherBoxShadowMixin: {
+    boxShadow: '0 4px 8px 0 rgba(35, 31, 32, 0.25), 0 2px 8px 0 rgba(35, 31, 32, 0.1)',
+  },
   textInputCommonStylesMixin: (theme: Theme): CSSObject => ({
     ['& .MuiOutlinedInput-root']: {
       color: theme.palette.grey[700],
