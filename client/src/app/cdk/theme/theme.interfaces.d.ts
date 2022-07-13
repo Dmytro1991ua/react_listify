@@ -12,6 +12,10 @@ declare global {
 
   declare module '@mui/material/styles/createMixins' {
     interface Mixins {
+      commonBoxShadowMixin: CSSProperties;
+      buttonBoxShadowMixin: CSSProperties;
+      transparentButtonShadowMixin: CSSProperties;
+      switcherBoxShadowMixin: CSSProperties;
       textInputCommonStylesMixin: (theme: Theme) => CSSObject;
     }
   }

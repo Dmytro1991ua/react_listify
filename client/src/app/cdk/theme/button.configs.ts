@@ -1,6 +1,8 @@
 import { ButtonProps } from '@mui/material';
 import { green, grey, purple } from '@mui/material/colors';
 
+import { MIXINS_OPTIONS } from './mixins';
+
 export const CUSTOM_BUTTON_CONFIGS = [
   {
     props: { variant: 'primaryContained' } as ButtonProps,
@@ -8,7 +10,7 @@ export const CUSTOM_BUTTON_CONFIGS = [
       backgroundColor: green[900],
       color: '#fff',
       padding: '1rem 3rem',
-      boxShadow: 'inset 0 -2px 0 0 rgba(35, 31, 32, 0.15)',
+      ...MIXINS_OPTIONS.buttonBoxShadowMixin,
       ['&:hover']: {
         backgroundColor: green[700],
       },
@@ -28,7 +30,7 @@ export const CUSTOM_BUTTON_CONFIGS = [
       color: '#fff',
       backgroundColor: purple[900],
       padding: '1rem 3rem',
-      boxShadow: 'inset 0 -2px 0 0 rgba(35, 31, 32, 0.15)',
+      ...MIXINS_OPTIONS.buttonBoxShadowMixin,
       ['&:hover']: {
         backgroundColor: purple[600],
       },
@@ -49,10 +51,10 @@ export const CUSTOM_BUTTON_CONFIGS = [
       border: `1px solid ${green[900]}`,
       ['&:hover']: {
         backgroundColor: green[100],
+        ...MIXINS_OPTIONS.buttonBoxShadowMixin,
       },
       ['&:active']: {
         backgroundColor: green[100],
-        boxShadow: 'none',
       },
       ['&:disabled']: {
         backgroundColor: green[900],
@@ -68,6 +70,7 @@ export const CUSTOM_BUTTON_CONFIGS = [
       border: `1px solid ${purple[900]}`,
       ['&:hover']: {
         backgroundColor: purple[100],
+        ...MIXINS_OPTIONS.buttonBoxShadowMixin,
       },
       ['&:active']: {
         backgroundColor: purple[200],
@@ -84,9 +87,10 @@ export const CUSTOM_BUTTON_CONFIGS = [
       padding: '1.2rem',
       ['&:hover']: {
         backgroundColor: grey[300],
+        ...MIXINS_OPTIONS.transparentButtonShadowMixin,
       },
       ['&:active']: {
-        boxShadow: 'inset 0 0 6px 0 rgba(0, 0, 0, 0.12)',
+        ...MIXINS_OPTIONS.transparentButtonShadowMixin,
       },
       ['&:disabled']: {
         backgroundColor: 'transparent',
@@ -98,7 +102,7 @@ export const CUSTOM_BUTTON_CONFIGS = [
     style: {
       backgroundColor: '#fff',
       padding: '7px',
-      boxShadow: '0 16px 32px 0 rgba(15, 65, 107, 8%), 0 2px 8px 0 rgba(15, 65, 107, 9%)',
+      ...MIXINS_OPTIONS.commonBoxShadowMixin,
       border: `2px solid ${purple[900]}`,
       ['&:hover']: {
         backgroundColor: grey[200],

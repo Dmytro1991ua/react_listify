@@ -14,6 +14,7 @@ export const DialogContainer = styled(Dialog)`
       justify-content: center;
       padding: 2.8rem 1.6rem;
       margin: 0;
+      border: ${({ theme }) => `3px solid ${theme.palette.success.dark}`};
     }
   }
 `;
