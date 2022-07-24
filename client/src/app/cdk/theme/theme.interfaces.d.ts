@@ -17,6 +17,7 @@ declare global {
       transparentButtonShadowMixin: CSSProperties;
       switcherBoxShadowMixin: CSSProperties;
       textInputCommonStylesMixin: (theme: Theme) => CSSObject;
+      textInputCommonErrorsStylesMixin: (theme: Theme) => CSSObject;
     }
   }
 }
