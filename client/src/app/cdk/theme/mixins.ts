@@ -37,7 +37,6 @@ export const MIXINS_OPTIONS: MixinsOptions = {
         // Delays all styles for input:-webkit-autofill to be in sync with input background styles
         transition: 'all 0s 5000s',
       },
-
       ['& fieldset']: {
         border: 'solid 1.5px rgba(116, 123, 153, 0.2)',
       },
@@ -54,6 +53,46 @@ export const MIXINS_OPTIONS: MixinsOptions = {
         fieldset: {
           border: 'solid 1.5px rgba(116, 123, 153, 0.2)',
         },
+      },
+      ['& svg']: {
+        color: theme.palette.grey[600],
+        width: '2rem',
+        height: '2rem',
+      },
+    },
+    ['& .MuiSelect-select']: {
+      padding: `${theme.spacing(12)} ${theme.spacing(16)}`,
+      ...theme.typography.h5,
+    },
+    ['& label']: {
+      ...theme.typography.h6,
+      fontWeight: 600,
+      lineHeight: 1.2,
+      opacity: 0.6,
+
+      ['&.Mui-focused']: {
+        color: theme.palette.grey[700],
+      },
+    },
+  }),
+  textInputCommonErrorsStylesMixin: (theme: Theme): CSSObject => ({
+    ['& .MuiOutlinedInput-root']: {
+      ['&.Mui-error']: {
+        backgroundColor: '#fbdee1',
+
+        fieldset: {
+          border: `1.5px solid ${theme.palette.error.main}`,
+        },
+      },
+    },
+
+    ['& .MuiFormHelperText-root']: {
+      margin: `${theme.spacing(4)} ${theme.spacing(0)} ${theme.spacing(0)}`,
+      ...theme.typography.subtitle1,
+
+      ['&.Mui-error']: {
+        bottom: theme.spacing(-16),
+        color: theme.palette.error.main,
       },
     },
   }),
