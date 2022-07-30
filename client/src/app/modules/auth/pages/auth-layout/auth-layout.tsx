@@ -1,8 +1,9 @@
-import { Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { ReactElement, ReactNode } from 'react';
+import { FaLeaf } from 'react-icons/fa';
 
 import AuthImagePreview from '../../components/auth-image-preview/auth-image-preview';
-import { AuthLayoutContainer } from './auth-layout.styled';
+import { AuthFormHeader, AuthFormWrapper, AuthLayoutContainer } from './auth-layout.styled';
 
 interface AuthLayoutProps {
   /**
@@ -20,13 +21,20 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children, image, overlayText }: AuthLayoutProps): ReactElement => {
   return (
-    <AuthLayoutContainer container item xs={12}>
+    <AuthLayoutContainer container item component='section' xs={12}>
       <Grid item xs={6}>
         <AuthImagePreview image={image} overlayText={overlayText} />
       </Grid>
-      <Grid item xs={6}>
+      <AuthFormWrapper item xs={6}>
+        <AuthFormHeader>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Typography variant='h2'>Listify</Typography>
+            <FaLeaf />
+          </Box>
+          <Typography paragraph>Your perfect choice for shopping</Typography>
+        </AuthFormHeader>
         {children}
-      </Grid>
+      </AuthFormWrapper>
     </AuthLayoutContainer>
   );
 };
