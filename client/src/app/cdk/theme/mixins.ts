@@ -14,6 +14,9 @@ export const MIXINS_OPTIONS: MixinsOptions = {
   switcherBoxShadowMixin: {
     boxShadow: '0 4px 8px 0 rgba(35, 31, 32, 0.25), 0 2px 8px 0 rgba(35, 31, 32, 0.1)',
   },
+  formBoxShadowMixin: {
+    boxShadow: '2px 4px 4px -1px rgb(0 0 0 / 68%)',
+  },
   textInputCommonStylesMixin: (theme: Theme): CSSObject => ({
     ['& .MuiOutlinedInput-root']: {
       color: theme.palette.grey[700],
