@@ -8,6 +8,7 @@ import LayoutWithNavigationAndHeader from './shared/containers/layout-with-navig
 
 const ShoppingListsPageLazy = withSuspense(lazy(() => import('./modules/shopping-lists/shopping-lists')));
 const SignInPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth-sign-in-page')));
+const SignUpPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth-sign-up-page')));
 const ProfilePageLazy = withSuspense(lazy(() => import('./modules/profile/profile')));
 
 const Routes = (): ReactElement => {
@@ -16,6 +17,7 @@ const Routes = (): ReactElement => {
       <Switch>
         <Redirect exact from='/' to={AppRoutes.ShoppingLists} />
         <Route exact component={SignInPageLazy} path={AppRoutes.SignIn} />
+        <Route exact component={SignUpPageLazy} path={AppRoutes.SignUp} />
 
         <Route exact path={[AppRoutes.ShoppingLists, AppRoutes.Profile]}>
           <LayoutWithNavigationAndHeader>

@@ -8,6 +8,7 @@ export const AuthFormWrapper = styled(Grid)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
   padding: ${({ theme }) => `${theme.spacing(20)} ${theme.spacing(50)}`};
 `;
 

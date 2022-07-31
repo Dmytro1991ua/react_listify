@@ -1,6 +1,8 @@
 import { styled } from '@mui/material/styles';
 
-export const ImagePreviewSection = styled('section')`
+export const ImagePreviewSection = styled('section', { shouldForwardProp: (prop) => prop !== 'textPosition' })<{
+  textPosition?: string;
+}>`
   position: relative;
   height: 100vh;
 
@@ -23,7 +25,7 @@ export const ImagePreviewSection = styled('section')`
 
   p {
     position: absolute;
-    top: 50%;
+    top: ${({ textPosition }) => (textPosition ? `${textPosition}%` : '50%')};
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2rem;
