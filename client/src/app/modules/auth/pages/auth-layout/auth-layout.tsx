@@ -16,14 +16,20 @@ interface AuthLayoutProps {
    * @example "Welcome to Listify application. Stay tuned and let's roll"
    */
   overlayText: string;
+  /**
+   * @param {string} Defines an overlaying text position on a specific auth flow cover image
+   * Applying for an absolute position of overlaying text
+   * @example textPosition="50"
+   */
+  textPosition?: string;
   children?: ReactNode;
 }
 
-const AuthLayout = ({ children, image, overlayText }: AuthLayoutProps): ReactElement => {
+const AuthLayout = ({ children, image, overlayText, textPosition }: AuthLayoutProps): ReactElement => {
   return (
     <AuthLayoutContainer container item component='section' xs={12}>
       <Grid item xs={6}>
-        <AuthImagePreview image={image} overlayText={overlayText} />
+        <AuthImagePreview image={image} overlayText={overlayText} textPosition={textPosition} />
       </Grid>
       <AuthFormWrapper item xs={6}>
         <AuthFormHeader>

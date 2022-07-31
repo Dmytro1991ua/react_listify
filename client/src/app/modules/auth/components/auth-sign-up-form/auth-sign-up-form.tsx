@@ -1,24 +1,27 @@
-import { Box } from '@mui/material';
 import { Formik } from 'formik';
 import { ReactElement } from 'react';
 import { SchemaOf } from 'yup';
 
 import { AppRoutes } from '../../../../app.enums';
 import FormikInput from '../../../../shared/components/input/formik-input/formik-input';
-import { SignInFormInitialValues } from '../../auth.interfaces';
+import { SignUpFormInitialValues } from '../../auth.interfaces';
 import { FormInputContainer, FormLink, FormSubmitButton, FormWrapper, InputLabel } from '../../auth.styled';
 
-interface AuthSignInFormProps {
-  initialValues: SignInFormInitialValues;
-  validationSchema: SchemaOf<SignInFormInitialValues, never>;
-  onSubmit: (values: SignInFormInitialValues) => Promise<void>;
+interface AuthSignUpFormProps {
+  initialValues: SignUpFormInitialValues;
+  validationSchema: SchemaOf<SignUpFormInitialValues, never>;
+  onSubmit: (values: SignUpFormInitialValues) => Promise<void>;
 }
 
-const AuthSignInForm = ({ initialValues, validationSchema, onSubmit }: AuthSignInFormProps): ReactElement => {
+const AuthSignUpForm = ({ initialValues, validationSchema, onSubmit }: AuthSignUpFormProps): ReactElement => {
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
       {({ submitForm, isSubmitting }) => (
         <FormWrapper>
+          <FormInputContainer fullWidth variant='standard'>
+            <InputLabel htmlFor='name'>Name</InputLabel>
+            <FormikInput id='name' name='name' placeholder='Enter your name' />
+          </FormInputContainer>
           <FormInputContainer fullWidth variant='standard'>
             <InputLabel htmlFor='email'>Email</InputLabel>
             <FormikInput id='email' name='email' placeholder='Enter your email' type='email' />
@@ -27,6 +30,15 @@ const AuthSignInForm = ({ initialValues, validationSchema, onSubmit }: AuthSignI
             <InputLabel htmlFor='password'>Password</InputLabel>
             <FormikInput id='password' name='password' placeholder='Enter your password' type='password' />
           </FormInputContainer>
+          <FormInputContainer fullWidth variant='standard'>
+            <InputLabel htmlFor='confirmPassword'>Confirm Password</InputLabel>
+            <FormikInput
+              id='confirmPassword'
+              name='confirmPassword'
+              placeholder='Confirm the password'
+              type='password'
+            />
+          </FormInputContainer>
           <FormSubmitButton
             fullWidth
             disabled={isSubmitting}
@@ -34,7 +46,7 @@ const AuthSignInForm = ({ initialValues, validationSchema, onSubmit }: AuthSignI
             variant='primaryContained'
             onClick={submitForm}
           >
-            Sign-In
+            Create Account
           </FormSubmitButton>
           <FormSubmitButton
             fullWidth
@@ -43,16 +55,13 @@ const AuthSignInForm = ({ initialValues, validationSchema, onSubmit }: AuthSignI
             variant='secondaryContained'
             onClick={submitForm}
           >
-            Sign-In via Google
+            Create Account via Google
           </FormSubmitButton>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <FormLink to={AppRoutes.SignUp}>Do not have an account?</FormLink>
-            <FormLink to={AppRoutes.ForgotPassword}>Forgot password?</FormLink>
-          </Box>
+          <FormLink to={AppRoutes.SignIn}>Already have have an account?</FormLink>
         </FormWrapper>
       )}
     </Formik>
   );
 };
 
-export default AuthSignInForm;
+export default AuthSignUpForm;
