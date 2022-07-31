@@ -12,7 +12,15 @@ export const SIGN_UP_FORM_INITIAL_VALUE: SignUpFormInitialValues = {
 export const SIGN_UP_FORM_VALIDATION: yup.SchemaOf<SignUpFormInitialValues> = yup.object().shape({
   name: yup.string().label('Name'),
   email: yup.string().email().label('Email').required(),
-  password: yup.string().label('Password').required().trim(),
+  password: yup
+    .string()
+    .label('Password')
+    .required()
+    .min(8, 'Should be at least 8 characters')
+    .matches(/[a-z]+/, 'One lowercase character')
+    .matches(/[A-Z]+/, 'One uppercase character')
+    .matches(/[@$!%*#?&]+/, 'One special character')
+    .matches(/\d+/, 'One number'),
   confirmPassword: yup
     .string()
     .label('Confirm Password')

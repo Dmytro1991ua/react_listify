@@ -13,3 +13,7 @@ export interface SignUpFormInitialValues {
 export interface ForgotPasswordFormInitialValues {
   email: string;
 }
+
+export interface ResetPasswordFormInitialValues {
+  newPassword: string;
+}

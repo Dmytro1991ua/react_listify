@@ -1,7 +1,9 @@
+import { FormikHelpers } from 'formik';
 import { ReactElement } from 'react';
 
 import ForgotPasswordPreviewImage from '../../../../assets/images/auth/forgot-password.jpg';
-import { toastService } from '../../../services/toast.service';
+import { ForgotPasswordFormInitialValues } from '../auth.interfaces';
+import { authService } from '../auth.service';
 import AuthForgotPasswordForm from '../components/auth-forgot-password-form/auth-forgot-password-form';
 import {
   FORGOT_PASSWORD_FORM_INITIAL_VALUE,
@@ -10,8 +12,15 @@ import {
 import AuthLayout from './auth-layout/auth-layout';
 
 const AuthForgotPasswordPage = (): ReactElement => {
-  async function handleFormSubmit(): Promise<void> {
-    toastService.info('Not implemented yet');
+  async function handleFormSubmit(
+    values: ForgotPasswordFormInitialValues,
+    actions: FormikHelpers<ForgotPasswordFormInitialValues>
+  ): Promise<void> {
+    const { email } = values;
+
+    await authService.forgotPassword(email);
+
+    actions.resetForm();
   }
 
   return (
