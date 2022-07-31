@@ -28,7 +28,7 @@ export const ImagePreviewSection = styled('section', { shouldForwardProp: (prop)
     top: ${({ textPosition }) => (textPosition ? `${textPosition}%` : '50%')};
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: ${({ theme }) => theme.palette.common.white};
     text-align: center;
     width: 100%;
