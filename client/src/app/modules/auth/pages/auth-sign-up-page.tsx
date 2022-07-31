@@ -2,7 +2,6 @@ import { ReactElement } from 'react';
 
 import SignUpPreviewImage from '../../../../assets/images/auth/sign-up-img.jpg';
 import { toastService } from '../../../services/toast.service';
-import { SignUpFormInitialValues } from '../auth.interfaces';
 import AuthSignUpForm from '../components/auth-sign-up-form/auth-sign-up-form';
 import {
   SIGN_UP_FORM_INITIAL_VALUE,
@@ -11,9 +10,8 @@ import {
 import AuthLayout from './auth-layout/auth-layout';
 
 const AuthSignUpPage = (): ReactElement => {
-  async function handleFormSubmit(values: SignUpFormInitialValues): Promise<void> {
+  async function handleFormSubmit(): Promise<void> {
     toastService.info('Not implemented yet');
-    console.log(values);
   }
 
   return (
