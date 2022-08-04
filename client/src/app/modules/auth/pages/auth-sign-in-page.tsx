@@ -3,6 +3,7 @@ import { ReactElement, useState } from 'react';
 
 import SignInPreviewImage from '../../../../assets/images/auth/sign-in-img.jpg';
 import { SignInFormInitialValues } from '../auth.interfaces';
+import { authService } from '../auth.service';
 import AuthSignInForm from '../components/auth-sign-in-form/auth-sign-in-form';
 import {
   SIGN_IN_FORM_INITIAL_VALUE,
