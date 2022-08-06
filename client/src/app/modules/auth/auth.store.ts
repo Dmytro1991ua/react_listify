@@ -1,18 +1,33 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-interface AuthStoreState {
+type AuthStoreState = {
   user: CurrentUser | null;
   loadingStatus: LoadingStatus;
+};
+
+type AuthStoreActions = {
   setUser: (user: CurrentUser | null) => void;
   setLoadingStatus: (loadingStatus: LoadingStatus) => void;
-}
+  reset: () => void;
+};
 
-export const useAuthStore = create<AuthStoreState>()(
+const initialState: AuthStoreState = {
+  user: null,
+  loadingStatus: 'loading',
+};
+
+export const useAuthStore = create<AuthStoreState & AuthStoreActions>()(
   devtools((set) => ({
-    user: null,
-    loadingStatus: 'loading',
-    setUser: (payload) => set((state) => ({ ...state, user: payload }), false, 'setUser'),
+    ...initialState,
+    setUser: (payload) => {
+      return set(
+        (state) => ({ ...state, user: payload, loadingStatus: payload ? 'idle' : 'failed' }),
+        false,
+        'setUser'
+      );
+    },
     setLoadingStatus: (payload) => set((state) => ({ ...state, loadingStatus: payload }), false, 'setLoadingStatus'),
+    reset: () => set({ ...initialState, loadingStatus: 'idle' }, false, 'resetStore'),
   }))
 );

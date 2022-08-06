@@ -8,13 +8,10 @@ import { useAuthStore } from './modules/auth/auth.store';
 
 const App = (): ReactElement => {
   const setUser = useAuthStore((state) => state.setUser);
-  const setLoadingStatus = useAuthStore((state) => state.setLoadingStatus);
 
   const setCurrentUser = useCallback(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setLoadingStatus('loading');
-
         getIdToken(user).then(async (token) => {
           authService.setToken(token);
         });
@@ -27,14 +24,13 @@ const App = (): ReactElement => {
           phoneNumber: user.phoneNumber,
           emailVerified: user.emailVerified,
         });
-        setLoadingStatus('idle');
       } else {
-        setLoadingStatus('failed');
+        setUser(null);
       }
     });
 
     return unsubscribe;
-  }, [setLoadingStatus, setUser]);
+  }, [setUser]);
 
   useEffect(() => {
     setCurrentUser();

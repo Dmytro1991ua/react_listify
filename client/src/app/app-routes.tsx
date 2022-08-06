@@ -1,10 +1,12 @@
 import { ReactElement, lazy } from 'react';
-import { Redirect, Route, Router, Switch } from 'react-router-dom';
+import { Redirect, Router, Switch } from 'react-router-dom';
 
 import { AppRoutes } from './app.enums';
 import { withSuspense } from './cdk/HOCs/with-suspense';
 import history from './services/history.service';
 import LayoutWithNavigationAndHeader from './shared/containers/layout-with-navigation-and-header/layout-with-navigation-and-header';
+import AuthorizedRoute from './shared/containers/routes/authorized-route';
+import UnauthorizedRoute from './shared/containers/routes/unauthorized-route';
 
 const ShoppingListsPageLazy = withSuspense(lazy(() => import('./modules/shopping-lists/shopping-lists')));
 const SignInPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth-sign-in-page')));
@@ -19,17 +21,30 @@ const Routes = (): ReactElement => {
     <Router history={history}>
       <Switch>
         <Redirect exact from='/' to={AppRoutes.ShoppingLists} />
-        <Route exact component={SignInPageLazy} path={AppRoutes.SignIn} />
-        <Route exact component={SignUpPageLazy} path={AppRoutes.SignUp} />
-        <Route exact component={ForgotPasswordPageLazy} path={AppRoutes.ForgotPassword} />
-        <Route exact component={ResetPasswordPageLazy} path={AppRoutes.ResetPassword} />
 
-        <Route exact path={[AppRoutes.ShoppingLists, AppRoutes.Profile]}>
+        <UnauthorizedRoute exact path={AppRoutes.SignIn}>
+          <SignInPageLazy />
+        </UnauthorizedRoute>
+        <UnauthorizedRoute exact path={AppRoutes.SignUp}>
+          <SignUpPageLazy />
+        </UnauthorizedRoute>
+        <UnauthorizedRoute exact path={AppRoutes.ForgotPassword}>
+          <ForgotPasswordPageLazy />
+        </UnauthorizedRoute>
+        <UnauthorizedRoute exact path={AppRoutes.ResetPassword}>
+          <ResetPasswordPageLazy />
+        </UnauthorizedRoute>
+
+        <AuthorizedRoute exact path={[AppRoutes.ShoppingLists, AppRoutes.Profile]}>
           <LayoutWithNavigationAndHeader>
-            <Route exact component={ShoppingListsPageLazy} path={AppRoutes.ShoppingLists} />
-            <Route exact component={ProfilePageLazy} path={AppRoutes.Profile} />
+            <AuthorizedRoute exact path={AppRoutes.ShoppingLists}>
+              <ShoppingListsPageLazy />
+            </AuthorizedRoute>
+            <AuthorizedRoute exact path={AppRoutes.Profile}>
+              <ProfilePageLazy />
+            </AuthorizedRoute>
           </LayoutWithNavigationAndHeader>
-        </Route>
+        </AuthorizedRoute>
       </Switch>
     </Router>
   );
