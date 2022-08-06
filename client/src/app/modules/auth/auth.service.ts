@@ -12,6 +12,7 @@ import firebase from 'firebase/compat';
 
 import { AppRoutes } from '../../app.enums';
 import { auth } from '../../configs/firebase';
+import { appLifeCycleService } from '../../services/app-lifecycle.service';
 import history from '../../services/history.service';
 import { toastService } from '../../services/toast.service';
 import {
@@ -64,6 +65,7 @@ class AuthService {
     try {
       await auth.signOut();
       this.removeToken();
+      appLifeCycleService.clearAppDataStorage();
       toastService.success(SUCCESSFUL_SIGN_OUT_MESSAGE);
       history.push(AppRoutes.SignIn);
     } catch (error) {

@@ -4,7 +4,7 @@ import { gear, rotation } from '../../../../assets/styles/animations.styled';
 
 export const LoaderContainer = styled('div')`
   display: flex;
-  height: 100%;
+  height: 100vh;
   justify-content: center;
   align-items: center;
 `;
