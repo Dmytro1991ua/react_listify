@@ -13,15 +13,13 @@ const SignInPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth
 const SignUpPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth-sign-up-page')));
 const ForgotPasswordPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth-forgot-password-page')));
 const ResetPasswordPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth-reset-password-page')));
-
 const ProfilePageLazy = withSuspense(lazy(() => import('./modules/profile/profile')));
+const NotFoundPageLazy = withSuspense(lazy(() => import('./modules/not-found-page/not-found-page')));
 
 const Routes = (): ReactElement => {
   return (
     <Router history={history}>
       <Switch>
-        <Redirect exact from='/' to={AppRoutes.ShoppingLists} />
-
         <UnauthorizedRoute exact path={AppRoutes.SignIn}>
           <SignInPageLazy />
         </UnauthorizedRoute>
@@ -44,6 +42,14 @@ const Routes = (): ReactElement => {
               <ProfilePageLazy />
             </AuthorizedRoute>
           </LayoutWithNavigationAndHeader>
+        </AuthorizedRoute>
+
+        <AuthorizedRoute>
+          <Redirect exact from='/' to={AppRoutes.ShoppingLists} />
+        </AuthorizedRoute>
+
+        <AuthorizedRoute exact path={AppRoutes.NotFound}>
+          <NotFoundPageLazy />
         </AuthorizedRoute>
       </Switch>
     </Router>
