@@ -27,7 +27,7 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children, image, overlayText, textPosition }: AuthLayoutProps): ReactElement => {
   return (
-    <AuthLayoutContainer container item component='section' xs={12}>
+    <AuthLayoutContainer container item xs={12}>
       <Grid item xs={6}>
         <AuthImagePreview image={image} overlayText={overlayText} textPosition={textPosition} />
       </Grid>
