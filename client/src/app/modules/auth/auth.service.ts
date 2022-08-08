@@ -11,6 +11,7 @@ import {
 import firebase from 'firebase/compat';
 
 import { AppRoutes } from '../../app.enums';
+import { AXIOS_CONFIG } from '../../configs/axios';
 import { auth } from '../../configs/firebase';
 import { appLifeCycleService } from '../../services/app-lifecycle.service';
 import history from '../../services/history.service';
@@ -105,6 +106,20 @@ class AuthService {
       toastService.success(SUCCESSFUL_SIGN_IN_VIA_GOOGLE_MESSAGE);
     } catch (error) {
       toastService.error(`${FAILED_SIGN_IN_VIA_GOOGLE_MESSAGE} ${(error as Error).message}`);
+    }
+  }
+
+  async validateUser(): Promise<CurrentUser | null> {
+    try {
+      const resp = await AXIOS_CONFIG.get('/api/users/me');
+
+      if (!resp.data) {
+        return null;
+      }
+
+      return resp.data;
+    } catch (error) {
+      throw new Error((error as Error).message);
     }
   }
 

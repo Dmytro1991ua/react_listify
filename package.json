@@ -2,14 +2,14 @@
   "name": "react_listify",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "engines": {
     "npm": "6.14.13",
     "node": "14.17.0"
   },
   "scripts": {
     "start": "node server/dist/index.js",
-    "server": "nodemon server/index.ts",
+    "server": "ts-node-dev --files --respawn --pretty --transpile-only server/index.ts",
     "build": "npx tsc -p .",
     "client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -32,7 +32,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "express-async-handler": "^1.2.0",
+    "express-async-errors": "^3.1.1",
     "firebase-admin": "^10.3.0",
     "mongoose": "^6.3.4"
   },
@@ -43,6 +43,7 @@
     "concurrently": "^7.2.1",
     "nodemon": "^2.0.16",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4"
   }
