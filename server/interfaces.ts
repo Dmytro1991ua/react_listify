@@ -1,8 +1,8 @@
-export type Port = string | number;
 import express from "express";
 import { ServiceAccount } from "firebase-admin";
 import { DecodedIdToken } from "firebase-admin/lib/auth/token-verifier";
 
+export type Port = string | number;
 export interface FirebaseServiceAccount extends ServiceAccount {
   privateKeyId?: string;
   clientId?: string;
