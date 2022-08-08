@@ -20,6 +20,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.8.7",
     "@mui/system": "^5.8.7",
+    "axios": "^0.21.1",
     "firebase": "^9.8.4",
     "formik": "^2.2.9",
     "formik-mui": "^4.0.0-alpha.3",

@@ -7,30 +7,24 @@ import { authService } from './modules/auth/auth.service';
 import { useAuthStore } from './modules/auth/auth.store';
 
 const App = (): ReactElement => {
-  const setUser = useAuthStore((state) => state.setUser);
+  const validateUser = useAuthStore((state) => state.validateUser);
+  const setLoadingStatus = useAuthStore((state) => state.setLoadingStatus);
 
   const setCurrentUser = useCallback(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         getIdToken(user).then(async (token) => {
           authService.setToken(token);
         });
 
-        setUser({
-          uid: user.uid,
-          name: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-          phoneNumber: user.phoneNumber,
-          emailVerified: user.emailVerified,
-        });
-      } else {
-        setUser(null);
+        await validateUser();
       }
+
+      setLoadingStatus('idle');
     });
 
     return unsubscribe;
-  }, [setUser]);
+  }, [validateUser, setLoadingStatus]);
 
   useEffect(() => {
     setCurrentUser();
