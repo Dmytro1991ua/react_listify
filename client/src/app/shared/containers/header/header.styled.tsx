@@ -1,7 +1,9 @@
 import { AppBar, Menu, Typography, styled } from '@mui/material';
 import { BiLogOut } from 'react-icons/bi';
+import { BsFillTrashFill } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
 import { FaLeaf } from 'react-icons/fa';
+import { MdOpenInNew } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 export const CommonDropdownMenuIconStyles = `
@@ -72,5 +74,13 @@ export const ProfileIcon = styled(CgProfile)`
 `;
 
 export const LogoutIcon = styled(BiLogOut)`
+  ${CommonDropdownMenuIconStyles};
+`;
+
+export const OpenIcon = styled(MdOpenInNew)`
+  ${CommonDropdownMenuIconStyles};
+`;
+
+export const TrashIcon = styled(BsFillTrashFill)`
   ${CommonDropdownMenuIconStyles};
 `;

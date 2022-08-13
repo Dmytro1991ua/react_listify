@@ -69,6 +69,7 @@ class AuthService {
       appLifeCycleService.clearAppDataStorage();
       toastService.success(SUCCESSFUL_SIGN_OUT_MESSAGE);
       history.push(AppRoutes.SignIn);
+      location.reload();
     } catch (error) {
       toastService.error(`${FAILED_SIGN_OUT_MESSAGE}: ${(error as Error).message}`);
     }

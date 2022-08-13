@@ -41,7 +41,7 @@ const SectionHeader = ({
 }: SectionHeaderProps): ReactElement => {
   return (
     <SectionHeaderWrapper container alignItems='center'>
-      <Typography sx={{ fontWeight: 'bold' }} variant='h4'>
+      <Typography sx={{ fontWeight: 'bold' }} variant='h3'>
         {title}
       </Typography>
       <Box sx={{ marginLeft: 'auto' }}>
