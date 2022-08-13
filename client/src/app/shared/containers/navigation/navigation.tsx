@@ -2,14 +2,12 @@ import { List } from '@mui/material';
 import { Box } from '@mui/system';
 import { ReactElement, useState } from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import { useLocation } from 'react-router-dom';
 
+import NavigationItem from './components/navigation-item/navigation-item';
 import { NAVIGATION_MENU_CONFIGS } from './navigation.configs';
 import {
   DrawerContainer,
   ExpandButton,
-  ListItem,
-  ListItemLabel,
   NavigationLogoIconBig,
   NavigationLogoIconSmall,
   NavigationLogoSubTitle,
@@ -17,8 +15,6 @@ import {
 } from './navigation.styled';
 
 const Navigation = (): ReactElement => {
-  const location = useLocation();
-
   const [isExpanded, setIsExpanded] = useState(true);
 
   function handleDrawerExpandAndCollapse(): void {
@@ -48,15 +44,7 @@ const Navigation = (): ReactElement => {
 
       <List sx={{ overflow: 'hidden' }}>
         {NAVIGATION_MENU_CONFIGS.map((item) => (
-          <ListItem
-            key={item.id}
-            isActive={location.pathname === item.url}
-            isExpanded={isExpanded}
-            onClick={item.onClick}
-          >
-            {item.icon}
-            <ListItemLabel isExpanded={isExpanded}>{item.label}</ListItemLabel>
-          </ListItem>
+          <NavigationItem key={item.id} isExpanded={isExpanded} item={item} />
         ))}
       </List>
     </DrawerContainer>
