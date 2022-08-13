@@ -9,6 +9,9 @@ import AuthorizedRoute from './shared/containers/routes/authorized-route';
 import UnauthorizedRoute from './shared/containers/routes/unauthorized-route';
 
 const ShoppingListsPageLazy = withSuspense(lazy(() => import('./modules/shopping-lists/shopping-lists')));
+const ShoppingListDetailsPageLazy = withSuspense(
+  lazy(() => import('./modules/shopping-list-details/shopping-list-details'))
+);
 const SignInPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth-sign-in-page')));
 const SignUpPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth-sign-up-page')));
 const ForgotPasswordPageLazy = withSuspense(lazy(() => import('./modules/auth/pages/auth-forgot-password-page')));
@@ -33,10 +36,13 @@ const Routes = (): ReactElement => {
           <ResetPasswordPageLazy />
         </UnauthorizedRoute>
 
-        <AuthorizedRoute exact path={[AppRoutes.ShoppingLists, AppRoutes.Profile]}>
+        <AuthorizedRoute exact path={[AppRoutes.ShoppingLists, AppRoutes.Profile, AppRoutes.ShoppingList]}>
           <LayoutWithNavigationAndHeader>
             <AuthorizedRoute exact path={AppRoutes.ShoppingLists}>
               <ShoppingListsPageLazy />
+            </AuthorizedRoute>
+            <AuthorizedRoute exact path={AppRoutes.ShoppingList}>
+              <ShoppingListDetailsPageLazy />
             </AuthorizedRoute>
             <AuthorizedRoute exact path={AppRoutes.Profile}>
               <ProfilePageLazy />

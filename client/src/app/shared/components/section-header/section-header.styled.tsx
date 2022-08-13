@@ -6,6 +6,7 @@ import Button from '../button/button';
 export const SectionHeaderWrapper = styled(Grid)`
   padding-bottom: ${({ theme }) => theme.spacing(12)};
   border-bottom: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
+  margin-bottom: ${({ theme }) => theme.spacing(30)};
 `;
 
 export const SecondaryButton = styled(Button, { shouldForwardProp: (prop) => prop !== 'isShoppingListDetails' })<{
