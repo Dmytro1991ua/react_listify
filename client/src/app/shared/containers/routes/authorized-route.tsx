@@ -7,7 +7,7 @@ import GlobalSpinner from '../../components/global-spinner/global-spinner';
 import PrivateRoute from './private.route';
 
 const AuthorizedRoute = ({ children, ...props }: RouteProps): ReactElement => {
-  const isUserLoading = useAuthStore((state) => state.loadingStatus) === 'loading';
+  const isUserLoading = useAuthStore((state) => state.userLoadingStatus) === 'loading';
   const isUserAuthenticated = Boolean(useAuthStore((state) => state.user));
 
   if (isUserLoading) {

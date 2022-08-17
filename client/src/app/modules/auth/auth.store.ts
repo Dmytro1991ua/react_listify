@@ -3,31 +3,35 @@ import { devtools } from 'zustand/middleware';
 
 import { validateUserAction } from './auth.actions';
 
-type AuthStoreState = {
+export type AuthStoreState = {
   user: CurrentUser | null;
-  loadingStatus: LoadingStatus;
+  userLoadingStatus: LoadingStatus;
 };
 
-type AuthStoreActions = {
+export type AuthStoreActions = {
   setUser: (user: CurrentUser | null) => void;
-  setLoadingStatus: (loadingStatus: LoadingStatus) => void;
-  reset: () => void;
+  setUserLoadingStatus: (loadingStatus: LoadingStatus) => void;
   validateUser: () => Promise<void>;
+  reset: () => void;
 };
 
 const initialState: AuthStoreState = {
   user: null,
-  loadingStatus: 'loading',
+  userLoadingStatus: 'loading',
 };
 
 export const useAuthStore = create<AuthStoreState & AuthStoreActions>()(
-  devtools((set) => ({
-    ...initialState,
-    setUser: (payload) => {
-      return set((state) => ({ ...state, user: payload }), false, 'setUser');
-    },
-    setLoadingStatus: (payload) => set((state) => ({ ...state, loadingStatus: payload }), false, 'setLoadingStatus'),
-    validateUser: validateUserAction,
-    reset: () => set({ ...initialState, loadingStatus: 'idle' }, false, 'resetStore'),
-  }))
+  devtools(
+    (set) => ({
+      ...initialState,
+      setUser: (payload) => {
+        return set((state) => ({ ...state, user: payload }), false, 'setUser');
+      },
+      setUserLoadingStatus: (payload) =>
+        set((state) => ({ ...state, userLoadingStatus: payload }), false, 'setUserLoadingStatus'),
+      validateUser: validateUserAction,
+      reset: () => set({ ...initialState, userLoadingStatus: 'idle' }, false, 'resetAuthStore'),
+    }),
+    { name: 'AuthStore' }
+  )
 );
