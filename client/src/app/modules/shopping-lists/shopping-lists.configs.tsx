@@ -4,9 +4,11 @@ import { AppRoutes } from '../../app.enums';
 import history from '../../services/history.service';
 import { DropdownMenuConfig } from '../../shared/containers/header/header.interfaces';
 import { OpenIcon, TrashIcon } from '../../shared/containers/header/header.styled';
-import { toastService } from './../../services/toast.service';
+import { useShoppingListsStore } from './shopping-lists.store';
 
 export function dropdownConfigs(shoppingListId: string): DropdownMenuConfig[] {
+  const deleteShoppingList = useShoppingListsStore.getState().removeShoppingList;
+
   return [
     {
       id: uuidv4(),
@@ -21,8 +23,8 @@ export function dropdownConfigs(shoppingListId: string): DropdownMenuConfig[] {
       id: uuidv4(),
       label: 'Delete',
       icon: <TrashIcon />,
-      onClick: () => {
-        toastService.info('Not implemented yet');
+      onClick: async () => {
+        await deleteShoppingList(shoppingListId);
       },
     },
   ];

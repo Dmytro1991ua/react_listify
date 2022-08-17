@@ -1,4 +1,5 @@
 import { Response } from "express";
+import mongoose from "mongoose";
 
 import { UserRequest } from "../interfaces";
 import { ShoppingList } from "../models/shoppingListSchema";
@@ -38,6 +39,40 @@ export const createShoppingList = async (req: UserRequest, res: Response) => {
     } else {
       res.status(401).send("Not authorized");
     }
+  } catch (err) {
+    res.status(409);
+    throw new Error((err as Error).message);
+  }
+};
+
+// @dec  Delete a specific shopping list
+// @route  DELETE /api/shopping-lists/:id
+// @access Private
+export const deleteShoppingList = async (req: UserRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user = req.currentUser;
+
+    const shoppingList = await ShoppingList.findById(id);
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(404);
+      throw new Error("No shopping list with that id");
+    }
+
+    if (!user) {
+      res.status(401);
+      throw new Error("User not found");
+    }
+
+    if (shoppingList?.user !== user.uid) {
+      res.status(401);
+      throw new Error("User not authorized");
+    }
+
+    await ShoppingList.findByIdAndDelete(id);
+
+    res.status(200).json(id);
   } catch (err) {
     res.status(409);
     throw new Error((err as Error).message);

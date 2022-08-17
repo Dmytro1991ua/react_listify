@@ -42,7 +42,7 @@ export interface ShoppingListDetailsItem {
 }
 
 export interface ShoppingListItem {
-  user: FirebaseUser;
+  user: string;
   name: string;
   currency: string;
   shoppingListItems: ShoppingListDetailsItem[];
