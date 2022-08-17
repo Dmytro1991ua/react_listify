@@ -77,7 +77,7 @@ const ShoppingLists = (): ReactElement => {
   const renderAvailableShoppingLists = (
     <>
       {isLoading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
           <Bars color='#1b5e20' height={120} width={120} />
         </Box>
       ) : (
