@@ -1,7 +1,11 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { createShoppingListAction, loadAvailableShoppingListsAction } from './shopping-lists.actions';
+import {
+  createShoppingListAction,
+  deleteShoppingListAction,
+  loadAvailableShoppingListsAction,
+} from './shopping-lists.actions';
 
 export type ShoppingListsStoreState = {
   shoppingLists: ShoppingList[];
@@ -12,9 +16,11 @@ export type ShoppingListsStoreState = {
 export type ShoppingListsStoreActions = {
   setShoppingLists: (shoppingLists: ShoppingList[]) => void;
   createShoppingList: (shoppingList: ShoppingList) => void;
+  deleteShoppingList: (id: string) => void;
   setShoppingListsLoadingStatus: (loadingStatus: LoadingStatus) => void;
   loadAvailableShoppingLists: () => Promise<void>;
   createNewShoppingList: (shoppingList: ShoppingList) => Promise<void>;
+  removeShoppingList: (id: string) => Promise<void>;
   reset: () => void;
 };
 
@@ -42,10 +48,20 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
           'createShoppingList'
         );
       },
+      deleteShoppingList: (payload) => {
+        return set(
+          (state) => ({
+            shoppingLists: state.shoppingLists.filter((shoppingList) => shoppingList._id !== payload),
+          }),
+          false,
+          'deleteShoppingList'
+        );
+      },
       setShoppingListsLoadingStatus: (payload) =>
         set((state) => ({ ...state, shoppingListsLoadingStatus: payload }), false, 'setShoppingListsLoadingStatus'),
       loadAvailableShoppingLists: loadAvailableShoppingListsAction,
       createNewShoppingList: createShoppingListAction,
+      removeShoppingList: deleteShoppingListAction,
       reset: () => set({ ...initialState, shoppingListsLoadingStatus: 'idle' }, false, 'resetShoppingListsStore'),
     }),
     { name: 'ShoppingListsStore' }
