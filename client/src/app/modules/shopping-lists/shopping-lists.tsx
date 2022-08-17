@@ -1,6 +1,7 @@
+import { Box } from '@mui/system';
 import { FormikProps, useFormik } from 'formik';
 import { ReactElement, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { Bars } from 'react-loader-spinner';
 
 import { AppRoutes } from '../../app.enums';
 import history from '../../services/history.service';
@@ -12,29 +13,15 @@ import {
 } from './components/create-shopping-list-modal/create-shopping-list-modal.schema';
 import ShoppingList from './components/shopping-list/shopping-list';
 import { CreateShoppingListFromInitialValues } from './shopping-lists.interfaces';
-
-//TODO: Delete when the real data from server will be available
-const MOCK_SHOPPING_LISTS: ShoppingList[] = [
-  { id: uuidv4(), name: 'First Test List', currency: '$', shoppingListItems: [] },
-  {
-    id: uuidv4(),
-    name: 'Second Test List',
-    currency: '€',
-    shoppingListItems: [
-      {
-        id: uuidv4(),
-        name: 'Terra',
-        category: { id: uuidv4(), iconName: 'Icon', isCustom: false, label: 'Cool Icon', value: 'Cool Icon' },
-        quantity: 10,
-        units: 'L',
-        price: 10,
-        isChecked: false,
-      },
-    ],
-  },
-];
+import { useShoppingListsStore } from './shopping-lists.store';
 
 const ShoppingLists = (): ReactElement => {
+  const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
+  const shoppingList = useShoppingListsStore((state) => state.shoppingList);
+  const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
+
+  const availableShoppingLists = useShoppingListsStore((state) => state.shoppingLists);
+
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -73,25 +60,46 @@ const ShoppingLists = (): ReactElement => {
     formikInstance.resetForm();
   }
 
-  function handleFormSubmit(values: CreateShoppingListFromInitialValues): void {
-    console.log(values);
-    handleCloseModal();
+  async function handleFormSubmit(values: CreateShoppingListFromInitialValues): Promise<void> {
+    try {
+      const payload: ShoppingList = {
+        ...shoppingList,
+        name: values.name,
+      };
+
+      await createShoppingList(payload);
+      handleCloseModal();
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
   }
+
+  const renderAvailableShoppingLists = (
+    <>
+      {isLoading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Bars color='#1b5e20' height={120} width={120} />
+        </Box>
+      ) : (
+        availableShoppingLists.map((list) => (
+          <ShoppingList
+            key={list._id}
+            anchorElement={anchorElement}
+            isMenuOpened={isMenuOpened}
+            list={list}
+            onDoubleClick={handleCardDoubleClick}
+            onMenuClose={handleMenuClose}
+            onMenuOpen={handleMenuOpen}
+          />
+        ))
+      )}
+    </>
+  );
 
   return (
     <>
       <SectionHeader primaryBtnLabel='Add List' title='Shopping List' onClick={handleOpenModal} />
-      {MOCK_SHOPPING_LISTS.map((list) => (
-        <ShoppingList
-          key={list.id}
-          anchorElement={anchorElement}
-          isMenuOpened={isMenuOpened}
-          list={list}
-          onDoubleClick={handleCardDoubleClick}
-          onMenuClose={handleMenuClose}
-          onMenuOpen={handleMenuOpen}
-        />
-      ))}
+      {renderAvailableShoppingLists}
       <CreateShoppingListModal
         fullWidth
         formikInstance={formikInstance}
