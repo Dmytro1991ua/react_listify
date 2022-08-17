@@ -37,3 +37,22 @@ export const createShoppingListAction = async (shoppingList: ShoppingList): Prom
     throw new Error((error as Error).message);
   }
 };
+
+export const deleteShoppingListAction = async (id: string) => {
+  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
+  const deleteShoppingList = useShoppingListsStore.getState().deleteShoppingList;
+
+  try {
+    setShoppingListsLoadingStatus('loading');
+
+    const deletedShoppingList = await shoppingListsService.deleteShoppingList(id);
+
+    if (deletedShoppingList) {
+      deleteShoppingList(deletedShoppingList);
+    }
+
+    setShoppingListsLoadingStatus('idle');
+  } catch (err) {
+    setShoppingListsLoadingStatus('failed');
+  }
+};
