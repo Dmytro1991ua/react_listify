@@ -52,13 +52,13 @@ const ShoppingList = ({
 }: ShoppingListProps) => {
   return (
     <Card
-      key={list?.id}
+      key={list?._id}
       actions={
         <CardActionsContent
           isShoppingList
           anchorElement={anchorElement}
           isMenuOpened={isMenuOpened}
-          shoppingListId={list?.id}
+          shoppingListId={list?._id}
           onMenuClose={onMenuClose}
           onMenuOpen={onMenuOpen}
         />
@@ -66,7 +66,7 @@ const ShoppingList = ({
       description={
         <CardDescriptionContent isShoppingList currency={list?.currency} quantity={list?.shoppingListItems.length} />
       }
-      shoppingListId={list?.id}
+      shoppingListId={list?._id}
       title={list?.name}
       onDoubleClick={onDoubleClick}
     />

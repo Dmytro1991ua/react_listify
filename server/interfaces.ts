@@ -24,3 +24,26 @@ export interface FirebaseUser {
 export interface UserRequest extends express.Request {
   currentUser?: DecodedIdToken;
 }
+
+export interface CategoryItem {
+  iconName: string;
+  isCustom: boolean;
+  label: string;
+  value: string;
+}
+
+export interface ShoppingListDetailsItem {
+  name: string;
+  category: CategoryItem;
+  quantity: number;
+  units: string;
+  price: number;
+  isChecked: boolean;
+}
+
+export interface ShoppingListItem {
+  user: FirebaseUser;
+  name: string;
+  currency: string;
+  shoppingListItems: ShoppingListDetailsItem[];
+}

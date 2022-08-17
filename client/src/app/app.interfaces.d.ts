@@ -17,15 +17,15 @@ declare interface Category {
 declare interface ShoppingListItem {
   id: string;
   name: string;
-  category: Category;
+  category?: Category;
   quantity: number;
   units: string;
   price: number;
-  isChecked: boolean;
+  isChecked?: boolean;
 }
 
 declare interface ShoppingList {
-  id: string;
+  _id?: string;
   name: string;
   currency: string;
   shoppingListItems: ShoppingListItem[];
