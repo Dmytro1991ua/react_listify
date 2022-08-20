@@ -1,4 +1,4 @@
-import { TextFieldProps } from '@mui/material';
+import { InputAdornment, TextFieldProps } from '@mui/material';
 import React, { ReactElement } from 'react';
 
 import { TextInputCustom } from './text-input.styled';
@@ -13,7 +13,7 @@ export type TextInputProps = {
   /**
    * @param {React.ReactNode} startIcon - represent a right side position of an icon inside a button
    * @default undefined
-   * @example startIcon={<FaTrash />}
+   * @example endIcon={<FaTrash />}
    */
   endIcon?: React.ReactNode;
 } & TextFieldProps;
@@ -29,8 +29,8 @@ const TextInput = ({ startIcon, endIcon, ...rest }: TextInputProps): ReactElemen
     <TextInputCustom
       {...rest}
       InputProps={{
-        startAdornment: startIcon,
-        endAdornment: endIcon,
+        startAdornment: <InputAdornment position='start'>{startIcon}</InputAdornment>,
+        endAdornment: <InputAdornment position='end'>{endIcon}</InputAdornment>,
       }}
     />
   );
