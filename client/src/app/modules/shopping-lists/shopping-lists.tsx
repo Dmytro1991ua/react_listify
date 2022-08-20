@@ -1,10 +1,10 @@
-import { Box } from '@mui/system';
 import { FormikProps, useFormik } from 'formik';
 import { ReactElement, useState } from 'react';
 import { Bars } from 'react-loader-spinner';
 
 import { AppRoutes } from '../../app.enums';
 import history from '../../services/history.service';
+import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
 import CreateShoppingListModal from './components/create-shopping-list-modal/create-shopping-list-modal';
 import {
@@ -12,8 +12,13 @@ import {
   CREATE_SHOPPING_LIST_FORM_VALIDATION,
 } from './components/create-shopping-list-modal/create-shopping-list-modal.schema';
 import ShoppingList from './components/shopping-list/shopping-list';
+import {
+  SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE,
+  SHOPPING_LISTS_FALLBACK_MESSAGE_TITLE,
+} from './shopping-lists.contants';
 import { CreateShoppingListFromInitialValues } from './shopping-lists.interfaces';
 import { useShoppingListsStore } from './shopping-lists.store';
+import { ItemWrapper } from './shopping-lists.styled';
 
 const ShoppingLists = (): ReactElement => {
   const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
@@ -37,6 +42,43 @@ const ShoppingLists = (): ReactElement => {
         resetForm();
       },
     });
+
+  const renderFallbackMessageOrShoppingLists = (
+    <>
+      {!availableShoppingLists.length ? (
+        <ItemWrapper>
+          <FallbackMessage
+            subtitle={SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE}
+            title={SHOPPING_LISTS_FALLBACK_MESSAGE_TITLE}
+          />
+        </ItemWrapper>
+      ) : (
+        availableShoppingLists.map((list) => (
+          <ShoppingList
+            key={list._id}
+            anchorElement={anchorElement}
+            isMenuOpened={isMenuOpened}
+            list={list}
+            onDoubleClick={handleCardDoubleClick}
+            onMenuClose={handleMenuClose}
+            onMenuOpen={handleMenuOpen}
+          />
+        ))
+      )}
+    </>
+  );
+
+  const renderAvailableShoppingLists = (
+    <>
+      {isLoading ? (
+        <ItemWrapper sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <Bars color='#1b5e20' height={120} width={120} />
+        </ItemWrapper>
+      ) : (
+        renderFallbackMessageOrShoppingLists
+      )}
+    </>
+  );
 
   function handleMenuOpen(event: React.MouseEvent<HTMLButtonElement>): void {
     setAnchorElement(event.currentTarget);
@@ -73,28 +115,6 @@ const ShoppingLists = (): ReactElement => {
       throw new Error((error as Error).message);
     }
   }
-
-  const renderAvailableShoppingLists = (
-    <>
-      {isLoading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <Bars color='#1b5e20' height={120} width={120} />
-        </Box>
-      ) : (
-        availableShoppingLists.map((list) => (
-          <ShoppingList
-            key={list._id}
-            anchorElement={anchorElement}
-            isMenuOpened={isMenuOpened}
-            list={list}
-            onDoubleClick={handleCardDoubleClick}
-            onMenuClose={handleMenuClose}
-            onMenuOpen={handleMenuOpen}
-          />
-        ))
-      )}
-    </>
-  );
 
   return (
     <>
