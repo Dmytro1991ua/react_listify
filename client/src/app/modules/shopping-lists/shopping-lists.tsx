@@ -118,7 +118,7 @@ const ShoppingLists = (): ReactElement => {
 
   return (
     <>
-      <SectionHeader primaryBtnLabel='Add List' title='Shopping List' onClick={handleOpenModal} />
+      <SectionHeader primaryBtnLabel='Add List' title='Shopping List' onPrimaryButtonClick={handleOpenModal} />
       {renderAvailableShoppingLists}
       <CreateShoppingListModal
         fullWidth
