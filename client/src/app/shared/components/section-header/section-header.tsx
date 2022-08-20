@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import { ReactElement } from 'react';
 
 import Button from '../button/button';
-import { SecondaryButton, SectionHeaderWrapper } from './section-header.styled';
+import { BackIcon, SecondaryButton, SectionHeaderWrapper } from './section-header.styled';
 
 interface SectionHeaderProps {
   /**
@@ -29,7 +29,9 @@ interface SectionHeaderProps {
    * @example 'Create Copy'
    */
   isShoppingListDetails?: boolean;
-  onClick: () => void;
+  onPrimaryButtonClick: () => void;
+  onSecondaryButtonClick?: () => void;
+  onGoBack?: () => void;
 }
 
 const SectionHeader = ({
@@ -37,23 +39,44 @@ const SectionHeader = ({
   primaryBtnLabel,
   secondaryBtnLabel,
   isShoppingListDetails,
-  onClick,
+  onPrimaryButtonClick,
+  onSecondaryButtonClick,
+  onGoBack,
 }: SectionHeaderProps): ReactElement => {
+  const renderGoBackButton = (
+    <>
+      {isShoppingListDetails && (
+        <Button variant='transparent' onClick={() => onGoBack && onGoBack()}>
+          <BackIcon />
+        </Button>
+      )}
+    </>
+  );
+
+  const renderHeaderActions = (
+    <>
+      {isShoppingListDetails && (
+        <SecondaryButton
+          isShoppingListDetails={isShoppingListDetails}
+          variant='secondaryContained'
+          onClick={() => onSecondaryButtonClick && onSecondaryButtonClick()}
+        >
+          {secondaryBtnLabel}
+        </SecondaryButton>
+      )}
+      <Button variant='primaryContained' onClick={onPrimaryButtonClick}>
+        {primaryBtnLabel}
+      </Button>
+    </>
+  );
+
   return (
     <SectionHeaderWrapper container alignItems='center'>
-      <Typography sx={{ fontWeight: 'bold' }} variant='h3'>
+      {renderGoBackButton}
+      <Typography sx={{ fontWeight: 'bold', marginLeft: isShoppingListDetails ? '1.5rem' : 0 }} variant='h3'>
         {title}
       </Typography>
-      <Box sx={{ marginLeft: 'auto' }}>
-        {isShoppingListDetails && (
-          <SecondaryButton isShoppingListDetails={isShoppingListDetails} variant='secondaryContained' onClick={onClick}>
-            {secondaryBtnLabel}
-          </SecondaryButton>
-        )}
-        <Button variant='primaryContained' onClick={onClick}>
-          {primaryBtnLabel}
-        </Button>
-      </Box>
+      <Box sx={{ marginLeft: 'auto' }}>{renderHeaderActions}</Box>
     </SectionHeaderWrapper>
   );
 };
