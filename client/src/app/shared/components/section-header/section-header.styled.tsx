@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { IoArrowBackOutline } from 'react-icons/io5';
 
 import Button from '../button/button';
 
@@ -13,4 +14,9 @@ export const SecondaryButton = styled(Button, { shouldForwardProp: (prop) => pro
   isShoppingListDetails?: boolean;
 }>`
   margin-right: ${({ theme, isShoppingListDetails }) => (isShoppingListDetails ? theme.spacing(16) : theme.spacing(0))};
+`;
+
+export const BackIcon = styled(IoArrowBackOutline)`
+  width: 3rem;
+  height: 3rem;
 `;
