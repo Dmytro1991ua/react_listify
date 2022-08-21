@@ -14,6 +14,7 @@ interface CreateShoppingListModalProps {
   fullWidth?: boolean;
   onClose: () => void;
   onSubmit: () => Promise<void> | void;
+  onChange: (value: string) => void;
 }
 
 const CreateShoppingListModal = ({
@@ -25,6 +26,7 @@ const CreateShoppingListModal = ({
   fullWidth,
   onClose,
   onSubmit,
+  onChange,
 }: CreateShoppingListModalProps): ReactElement => {
   return (
     <Modal
@@ -37,7 +39,18 @@ const CreateShoppingListModal = ({
       onSubmit={onSubmit}
     >
       <FormikProvider value={formikInstance}>
-        <FormikInput id='name' name='name' placeholder='Enter the name of the list' />
+        <FormikInput
+          id='name'
+          name='name'
+          placeholder='Enter the name of the list'
+          onChange={(e) => onChange(e.target.value)}
+          onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              onSubmit();
+            }
+          }}
+        />
       </FormikProvider>
     </Modal>
   );

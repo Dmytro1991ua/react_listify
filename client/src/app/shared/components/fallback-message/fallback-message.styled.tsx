@@ -19,6 +19,7 @@ export const Title = styled(Typography)`
   font-weight: 600;
   padding-bottom: ${({ theme }) => theme.spacing(5)};
   border-bottom: ${({ theme }) => `1px solid ${theme.palette.success.dark}`};
+  text-align: center;
 `;
 
 export const Subtitle = styled(Title)`

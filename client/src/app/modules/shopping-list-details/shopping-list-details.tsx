@@ -4,8 +4,15 @@ import { useParams } from 'react-router-dom';
 
 import history from '../../services/history.service';
 import { toastService } from '../../services/toast.service';
+import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
+import { handleInputDebounce } from '../../utils';
+import {
+  SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE,
+  SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE,
+} from '../shopping-lists/shopping-lists.contants';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
+import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
 import { AddIcon, ClearIcon, Input } from './shopping-list-details.styled';
 
 const ShoppingListDetails = (): ReactElement => {
@@ -23,7 +30,7 @@ const ShoppingListDetails = (): ReactElement => {
     setCurrentShoppingList(getCurrentShoppingList);
   }, [availableShoppingLists, shoppingListId]);
 
-  const handleAddNewProduct = useMemo(() => _.debounce((value) => setProductItem(value), 500), []);
+  const handleAddNewProduct = useMemo(() => handleInputDebounce<string>(setProductItem), []);
 
   function handleGoBack(): void {
     history.goBack();
@@ -40,6 +47,21 @@ const ShoppingListDetails = (): ReactElement => {
     <ClearIcon sx={{ cursor: 'pointer' }} onClick={handleClearInput} />
   ) : (
     <AddIcon />
+  );
+
+  const renderFallbackMessageOrShoppingListDetails = (
+    <>
+      {!currentShoppingList?.shoppingListItems.length ? (
+        <ItemWrapper>
+          <FallbackMessage
+            subtitle={SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE}
+            title={SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE}
+          />
+        </ItemWrapper>
+      ) : (
+        <p>Details</p>
+      )}
+    </>
   );
 
   return (
@@ -59,8 +81,14 @@ const ShoppingListDetails = (): ReactElement => {
         inputRef={inputRef}
         placeholder='Add Product'
         onChange={(e) => handleAddNewProduct(e.target.value)}
-        onKeyDown={(e) => e.key !== 'Escape' && e.stopPropagation()}
+        onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAddNewProduct((e.target as HTMLInputElement).value);
+          }
+        }}
       />
+      {renderFallbackMessageOrShoppingListDetails}
     </>
   );
 };
