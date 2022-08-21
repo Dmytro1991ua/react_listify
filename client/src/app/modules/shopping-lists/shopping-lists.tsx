@@ -1,11 +1,12 @@
 import { FormikProps, useFormik } from 'formik';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useCallback, useMemo, useState } from 'react';
 import { Bars } from 'react-loader-spinner';
 
 import { AppRoutes } from '../../app.enums';
 import history from '../../services/history.service';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
+import { handleInputDebounce } from '../../utils';
 import CreateShoppingListModal from './components/create-shopping-list-modal/create-shopping-list-modal';
 import {
   CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
@@ -29,6 +30,7 @@ const ShoppingLists = (): ReactElement => {
 
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [shoppingListName, setShoppingListName] = useState('');
 
   const isMenuOpened = Boolean(anchorElement);
 
@@ -36,8 +38,8 @@ const ShoppingLists = (): ReactElement => {
     useFormik<CreateShoppingListFromInitialValues>({
       initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
       validationSchema: CREATE_SHOPPING_LIST_FORM_VALIDATION,
-      onSubmit: (values, { resetForm }) => {
-        handleFormSubmit(values);
+      onSubmit: (_, { resetForm }) => {
+        handleFormSubmit();
 
         resetForm();
       },
@@ -80,6 +82,16 @@ const ShoppingLists = (): ReactElement => {
     </>
   );
 
+  const inputDebounce = useMemo(() => handleInputDebounce<string>(setShoppingListName), []);
+
+  const handleAddNewShoppingList = useCallback(
+    (value: string) => {
+      formikInstance.setFieldValue('name', value);
+      inputDebounce(value);
+    },
+    [formikInstance, inputDebounce]
+  );
+
   function handleMenuOpen(event: React.MouseEvent<HTMLButtonElement>): void {
     setAnchorElement(event.currentTarget);
   }
@@ -102,11 +114,11 @@ const ShoppingLists = (): ReactElement => {
     formikInstance.resetForm();
   }
 
-  async function handleFormSubmit(values: CreateShoppingListFromInitialValues): Promise<void> {
+  async function handleFormSubmit(): Promise<void> {
     try {
       const payload: ShoppingList = {
         ...shoppingList,
-        name: values.name,
+        name: shoppingListName,
       };
 
       await createShoppingList(payload);
@@ -127,6 +139,7 @@ const ShoppingLists = (): ReactElement => {
         primaryBtnLabel='Submit'
         secondaryBtnLabel='Close'
         title='Create a List'
+        onChange={handleAddNewShoppingList}
         onClose={handleCloseModal}
         onSubmit={formikInstance.submitForm}
       />
