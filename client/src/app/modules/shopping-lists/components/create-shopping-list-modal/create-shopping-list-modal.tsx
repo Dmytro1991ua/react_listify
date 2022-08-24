@@ -1,4 +1,4 @@
-import { FormikProps, FormikProvider } from 'formik';
+import { Form, FormikProps, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 
 import FormikInput from '../../../../shared/components/input/formik-input/formik-input';
@@ -14,7 +14,6 @@ interface CreateShoppingListModalProps {
   fullWidth?: boolean;
   onClose: () => void;
   onSubmit: () => Promise<void> | void;
-  onChange: (value: string) => void;
 }
 
 const CreateShoppingListModal = ({
@@ -26,11 +25,11 @@ const CreateShoppingListModal = ({
   fullWidth,
   onClose,
   onSubmit,
-  onChange,
 }: CreateShoppingListModalProps): ReactElement => {
   return (
     <Modal
       fullWidth={fullWidth}
+      isDirty={!formikInstance.dirty}
       open={open}
       primaryBtnLabel={primaryBtnLabel}
       secondaryBtnLabel={secondaryBtnLabel}
@@ -39,18 +38,9 @@ const CreateShoppingListModal = ({
       onSubmit={onSubmit}
     >
       <FormikProvider value={formikInstance}>
-        <FormikInput
-          id='name'
-          name='name'
-          placeholder='Enter the name of the list'
-          onChange={(e) => onChange(e.target.value)}
-          onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              onSubmit();
-            }
-          }}
-        />
+        <Form>
+          <FormikInput id='name' name='name' placeholder='Enter the name of the list' />
+        </Form>
       </FormikProvider>
     </Modal>
   );

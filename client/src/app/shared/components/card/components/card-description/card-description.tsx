@@ -39,7 +39,7 @@ interface CardDescriptionContentProps {
 const CardDescriptionContent = ({
   quantity = 0,
   totalPrice = 0,
-  price = 10,
+  price = 0,
   currency = '$',
   isShoppingList,
 }: CardDescriptionContentProps): ReactElement => {
