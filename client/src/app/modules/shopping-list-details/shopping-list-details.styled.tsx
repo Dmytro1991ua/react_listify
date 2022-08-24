@@ -1,21 +1,16 @@
-import { Theme, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import { AiOutlineFileAdd } from 'react-icons/ai';
-import { GrPowerReset } from 'react-icons/gr';
 
 import TextInput from '../../shared/components/input/text-input/text-input';
 
-const commonIconStyles = (theme: Theme) => {
-  return {
-    width: '2.5rem !important',
-    height: '2.5rem !important',
-    color: `${theme.palette.success.dark} !important`,
-  };
-};
+export const Form = styled('form')`
+  width: 100%;
+  max-width: 70rem;
+  margin: 0 auto 4rem;
+`;
 
 export const Input = styled(TextInput)`
   width: 100%;
-  max-width: 70rem;
-  margin: 0 auto;
 
   & .MuiInputAdornment-positionStart {
     margin-right: -1.5rem;
@@ -36,9 +31,7 @@ export const Input = styled(TextInput)`
 `;
 
 export const AddIcon = styled(AiOutlineFileAdd)`
-  ${({ theme }) => commonIconStyles(theme)}
-`;
-
-export const ClearIcon = styled(GrPowerReset)`
-  ${({ theme }) => commonIconStyles(theme)}
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  color: ${({ theme }) => `${theme.palette.success.dark} !important`};
 `;

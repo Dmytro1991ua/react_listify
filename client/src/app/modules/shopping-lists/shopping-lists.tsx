@@ -36,12 +36,49 @@ const ShoppingLists = (): ReactElement => {
     useFormik<CreateShoppingListFromInitialValues>({
       initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
       validationSchema: CREATE_SHOPPING_LIST_FORM_VALIDATION,
+      enableReinitialize: true,
       onSubmit: (values, { resetForm }) => {
         handleFormSubmit(values);
 
         resetForm();
       },
     });
+
+  function handleMenuOpen(event: React.MouseEvent<HTMLButtonElement>): void {
+    setAnchorElement(event.currentTarget);
+  }
+
+  function handleMenuClose(): void {
+    setAnchorElement(null);
+  }
+
+  function handleCardDoubleClick(shoppingListId: string): void {
+    history.push(`${AppRoutes.ShoppingLists}/${shoppingListId}`);
+  }
+
+  function handleOpenModal(): void {
+    setIsModalOpen(true);
+  }
+
+  function handleCloseModal(): void {
+    setIsModalOpen(false);
+
+    formikInstance.resetForm();
+  }
+
+  async function handleFormSubmit(values: CreateShoppingListFromInitialValues): Promise<void> {
+    try {
+      const payload: ShoppingList = {
+        ...shoppingList,
+        name: values.name,
+      };
+
+      await createShoppingList(payload);
+      handleCloseModal();
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
 
   const renderFallbackMessageOrShoppingLists = (
     <>
@@ -79,42 +116,6 @@ const ShoppingLists = (): ReactElement => {
       )}
     </>
   );
-
-  function handleMenuOpen(event: React.MouseEvent<HTMLButtonElement>): void {
-    setAnchorElement(event.currentTarget);
-  }
-
-  function handleMenuClose(): void {
-    setAnchorElement(null);
-  }
-
-  function handleCardDoubleClick(shoppingListId: string): void {
-    history.push(`${AppRoutes.ShoppingLists}/${shoppingListId}`);
-  }
-
-  function handleOpenModal(): void {
-    setIsModalOpen(true);
-  }
-
-  function handleCloseModal(): void {
-    setIsModalOpen(false);
-
-    formikInstance.resetForm();
-  }
-
-  async function handleFormSubmit(values: CreateShoppingListFromInitialValues): Promise<void> {
-    try {
-      const payload: ShoppingList = {
-        ...shoppingList,
-        name: values.name,
-      };
-
-      await createShoppingList(payload);
-      handleCloseModal();
-    } catch (error) {
-      throw new Error((error as Error).message);
-    }
-  }
 
   return (
     <>
