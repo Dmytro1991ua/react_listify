@@ -40,16 +40,22 @@ interface ModalProps {
   title?: string;
   /**
    * @param {string} primaryBtnLabel - Defines the label of the primary btn
-   * @default Submit
+   * @default undefined
    * @example Submit, Delete
    */
   primaryBtnLabel?: string;
   /**
    * @param {string} primaryBtnLabel - Defines the label of the secondary btn
-   * @default Cancel
+   * @default undefined
    * @example Cancel, Ok
    */
   secondaryBtnLabel?: string;
+  /**
+   * @param {boolean} isDirty Defines if a specific form field was touched
+   * @default undefined,
+   * @example true/false
+   */
+  isDirty?: boolean;
   onClose: () => void;
   onSubmit: () => Promise<void> | void;
 }
@@ -61,6 +67,7 @@ const Modal = ({
   primaryBtnLabel = 'Submit',
   secondaryBtnLabel = 'Cancel',
   title,
+  isDirty,
   onClose,
   onSubmit,
 }: ModalProps): ReactElement => {
@@ -75,7 +82,7 @@ const Modal = ({
         <Button fullWidth variant='secondaryOutlined' onClick={onClose}>
           {secondaryBtnLabel}
         </Button>
-        <Button fullWidth variant='primaryOutlined' onClick={onSubmit}>
+        <Button fullWidth disabled={isDirty} type='submit' variant='primaryOutlined' onClick={onSubmit}>
           {primaryBtnLabel}
         </Button>
       </DialogActionsContainer>

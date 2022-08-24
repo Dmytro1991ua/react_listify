@@ -4,7 +4,7 @@ import { Response } from "express";
 import { ShoppingList } from "./../models/shoppingListSchema";
 
 // @dec Create a new shopping list details item(product)
-// @route  POST /api/shopping-lists/:id/item
+// @route  PUT /api/shopping-lists/:id/product-item
 // @access Private
 export const createShoppingListDetailsItem = async (req: UserRequest, res: Response) => {
   const { id: _id } = req.params;

@@ -15,7 +15,7 @@ declare interface Category {
   value: string;
 }
 declare interface ShoppingListItem {
-  id: string;
+  _id?: string;
   name: string;
   category?: Category;
   quantity: number;

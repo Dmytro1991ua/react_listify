@@ -62,6 +62,7 @@ const Button = ({
   className,
   startIcon,
   endIcon,
+  type,
   onClick,
 }: ButtonProps): ReactElement => {
   function handleButtonClick(e: React.MouseEvent<Element, MouseEvent>): void {
@@ -77,6 +78,7 @@ const Button = ({
       endIcon={endIcon}
       fullWidth={fullWidth}
       startIcon={startIcon}
+      type={type}
       variant={variant}
       onClick={handleButtonClick}
     >
