@@ -7,13 +7,14 @@ import CardDescriptionContent from '../../../shared/components/card/components/c
 interface ProductItemProps {
   item: ShoppingListItem;
   currency: string;
+  onDelete: (productItemId: string) => Promise<void>;
 }
 
-const ProductItem = ({ item, currency }: ProductItemProps): ReactElement => {
+const ProductItem = ({ item, currency, onDelete }: ProductItemProps): ReactElement => {
   return (
     <Card
       key={item?._id}
-      actions={<CardActionsContent isShoppingList={false} shoppingListId={item?._id} />}
+      actions={<CardActionsContent isShoppingList={false} shoppingListId={item?._id} onDelete={onDelete} />}
       description={<CardDescriptionContent currency={currency} isShoppingList={false} quantity={item?.quantity} />}
       title={item?.name}
     />

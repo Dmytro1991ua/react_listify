@@ -1,32 +1,16 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { createShoppingListItemAction } from './../shopping-list-details/shopping-list-details.actions';
+import {
+  createShoppingListItemAction,
+  deleteShoppingListItemAction,
+} from './../shopping-list-details/shopping-list-details.actions';
 import {
   createShoppingListAction,
   deleteShoppingListAction,
   loadAvailableShoppingListsAction,
 } from './shopping-lists.actions';
-
-export type ShoppingListsStoreState = {
-  shoppingLists: ShoppingList[];
-  shoppingList: ShoppingList;
-  shoppingListItem: ShoppingListItem;
-  shoppingListsLoadingStatus: LoadingStatus;
-};
-
-export type ShoppingListsStoreActions = {
-  setShoppingLists: (shoppingLists: ShoppingList[]) => void;
-  createShoppingList: (shoppingList: ShoppingList) => void;
-  deleteShoppingList: (id: string) => void;
-  createShoppingListItem: (shoppingList: ShoppingList) => void;
-  setShoppingListsLoadingStatus: (loadingStatus: LoadingStatus) => void;
-  loadAvailableShoppingLists: () => Promise<void>;
-  createNewShoppingList: (shoppingList: ShoppingList) => Promise<void>;
-  createNewShoppingListItem: (id: string, shoppingListItem: ShoppingListItem) => Promise<void>;
-  removeShoppingList: (id: string) => Promise<void>;
-  reset: () => void;
-};
+import { ShoppingListsStoreActions, ShoppingListsStoreState } from './shopping-lists.interfaces';
 
 const initialState: ShoppingListsStoreState = {
   shoppingLists: [],
@@ -78,12 +62,22 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
           'createShoppingListItem'
         );
       },
+      deleteShoppingListItem: (payload) => {
+        return set(
+          (state) => ({
+            shoppingLists: state.shoppingLists.map((list) => (list._id === payload._id ? payload : list)),
+          }),
+          false,
+          'deleteShoppingListItem'
+        );
+      },
       setShoppingListsLoadingStatus: (payload) =>
         set((state) => ({ ...state, shoppingListsLoadingStatus: payload }), false, 'setShoppingListsLoadingStatus'),
       loadAvailableShoppingLists: loadAvailableShoppingListsAction,
       createNewShoppingList: createShoppingListAction,
       createNewShoppingListItem: createShoppingListItemAction,
       removeShoppingList: deleteShoppingListAction,
+      removeShoppingListItem: deleteShoppingListItemAction,
       reset: () => set({ ...initialState, shoppingListsLoadingStatus: 'idle' }, false, 'resetShoppingListsStore'),
     }),
     { name: 'ShoppingListsStore' }
