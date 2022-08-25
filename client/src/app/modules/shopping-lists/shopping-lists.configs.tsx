@@ -4,11 +4,8 @@ import { AppRoutes } from '../../app.enums';
 import history from '../../services/history.service';
 import { DropdownMenuConfig } from '../../shared/containers/header/header.interfaces';
 import { OpenIcon, TrashIcon } from '../../shared/containers/header/header.styled';
-import { useShoppingListsStore } from './shopping-lists.store';
 
-export function dropdownConfigs(shoppingListId: string): DropdownMenuConfig[] {
-  const deleteShoppingList = useShoppingListsStore.getState().removeShoppingList;
-
+export function dropdownConfigs(shoppingListId: string, onModalOpen?: (id: string) => void): DropdownMenuConfig[] {
   return [
     {
       id: uuidv4(),
@@ -24,7 +21,7 @@ export function dropdownConfigs(shoppingListId: string): DropdownMenuConfig[] {
       label: 'Delete',
       icon: <TrashIcon />,
       onClick: async () => {
-        await deleteShoppingList(shoppingListId);
+        onModalOpen && onModalOpen(shoppingListId);
       },
     },
   ];

@@ -40,6 +40,11 @@ interface ShoppingListProps {
    * @default undefined
    */
   onDoubleClick?: (shoppingListId: string) => void;
+  /**
+   * @param {void} Defines a click event on delete btn in dropdown menu within specific shopping list
+   * @default undefined
+   */
+  onModalOpen?: (id: string) => void;
 }
 
 const ShoppingList = ({
@@ -49,6 +54,7 @@ const ShoppingList = ({
   onMenuClose,
   onMenuOpen,
   onDoubleClick,
+  onModalOpen,
 }: ShoppingListProps) => {
   return (
     <Card
@@ -61,6 +67,7 @@ const ShoppingList = ({
           shoppingListId={list?._id}
           onMenuClose={onMenuClose}
           onMenuOpen={onMenuOpen}
+          onModalOpen={onModalOpen}
         />
       }
       description={

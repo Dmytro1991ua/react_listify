@@ -11,6 +11,7 @@ import {
   CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
   CREATE_SHOPPING_LIST_FORM_VALIDATION,
 } from './components/create-shopping-list-modal/create-shopping-list-modal.schema';
+import DeleteShoppingListModal from './components/delete-shopping-list-modal/delete-shopping-list-modal';
 import ShoppingList from './components/shopping-list/shopping-list';
 import {
   SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE,
@@ -24,11 +25,13 @@ const ShoppingLists = (): ReactElement => {
   const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
   const shoppingList = useShoppingListsStore((state) => state.shoppingList);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
-
+  const deleteShoppingList = useShoppingListsStore((state) => state.removeShoppingList);
   const availableShoppingLists = useShoppingListsStore((state) => state.shoppingLists);
 
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [shoppingListItemId, setShoppingListItemId] = useState('');
 
   const isMenuOpened = Boolean(anchorElement);
 
@@ -56,14 +59,23 @@ const ShoppingLists = (): ReactElement => {
     history.push(`${AppRoutes.ShoppingLists}/${shoppingListId}`);
   }
 
-  function handleOpenModal(): void {
-    setIsModalOpen(true);
+  function handleOpenCreateModal(): void {
+    setIsCreateModalOpen(true);
   }
 
-  function handleCloseModal(): void {
-    setIsModalOpen(false);
+  function handleCloseCreateModal(): void {
+    setIsCreateModalOpen(false);
 
     formikInstance.resetForm();
+  }
+
+  function handleOpenDeleteModal(id: string): void {
+    setIsDeleteModalOpen(true);
+    setShoppingListItemId(id);
+  }
+
+  function handleCloseDeleteModal(): void {
+    setIsDeleteModalOpen(false);
   }
 
   async function handleFormSubmit(values: CreateShoppingListFromInitialValues): Promise<void> {
@@ -74,7 +86,16 @@ const ShoppingLists = (): ReactElement => {
       };
 
       await createShoppingList(payload);
-      handleCloseModal();
+      handleCloseCreateModal();
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async function handleShoppingListDeletion(): Promise<void> {
+    try {
+      await deleteShoppingList(shoppingListItemId);
+      handleCloseDeleteModal();
     } catch (error) {
       throw new Error((error as Error).message);
     }
@@ -99,6 +120,7 @@ const ShoppingLists = (): ReactElement => {
             onDoubleClick={handleCardDoubleClick}
             onMenuClose={handleMenuClose}
             onMenuOpen={handleMenuOpen}
+            onModalOpen={handleOpenDeleteModal}
           />
         ))
       )}
@@ -119,17 +141,26 @@ const ShoppingLists = (): ReactElement => {
 
   return (
     <>
-      <SectionHeader primaryBtnLabel='Add List' title='Shopping List' onPrimaryButtonClick={handleOpenModal} />
+      <SectionHeader primaryBtnLabel='Add List' title='Shopping List' onPrimaryButtonClick={handleOpenCreateModal} />
       {renderAvailableShoppingLists}
       <CreateShoppingListModal
         fullWidth
         formikInstance={formikInstance}
-        open={isModalOpen}
+        open={isCreateModalOpen}
         primaryBtnLabel='Submit'
         secondaryBtnLabel='Close'
         title='Create a List'
-        onClose={handleCloseModal}
+        onClose={handleCloseCreateModal}
         onSubmit={formikInstance.submitForm}
+      />
+      <DeleteShoppingListModal
+        fullWidth
+        open={isDeleteModalOpen}
+        primaryBtnLabel='Yes'
+        secondaryBtnLabel='No'
+        title='Are you sure you want to delete it?'
+        onClose={handleCloseDeleteModal}
+        onSubmit={handleShoppingListDeletion}
       />
     </>
   );
