@@ -54,6 +54,11 @@ interface CardActionsContentProps {
    * @default undefined
    */
   onDelete?: (id: string) => void | Promise<void>;
+  /**
+   * @param {void} Defines a click event on delete btn in dropdown menu within specific shopping list
+   * @default undefined
+   */
+  onModalOpen?: (id: string) => void | Promise<void>;
 }
 
 const CardActionsContent = ({
@@ -65,10 +70,11 @@ const CardActionsContent = ({
   onMenuClose,
   onEdit,
   onDelete,
+  onModalOpen,
 }: CardActionsContentProps): ReactElement => {
   const SHOPPING_LIST_DROPDOWN_MENU_CONFIGS = useMemo(
-    () => dropdownConfigs(shoppingListId as string),
-    [shoppingListId]
+    () => dropdownConfigs(shoppingListId as string, onModalOpen),
+    [shoppingListId, onModalOpen]
   );
 
   const shoppingListActions = (
