@@ -7,7 +7,7 @@ import CardDescriptionContent from '../../../shared/components/card/components/c
 interface ProductItemProps {
   item: ShoppingListItem;
   currency: string;
-  onDelete: (productItemId: string) => Promise<void>;
+  onDelete: (id: string) => void;
 }
 
 const ProductItem = ({ item, currency, onDelete }: ProductItemProps): ReactElement => {

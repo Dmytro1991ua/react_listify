@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import history from '../../services/history.service';
 import { toastService } from '../../services/toast.service';
+import DeleteConfirmationModal from '../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
@@ -27,6 +28,8 @@ const ShoppingListDetails = (): ReactElement => {
 
   const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingList | null>(null);
   const [productItem, setProductItem] = useState('');
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [shoppingListItemId, setShoppingListItemId] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -37,7 +40,7 @@ const ShoppingListDetails = (): ReactElement => {
     }
   }, [availableShoppingLists, shoppingListId]);
 
-  const handleAddNewProduct = useMemo(() => _.debounce((value) => setProductItem(value), 500), []);
+  const handleAddNewProduct = useMemo(() => _.debounce((value) => setProductItem(value), 300), []);
 
   function handleGoBack(): void {
     history.goBack();
@@ -48,6 +51,15 @@ const ShoppingListDetails = (): ReactElement => {
       inputRef.current.value = '';
       setProductItem('');
     }
+  }
+
+  function handleOpenDeleteModal(id: string): void {
+    setIsDeleteModalOpen(true);
+    setShoppingListItemId(id);
+  }
+
+  function handleCloseDeleteModal(): void {
+    setIsDeleteModalOpen(false);
   }
 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
@@ -69,9 +81,11 @@ const ShoppingListDetails = (): ReactElement => {
     }
   }
 
-  async function handleShoppingListItemDeletion(productItemId: string): Promise<void> {
+  async function handleShoppingListItemDeletion(): Promise<void> {
     try {
-      await removeExistingShoppingListItem(currentShoppingList?._id as string, productItemId);
+      await removeExistingShoppingListItem(currentShoppingList?._id as string, shoppingListItemId);
+
+      handleCloseDeleteModal();
     } catch (error) {
       throw new Error((error as Error).message);
     }
@@ -93,7 +107,7 @@ const ShoppingListDetails = (): ReactElement => {
               key={item._id}
               currency={currentShoppingList.currency}
               item={item}
-              onDelete={handleShoppingListItemDeletion}
+              onDelete={handleOpenDeleteModal}
             />
           ))}
         </>
@@ -115,6 +129,15 @@ const ShoppingListDetails = (): ReactElement => {
 
   return (
     <>
+      <DeleteConfirmationModal
+        fullWidth
+        open={isDeleteModalOpen}
+        primaryBtnLabel='Yes'
+        secondaryBtnLabel='No'
+        title='Are you sure you want to delete it?'
+        onClose={handleCloseDeleteModal}
+        onSubmit={handleShoppingListItemDeletion}
+      />
       <SectionHeader
         isShoppingListDetails
         primaryBtnLabel='Delete List'
@@ -133,7 +156,6 @@ const ShoppingListDetails = (): ReactElement => {
           onChange={(e) => handleAddNewProduct(e.target.value)}
         />
       </Form>
-
       {renderAvailableShoppingListItems}
     </>
   );
