@@ -17,3 +17,15 @@ export interface ForgotPasswordFormInitialValues {
 export interface ResetPasswordFormInitialValues {
   newPassword: string;
 }
+
+export type AuthStoreState = {
+  user: CurrentUser | null;
+  userLoadingStatus: LoadingStatus;
+};
+
+export type AuthStoreActions = {
+  setUser: (user: CurrentUser | null) => void;
+  setUserLoadingStatus: (loadingStatus: LoadingStatus) => void;
+  validateUser: () => Promise<void>;
+  reset: () => void;
+};
