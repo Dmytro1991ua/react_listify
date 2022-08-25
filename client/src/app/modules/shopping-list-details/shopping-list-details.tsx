@@ -5,12 +5,13 @@ import { useParams } from 'react-router-dom';
 
 import history from '../../services/history.service';
 import { toastService } from '../../services/toast.service';
-import DeleteConfirmationModal from '../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
-import ProductItem from './component/product-item';
+import DeleteProductItemModal from './components/delete-product-item-modal/delete-product-item-modal';
+import DeleteShoppingListModal from './components/delete-shopping-list-modal/delete-shopping-list-modal';
+import ProductItem from './components/product-item/product-item';
 import {
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE,
@@ -23,12 +24,12 @@ const ShoppingListDetails = (): ReactElement => {
   const availableShoppingLists = useShoppingListsStore((state) => state.shoppingLists);
   const shoppingListItem = useShoppingListsStore((state) => state.shoppingListItem);
   const createShoppingListItem = useShoppingListsStore((state) => state.createNewShoppingListItem);
-  const removeExistingShoppingListItem = useShoppingListsStore((state) => state.removeShoppingListItem);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
 
   const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingList | null>(null);
   const [productItem, setProductItem] = useState('');
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isProductItemDeleteModalOpen, setIsProductItemDeleteModalOpen] = useState(false);
+  const [isShoppingListDeleteModalOpen, setIsShoppingListDeleteModalOpen] = useState(false);
   const [shoppingListItemId, setShoppingListItemId] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -53,13 +54,13 @@ const ShoppingListDetails = (): ReactElement => {
     }
   }
 
-  function handleOpenDeleteModal(id: string): void {
-    setIsDeleteModalOpen(true);
+  function handleOpenProductItemDeleteModal(id: string): void {
+    setIsProductItemDeleteModalOpen(true);
     setShoppingListItemId(id);
   }
 
-  function handleCloseDeleteModal(): void {
-    setIsDeleteModalOpen(false);
+  function handleOpenShoppingListDeleteModal(): void {
+    setIsShoppingListDeleteModalOpen(true);
   }
 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
@@ -81,16 +82,6 @@ const ShoppingListDetails = (): ReactElement => {
     }
   }
 
-  async function handleShoppingListItemDeletion(): Promise<void> {
-    try {
-      await removeExistingShoppingListItem(currentShoppingList?._id as string, shoppingListItemId);
-
-      handleCloseDeleteModal();
-    } catch (error) {
-      throw new Error((error as Error).message);
-    }
-  }
-
   const renderFallbackMessageOrShoppingListDetails = (
     <>
       {!currentShoppingList?.shoppingListItems.length ? (
@@ -107,7 +98,7 @@ const ShoppingListDetails = (): ReactElement => {
               key={item._id}
               currency={currentShoppingList.currency}
               item={item}
-              onDelete={handleOpenDeleteModal}
+              onDelete={handleOpenProductItemDeleteModal}
             />
           ))}
         </>
@@ -129,14 +120,16 @@ const ShoppingListDetails = (): ReactElement => {
 
   return (
     <>
-      <DeleteConfirmationModal
-        fullWidth
-        open={isDeleteModalOpen}
-        primaryBtnLabel='Yes'
-        secondaryBtnLabel='No'
-        title='Are you sure you want to delete it?'
-        onClose={handleCloseDeleteModal}
-        onSubmit={handleShoppingListItemDeletion}
+      <DeleteProductItemModal
+        isModalOpen={isProductItemDeleteModalOpen}
+        shoppingListId={currentShoppingList?._id as string}
+        shoppingListItemId={shoppingListItemId}
+        onModalOpen={setIsProductItemDeleteModalOpen}
+      />
+      <DeleteShoppingListModal
+        isModalOpen={isShoppingListDeleteModalOpen}
+        shoppingListId={currentShoppingList?._id as string}
+        onModalOpen={setIsShoppingListDeleteModalOpen}
       />
       <SectionHeader
         isShoppingListDetails
@@ -144,7 +137,7 @@ const ShoppingListDetails = (): ReactElement => {
         secondaryBtnLabel='Copy List'
         title={currentShoppingList?.name ?? ''}
         onGoBack={handleGoBack}
-        onPrimaryButtonClick={() => toastService.info('Not Implemented yet: Primary Button')}
+        onPrimaryButtonClick={handleOpenShoppingListDeleteModal}
         onSecondaryButtonClick={() => toastService.info('Not implemented yet: Secondary Button')}
       />
       <Form onSubmit={handleFormSubmit}>
