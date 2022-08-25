@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { Audio } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 
 import history from '../../services/history.service';
@@ -21,6 +22,8 @@ const ShoppingListDetails = (): ReactElement => {
   const availableShoppingLists = useShoppingListsStore((state) => state.shoppingLists);
   const shoppingListItem = useShoppingListsStore((state) => state.shoppingListItem);
   const createShoppingListItem = useShoppingListsStore((state) => state.createNewShoppingListItem);
+  const removeExistingShoppingListItem = useShoppingListsStore((state) => state.removeShoppingListItem);
+  const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
 
   const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingList | null>(null);
   const [productItem, setProductItem] = useState('');
@@ -66,6 +69,14 @@ const ShoppingListDetails = (): ReactElement => {
     }
   }
 
+  async function handleShoppingListItemDeletion(productItemId: string): Promise<void> {
+    try {
+      await removeExistingShoppingListItem(currentShoppingList?._id as string, productItemId);
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
   const renderFallbackMessageOrShoppingListDetails = (
     <>
       {!currentShoppingList?.shoppingListItems.length ? (
@@ -78,9 +89,26 @@ const ShoppingListDetails = (): ReactElement => {
       ) : (
         <>
           {currentShoppingList?.shoppingListItems.map((item) => (
-            <ProductItem key={item._id} currency={currentShoppingList.currency} item={item} />
+            <ProductItem
+              key={item._id}
+              currency={currentShoppingList.currency}
+              item={item}
+              onDelete={handleShoppingListItemDeletion}
+            />
           ))}
         </>
+      )}
+    </>
+  );
+
+  const renderAvailableShoppingListItems = (
+    <>
+      {isLoading ? (
+        <ItemWrapper sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <Audio color='#1b5e20' height={120} width={120} />
+        </ItemWrapper>
+      ) : (
+        renderFallbackMessageOrShoppingListDetails
       )}
     </>
   );
@@ -106,7 +134,7 @@ const ShoppingListDetails = (): ReactElement => {
         />
       </Form>
 
-      {renderFallbackMessageOrShoppingListDetails}
+      {renderAvailableShoppingListItems}
     </>
   );
 };

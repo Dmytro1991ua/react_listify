@@ -2,18 +2,7 @@ import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import { validateUserAction } from './auth.actions';
-
-export type AuthStoreState = {
-  user: CurrentUser | null;
-  userLoadingStatus: LoadingStatus;
-};
-
-export type AuthStoreActions = {
-  setUser: (user: CurrentUser | null) => void;
-  setUserLoadingStatus: (loadingStatus: LoadingStatus) => void;
-  validateUser: () => Promise<void>;
-  reset: () => void;
-};
+import { AuthStoreActions, AuthStoreState } from './auth.interfaces';
 
 const initialState: AuthStoreState = {
   user: null,

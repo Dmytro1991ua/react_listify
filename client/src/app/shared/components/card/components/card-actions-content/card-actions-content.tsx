@@ -53,7 +53,7 @@ interface CardActionsContentProps {
    * Takes an id of that card as an argument
    * @default undefined
    */
-  onDelete?: (id: string) => void;
+  onDelete?: (id: string) => void | Promise<void>;
 }
 
 const CardActionsContent = ({
