@@ -39,7 +39,7 @@ const CreateShoppingListModal = ({
     >
       <FormikProvider value={formikInstance}>
         <Form>
-          <FormikInput id='name' name='name' placeholder='Enter the name of the list' />
+          <FormikInput autoFocus id='name' name='name' placeholder='Enter the name of the list' />
         </Form>
       </FormikProvider>
     </Modal>

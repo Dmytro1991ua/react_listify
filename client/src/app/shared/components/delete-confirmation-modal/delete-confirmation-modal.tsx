@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import Modal from '../../../../shared/components/modal/modal';
+import Modal from '../modal/modal';
 
 interface DeleteShoppingListModalProps {
   open: boolean;
@@ -12,7 +12,7 @@ interface DeleteShoppingListModalProps {
   onSubmit: () => void;
 }
 
-const DeleteShoppingListModal = ({
+const DeleteConfirmationModal = ({
   open,
   title,
   primaryBtnLabel,
@@ -34,4 +34,4 @@ const DeleteShoppingListModal = ({
   );
 };
 
-export default DeleteShoppingListModal;
+export default DeleteConfirmationModal;
