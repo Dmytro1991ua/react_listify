@@ -1,5 +1,6 @@
 export interface CreateShoppingListFromInitialValues {
   name: string;
+  currency?: string;
 }
 
 export type ShoppingListsStoreState = {

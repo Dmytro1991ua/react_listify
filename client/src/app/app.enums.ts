@@ -8,3 +8,15 @@ export enum AppRoutes {
   Profile = '/profile',
   NotFound = '*',
 }
+
+export enum Currencies {
+  Dollar = '$',
+  Euro = '€',
+  Pound = '£',
+  Hryvna = '₴',
+  Zloty = 'zł',
+  Ruble = '₽',
+  JapaneseYen = '¥',
+  SwissFranc = '₣',
+  CanadianDollar = 'CA$',
+}
