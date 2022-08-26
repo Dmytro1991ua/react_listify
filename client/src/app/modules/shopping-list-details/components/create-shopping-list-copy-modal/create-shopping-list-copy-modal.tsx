@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
 import { ReactElement } from 'react';
 
-import CreateShoppingListModal from '../../../shopping-lists/components/create-shopping-list-modal/create-shopping-list-modal';
+import CreateShoppingListModal from '../../../../shared/components/create-shopping-list-modal/create-shopping-list-modal';
 import { CreateShoppingListFromInitialValues } from '../../../shopping-lists/shopping-lists.interfaces';
 
 interface CreateShoppingListCopyModalProps {

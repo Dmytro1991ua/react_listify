@@ -1,17 +1,19 @@
 import { FormikProps, useFormik } from 'formik';
 import { ReactElement, useState } from 'react';
 import { Bars } from 'react-loader-spinner';
+import { v4 as uuidv4 } from 'uuid';
 
-import { AppRoutes } from '../../app.enums';
+import { AppRoutes, Currencies } from '../../app.enums';
 import history from '../../services/history.service';
-import DeleteConfirmationModal from '../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
-import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
-import SectionHeader from '../../shared/components/section-header/section-header';
-import CreateShoppingListModal from './components/create-shopping-list-modal/create-shopping-list-modal';
+import CreateShoppingListModal from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal';
 import {
   CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
   CREATE_SHOPPING_LIST_FORM_VALIDATION,
-} from './components/create-shopping-list-modal/create-shopping-list-modal.schema';
+} from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal.schema';
+import DeleteConfirmationModal from '../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
+import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
+import SectionHeader from '../../shared/components/section-header/section-header';
+import { DropdownOption } from '../../shared/components/select/select.interfaces';
 import ShoppingList from './components/shopping-list/shopping-list';
 import {
   SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE,
@@ -31,16 +33,25 @@ const ShoppingLists = (): ReactElement => {
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
   const [shoppingListId, setShoppingListId] = useState('');
 
   const isMenuOpened = Boolean(anchorElement);
+  const availableCurrencies: DropdownOption<string>[] = Object.entries(Currencies).flatMap((currency) => ({
+    id: uuidv4(),
+    value: currency[1],
+    label: currency[1],
+  }));
 
   const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
     useFormik<CreateShoppingListFromInitialValues>({
       initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE(),
       validationSchema: CREATE_SHOPPING_LIST_FORM_VALIDATION,
       enableReinitialize: true,
+      validateOnBlur: validateAfterSubmit,
+      validateOnChange: validateAfterSubmit,
       onSubmit: (values, { resetForm }) => {
+        setValidateAfterSubmit(false);
         handleFormSubmit(values);
 
         resetForm();
@@ -65,6 +76,7 @@ const ShoppingLists = (): ReactElement => {
 
   function handleCloseCreateModal(): void {
     setIsCreateModalOpen(false);
+    setValidateAfterSubmit(false);
 
     formikInstance.resetForm();
   }
@@ -78,11 +90,21 @@ const ShoppingLists = (): ReactElement => {
     setIsDeleteModalOpen(false);
   }
 
+  function handleSelectFiledChange(event: React.ChangeEvent<HTMLInputElement>) {
+    formikInstance.setFieldValue('currency', event.target.value);
+  }
+
+  function handleCreateShoppingList(): void {
+    setValidateAfterSubmit(true);
+    formikInstance.submitForm();
+  }
+
   async function handleFormSubmit(values: CreateShoppingListFromInitialValues): Promise<void> {
     try {
       const payload: ShoppingList = {
         ...shoppingList,
         name: values.name,
+        currency: values.currency ?? '',
       };
 
       await createShoppingList(payload);
@@ -145,14 +167,17 @@ const ShoppingLists = (): ReactElement => {
       {renderAvailableShoppingLists}
       <CreateShoppingListModal
         fullWidth
+        isShoppingList
         formikInstance={formikInstance}
         isDirty={!formikInstance.dirty}
         open={isCreateModalOpen}
+        options={availableCurrencies}
         primaryBtnLabel='Submit'
         secondaryBtnLabel='Close'
         title='Create a List'
         onClose={handleCloseCreateModal}
-        onSubmit={formikInstance.submitForm}
+        onSelectChange={handleSelectFiledChange}
+        onSubmit={handleCreateShoppingList}
       />
       <DeleteConfirmationModal
         fullWidth

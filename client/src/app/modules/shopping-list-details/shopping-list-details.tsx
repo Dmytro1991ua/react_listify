@@ -6,12 +6,12 @@ import { useParams } from 'react-router-dom';
 
 import { AppRoutes } from '../../app.enums';
 import history from '../../services/history.service';
-import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
-import SectionHeader from '../../shared/components/section-header/section-header';
 import {
   CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
   CREATE_SHOPPING_LIST_FORM_VALIDATION,
-} from '../shopping-lists/components/create-shopping-list-modal/create-shopping-list-modal.schema';
+} from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal.schema';
+import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
+import SectionHeader from '../../shared/components/section-header/section-header';
 import { CreateShoppingListFromInitialValues } from '../shopping-lists/shopping-lists.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
