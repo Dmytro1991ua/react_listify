@@ -37,7 +37,7 @@ const ShoppingLists = (): ReactElement => {
 
   const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
     useFormik<CreateShoppingListFromInitialValues>({
-      initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
+      initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE(),
       validationSchema: CREATE_SHOPPING_LIST_FORM_VALIDATION,
       enableReinitialize: true,
       onSubmit: (values, { resetForm }) => {
@@ -146,6 +146,7 @@ const ShoppingLists = (): ReactElement => {
       <CreateShoppingListModal
         fullWidth
         formikInstance={formikInstance}
+        isDirty={!formikInstance.dirty}
         open={isCreateModalOpen}
         primaryBtnLabel='Submit'
         secondaryBtnLabel='Close'

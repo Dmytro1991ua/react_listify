@@ -12,6 +12,7 @@ interface CreateShoppingListModalProps {
   primaryBtnLabel?: string;
   secondaryBtnLabel?: string;
   fullWidth?: boolean;
+  isDirty?: boolean;
   onClose: () => void;
   onSubmit: () => Promise<void> | void;
 }
@@ -25,11 +26,12 @@ const CreateShoppingListModal = ({
   fullWidth,
   onClose,
   onSubmit,
+  isDirty,
 }: CreateShoppingListModalProps): ReactElement => {
   return (
     <Modal
       fullWidth={fullWidth}
-      isDirty={!formikInstance.dirty}
+      isDirty={isDirty}
       open={open}
       primaryBtnLabel={primaryBtnLabel}
       secondaryBtnLabel={secondaryBtnLabel}
