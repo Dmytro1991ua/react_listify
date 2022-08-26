@@ -1,14 +1,21 @@
+import { FormikProps, useFormik } from 'formik';
 import _ from 'lodash';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { Audio } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 
+import { AppRoutes } from '../../app.enums';
 import history from '../../services/history.service';
-import { toastService } from '../../services/toast.service';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
+import {
+  CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
+  CREATE_SHOPPING_LIST_FORM_VALIDATION,
+} from '../shopping-lists/components/create-shopping-list-modal/create-shopping-list-modal.schema';
+import { CreateShoppingListFromInitialValues } from '../shopping-lists/shopping-lists.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
+import CreateShoppingListCopyModal from './components/create-shopping-list-copy-modal/create-shopping-list-copy-modal';
 import DeleteProductItemModal from './components/delete-product-item-modal/delete-product-item-modal';
 import DeleteShoppingListModal from './components/delete-shopping-list-modal/delete-shopping-list-modal';
 import ProductItem from './components/product-item/product-item';
@@ -24,14 +31,28 @@ const ShoppingListDetails = (): ReactElement => {
   const availableShoppingLists = useShoppingListsStore((state) => state.shoppingLists);
   const shoppingListItem = useShoppingListsStore((state) => state.shoppingListItem);
   const createShoppingListItem = useShoppingListsStore((state) => state.createNewShoppingListItem);
+  const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
 
   const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingList | null>(null);
   const [productItem, setProductItem] = useState('');
   const [isProductItemDeleteModalOpen, setIsProductItemDeleteModalOpen] = useState(false);
   const [isShoppingListDeleteModalOpen, setIsShoppingListDeleteModalOpen] = useState(false);
+  const [isCreateShoppingListModalOpen, setIsCreateShoppingListModalOpen] = useState(false);
   const [shoppingListItemId, setShoppingListItemId] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
+    useFormik<CreateShoppingListFromInitialValues>({
+      initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE(`Copy of ${currentShoppingList?.name}`),
+      validationSchema: CREATE_SHOPPING_LIST_FORM_VALIDATION,
+      enableReinitialize: true,
+      onSubmit: (values, { resetForm }) => {
+        handleCreateShoppingListCopy(values);
+
+        resetForm();
+      },
+    });
 
   useEffect(() => {
     const getCurrentShoppingList = _.find(availableShoppingLists, { _id: shoppingListId }) ?? null;
@@ -63,6 +84,10 @@ const ShoppingListDetails = (): ReactElement => {
     setIsShoppingListDeleteModalOpen(true);
   }
 
+  function handleOpenCreateShoppingListModal(): void {
+    setIsCreateShoppingListModalOpen(true);
+  }
+
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     try {
       e.preventDefault();
@@ -77,6 +102,22 @@ const ShoppingListDetails = (): ReactElement => {
       }
 
       handleClearInput();
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async function handleCreateShoppingListCopy(values: CreateShoppingListFromInitialValues): Promise<void> {
+    try {
+      const payload: ShoppingList = {
+        name: values.name,
+        currency: currentShoppingList?.currency ?? '',
+        shoppingListItems: currentShoppingList?.shoppingListItems ?? [],
+      };
+
+      await createShoppingList(payload);
+      handleOpenCreateShoppingListModal();
+      history.push(AppRoutes.ShoppingLists);
     } catch (error) {
       throw new Error((error as Error).message);
     }
@@ -131,6 +172,11 @@ const ShoppingListDetails = (): ReactElement => {
         shoppingListId={currentShoppingList?._id as string}
         onModalOpen={setIsShoppingListDeleteModalOpen}
       />
+      <CreateShoppingListCopyModal
+        formikInstance={formikInstance}
+        isModalOpen={isCreateShoppingListModalOpen}
+        onModalOpen={setIsCreateShoppingListModalOpen}
+      />
       <SectionHeader
         isShoppingListDetails
         primaryBtnLabel='Delete List'
@@ -138,7 +184,7 @@ const ShoppingListDetails = (): ReactElement => {
         title={currentShoppingList?.name ?? ''}
         onGoBack={handleGoBack}
         onPrimaryButtonClick={handleOpenShoppingListDeleteModal}
-        onSecondaryButtonClick={() => toastService.info('Not implemented yet: Secondary Button')}
+        onSecondaryButtonClick={handleOpenCreateShoppingListModal}
       />
       <Form onSubmit={handleFormSubmit}>
         <Input
