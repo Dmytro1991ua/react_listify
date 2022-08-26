@@ -1,12 +1,14 @@
 import * as yup from 'yup';
 
-import { CreateShoppingListFromInitialValues } from './../../shopping-lists.interfaces';
+import { Currencies } from '../../../app.enums';
+import { CreateShoppingListFromInitialValues } from '../../../modules/shopping-lists/shopping-lists.interfaces';
 
 export const CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE = (
   shoppingListName?: string
 ): CreateShoppingListFromInitialValues => {
   return {
     name: shoppingListName ?? '',
+    currency: Currencies.Dollar,
   };
 };
 
@@ -14,4 +16,5 @@ export const CREATE_SHOPPING_LIST_FORM_VALIDATION: yup.SchemaOf<CreateShoppingLi
   .object()
   .shape({
     name: yup.string().label('Name').required(),
+    currency: yup.string().label('Currency'),
   });
