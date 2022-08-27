@@ -1,4 +1,4 @@
-export const SUCCESSFUL_SIGN_UP_MESSAGE = 'Successfully created an account';
+export const SUCCESSFUL_SIGN_UP_MESSAGE = 'Email address verification message was sent to your email';
 export const SUCCESSFUL_SIGN_IN_MESSAGE = 'Successfully logged in';
 export const SUCCESSFUL_SIGN_OUT_MESSAGE = 'Successfully logged out';
 export const SUCCESSFUL_FORGOT_PASSWORD_MESSAGE = 'Check your inbox for further instructions';

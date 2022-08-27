@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { Currencies } from "../enums";
 
 import { FirebaseUser } from "./../interfaces";
 
@@ -10,6 +11,7 @@ const userSchema = new Schema<FirebaseUser>(
     photoURL: { type: String, require: true },
     emailVerified: { type: Boolean, require: true },
     authTime: { type: String, require: true },
+    currency: { type: String, enum: [Currencies], default: Currencies.Dollar },
   },
   {
     timestamps: true,

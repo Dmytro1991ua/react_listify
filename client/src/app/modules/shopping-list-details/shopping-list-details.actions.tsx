@@ -1,3 +1,4 @@
+import { ShoppingListItem } from '../../app.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { shoppingListDetailsService } from './shopping-list-details.service';
 
