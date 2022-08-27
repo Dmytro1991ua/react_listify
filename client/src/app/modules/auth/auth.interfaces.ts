@@ -1,3 +1,5 @@
+import { CurrentUser, LoadingStatus } from '../../app.interfaces';
+
 export interface SignInFormInitialValues {
   email: string;
   password: string;

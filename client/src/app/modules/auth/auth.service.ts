@@ -3,6 +3,7 @@ import {
   confirmPasswordReset,
   createUserWithEmailAndPassword,
   getIdToken,
+  sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -11,6 +12,7 @@ import {
 import firebase from 'firebase/compat';
 
 import { AppRoutes } from '../../app.enums';
+import { CurrentUser } from '../../app.interfaces';
 import { AXIOS_CONFIG } from '../../configs/axios';
 import { auth } from '../../configs/firebase';
 import { appLifeCycleService } from '../../services/app-lifecycle.service';
@@ -34,6 +36,7 @@ class AuthService {
   async signUp(email: string, password: string, name?: string): Promise<void> {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(auth.currentUser as User);
       await updateProfile(auth.currentUser as User, {
         displayName: name,
       });
@@ -69,7 +72,6 @@ class AuthService {
       appLifeCycleService.clearAppDataStorage();
       toastService.success(SUCCESSFUL_SIGN_OUT_MESSAGE);
       history.push(AppRoutes.SignIn);
-      location.reload();
     } catch (error) {
       toastService.error(`${FAILED_SIGN_OUT_MESSAGE}: ${(error as Error).message}`);
     }

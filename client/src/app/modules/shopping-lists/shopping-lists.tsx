@@ -4,6 +4,7 @@ import { Bars } from 'react-loader-spinner';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AppRoutes, Currencies } from '../../app.enums';
+import { ShoppingListData } from '../../app.interfaces';
 import history from '../../services/history.service';
 import CreateShoppingListModal from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal';
 import {
@@ -14,6 +15,7 @@ import DeleteConfirmationModal from '../../shared/components/delete-confirmation
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
 import { DropdownOption } from '../../shared/components/select/select.interfaces';
+import { useAuthStore } from '../auth/auth.store';
 import ShoppingList from './components/shopping-list/shopping-list';
 import {
   SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE,
@@ -29,6 +31,7 @@ const ShoppingLists = (): ReactElement => {
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
   const deleteShoppingList = useShoppingListsStore((state) => state.removeShoppingList);
   const availableShoppingLists = useShoppingListsStore((state) => state.shoppingLists);
+  const user = useAuthStore((state) => state.user);
 
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -45,7 +48,7 @@ const ShoppingLists = (): ReactElement => {
 
   const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
     useFormik<CreateShoppingListFromInitialValues>({
-      initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE(),
+      initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE('', user?.currency),
       validationSchema: CREATE_SHOPPING_LIST_FORM_VALIDATION,
       enableReinitialize: true,
       validateOnBlur: validateAfterSubmit,
@@ -101,7 +104,7 @@ const ShoppingLists = (): ReactElement => {
 
   async function handleFormSubmit(values: CreateShoppingListFromInitialValues): Promise<void> {
     try {
-      const payload: ShoppingList = {
+      const payload: ShoppingListData = {
         ...shoppingList,
         name: values.name,
         currency: values.currency ?? '',

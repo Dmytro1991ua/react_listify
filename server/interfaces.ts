@@ -1,6 +1,7 @@
 import express from "express";
 import { ServiceAccount } from "firebase-admin";
 import { DecodedIdToken } from "firebase-admin/lib/auth/token-verifier";
+import { Currencies } from "./enums";
 
 export type Port = string | number;
 export interface FirebaseServiceAccount extends ServiceAccount {
@@ -19,6 +20,7 @@ export interface FirebaseUser {
   photoURL: string;
   emailVerified: boolean;
   authTime: string;
+  currency?: Currencies;
 }
 
 export interface UserRequest extends express.Request {
