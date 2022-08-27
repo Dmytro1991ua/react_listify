@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 
 import { DecodedIdToken } from "firebase-admin/lib/auth/token-verifier";
 import { firebaseAuth } from "../config/firebase.config";
+import { Currencies } from "../enums";
 import { User } from "../models/userSchema";
 
 const createNewUser = async (req: Request, res: Response, decodedIdToken: DecodedIdToken): Promise<void> => {
@@ -12,11 +13,12 @@ const createNewUser = async (req: Request, res: Response, decodedIdToken: Decode
     photoURL: decodedIdToken.picture,
     emailVerified: decodedIdToken.email_verified,
     authTime: decodedIdToken.auth_time,
+    currency: Currencies.Dollar,
   });
 
   try {
     const savedUser = await newUser.save();
-    res.status(200).send({ user: savedUser });
+    res.status(200).send(savedUser);
   } catch (err) {
     res.status(400).send({ success: false, message: (err as Error).message });
   }
@@ -30,7 +32,15 @@ const updateNewUser = async (req: Request, res: Response, decodedIdToken: Decode
   };
 
   try {
-    const updatedUser = await User.findOneAndUpdate(filterUsers, { authTime: decodedIdToken.auth_time }, options);
+    const updatedUser = await User.findOneAndUpdate(
+      filterUsers,
+      {
+        name: decodedIdToken.name,
+        emailVerified: decodedIdToken.email_verified,
+        authTime: decodedIdToken.auth_time,
+      },
+      options
+    );
 
     res.status(200).send(updatedUser);
   } catch (err) {
