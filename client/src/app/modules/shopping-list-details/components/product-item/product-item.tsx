@@ -1,11 +1,12 @@
 import { ReactElement } from 'react';
 
+import { ShoppingListData, ShoppingListItem } from '../../../../app.interfaces';
 import Card from '../../../../shared/components/card/card';
 import CardActionsContent from '../../../../shared/components/card/components/card-actions-content/card-actions-content';
 import CardDescriptionContent from '../../../../shared/components/card/components/card-description/card-description';
 
 interface ProductItemProps {
-  item: ShoppingListItem;
+  item: Partial<ShoppingListData & ShoppingListItem>;
   currency: string;
   onDelete: (id: string) => void;
 }
