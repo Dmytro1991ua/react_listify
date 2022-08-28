@@ -35,3 +35,5 @@ export interface ShoppingListData {
 }
 
 export type LoadingStatus = 'loading' | 'idle' | 'failed';
+
+export type SortingItem = Partial<ShoppingListData & ShoppingListItem>;
