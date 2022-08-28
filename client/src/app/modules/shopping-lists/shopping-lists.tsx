@@ -1,5 +1,5 @@
 import { FormikProps, useFormik } from 'formik';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useMemo, useState } from 'react';
 import { Bars } from 'react-loader-spinner';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,6 +15,7 @@ import DeleteConfirmationModal from '../../shared/components/delete-confirmation
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
 import { DropdownOption } from '../../shared/components/select/select.interfaces';
+import { sortedItems } from '../../utils';
 import { useAuthStore } from '../auth/auth.store';
 import ShoppingList from './components/shopping-list/shopping-list';
 import {
@@ -45,6 +46,7 @@ const ShoppingLists = (): ReactElement => {
     value: currency[1],
     label: currency[1],
   }));
+  const sortedItemsByName = useMemo(() => sortedItems(availableShoppingLists), [availableShoppingLists]);
 
   const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
     useFormik<CreateShoppingListFromInitialValues>({
@@ -62,6 +64,7 @@ const ShoppingLists = (): ReactElement => {
     });
 
   function handleMenuOpen(event: React.MouseEvent<HTMLButtonElement>): void {
+    event.preventDefault();
     setAnchorElement(event.currentTarget);
   }
 
@@ -84,9 +87,8 @@ const ShoppingLists = (): ReactElement => {
     formikInstance.resetForm();
   }
 
-  function handleOpenDeleteModal(id: string): void {
+  function handleOpenDeleteModal(): void {
     setIsDeleteModalOpen(true);
-    setShoppingListId(id);
   }
 
   function handleCloseDeleteModal(): void {
@@ -100,6 +102,10 @@ const ShoppingLists = (): ReactElement => {
   function handleCreateShoppingList(): void {
     setValidateAfterSubmit(true);
     formikInstance.submitForm();
+  }
+
+  function handleRedirectToDetails(): void {
+    history.push(`${AppRoutes.ShoppingLists}/${shoppingListId}`);
   }
 
   async function handleFormSubmit(values: CreateShoppingListFromInitialValues): Promise<void> {
@@ -128,7 +134,7 @@ const ShoppingLists = (): ReactElement => {
 
   const renderFallbackMessageOrShoppingLists = (
     <>
-      {!availableShoppingLists.length ? (
+      {!sortedItemsByName.length ? (
         <ItemWrapper>
           <FallbackMessage
             subtitle={SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE}
@@ -136,7 +142,7 @@ const ShoppingLists = (): ReactElement => {
           />
         </ItemWrapper>
       ) : (
-        availableShoppingLists.map((list) => (
+        sortedItemsByName.map((list) => (
           <ShoppingList
             key={list._id}
             anchorElement={anchorElement}
@@ -146,6 +152,8 @@ const ShoppingLists = (): ReactElement => {
             onMenuClose={handleMenuClose}
             onMenuOpen={handleMenuOpen}
             onModalOpen={handleOpenDeleteModal}
+            onRedirectToDetails={handleRedirectToDetails}
+            onSetShoppingListId={setShoppingListId}
           />
         ))
       )}

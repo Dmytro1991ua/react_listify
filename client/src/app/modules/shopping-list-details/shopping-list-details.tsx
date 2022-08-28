@@ -5,6 +5,7 @@ import { Audio } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 
 import { AppRoutes } from '../../app.enums';
+import { ShoppingListData, ShoppingListItem } from '../../app.interfaces';
 import history from '../../services/history.service';
 import {
   CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
@@ -12,6 +13,7 @@ import {
 } from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal.schema';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
+import { sortedItems } from '../../utils';
 import { CreateShoppingListFromInitialValues } from '../shopping-lists/shopping-lists.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
@@ -34,7 +36,7 @@ const ShoppingListDetails = (): ReactElement => {
   const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
 
-  const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingList | null>(null);
+  const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingListData | null>(null);
   const [productItem, setProductItem] = useState('');
   const [isProductItemDeleteModalOpen, setIsProductItemDeleteModalOpen] = useState(false);
   const [isShoppingListDeleteModalOpen, setIsShoppingListDeleteModalOpen] = useState(false);
@@ -63,6 +65,10 @@ const ShoppingListDetails = (): ReactElement => {
   }, [availableShoppingLists, shoppingListId]);
 
   const handleAddNewProduct = useMemo(() => _.debounce((value) => setProductItem(value), 300), []);
+  const sortedItemsByNameOrSelectedState = useMemo(
+    () => sortedItems(currentShoppingList?.shoppingListItems ?? []),
+    [currentShoppingList?.shoppingListItems]
+  );
 
   function handleGoBack(): void {
     history.goBack();
@@ -109,7 +115,7 @@ const ShoppingListDetails = (): ReactElement => {
 
   async function handleCreateShoppingListCopy(values: CreateShoppingListFromInitialValues): Promise<void> {
     try {
-      const payload: ShoppingList = {
+      const payload: ShoppingListData = {
         name: values.name,
         currency: currentShoppingList?.currency ?? '',
         shoppingListItems: currentShoppingList?.shoppingListItems ?? [],
@@ -125,7 +131,7 @@ const ShoppingListDetails = (): ReactElement => {
 
   const renderFallbackMessageOrShoppingListDetails = (
     <>
-      {!currentShoppingList?.shoppingListItems.length ? (
+      {!sortedItemsByNameOrSelectedState.length ? (
         <ItemWrapper>
           <FallbackMessage
             subtitle={SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE}
@@ -134,14 +140,15 @@ const ShoppingListDetails = (): ReactElement => {
         </ItemWrapper>
       ) : (
         <>
-          {currentShoppingList?.shoppingListItems.map((item) => (
-            <ProductItem
-              key={item._id}
-              currency={currentShoppingList.currency}
-              item={item}
-              onDelete={handleOpenProductItemDeleteModal}
-            />
-          ))}
+          {currentShoppingList &&
+            sortedItemsByNameOrSelectedState.map((item) => (
+              <ProductItem
+                key={item._id}
+                currency={currentShoppingList.currency}
+                item={item}
+                onDelete={handleOpenProductItemDeleteModal}
+              />
+            ))}
         </>
       )}
     </>
