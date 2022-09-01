@@ -8,6 +8,7 @@ import {
 import {
   createShoppingListDetailsItem,
   deleteShoppingListDetailsItem,
+  selectShoppingListDetailsItem,
 } from "../controller/shoppingListsDetailsController";
 
 import { checkAuth } from "../middleware/authMiddleware";
@@ -16,6 +17,7 @@ const router = express.Router();
 
 router.put("/:id/product-item", checkAuth, createShoppingListDetailsItem);
 router.delete("/:id/delete-product-item", checkAuth, deleteShoppingListDetailsItem);
+router.put("/:id/select-product-item", checkAuth, selectShoppingListDetailsItem);
 
 router.route("/").get(checkAuth, getAvailableShoppingLists).post(checkAuth, createShoppingList);
 router.route("/:id").delete(checkAuth, deleteShoppingList);
