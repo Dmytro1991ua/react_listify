@@ -41,3 +41,22 @@ export const deleteShoppingListItemAction = async (id: string, productItemId: st
     throw new Error((error as Error).message);
   }
 };
+
+export const selectShoppingListItemAction = async (
+  id: string,
+  shoppingListItem: ShoppingListItem | null
+): Promise<void> => {
+  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
+  const selectShoppingListItem = useShoppingListsStore.getState().checkShoppingListItem;
+
+  try {
+    const updatedShoppingList = await shoppingListDetailsService.checkShoppingListItem(id, shoppingListItem);
+
+    if (updatedShoppingList) {
+      selectShoppingListItem(updatedShoppingList);
+    }
+  } catch (error) {
+    setShoppingListsLoadingStatus('failed');
+    throw new Error((error as Error).message);
+  }
+};

@@ -4,6 +4,7 @@ import { devtools } from 'zustand/middleware';
 import {
   createShoppingListItemAction,
   deleteShoppingListItemAction,
+  selectShoppingListItemAction,
 } from './../shopping-list-details/shopping-list-details.actions';
 import {
   createShoppingListAction,
@@ -71,6 +72,15 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
           'deleteShoppingListItem'
         );
       },
+      checkShoppingListItem: (payload) => {
+        return set(
+          (state) => ({
+            shoppingLists: state.shoppingLists.map((list) => (list._id === payload._id ? payload : list)),
+          }),
+          false,
+          'selectShoppingListItem'
+        );
+      },
       setShoppingListsLoadingStatus: (payload) =>
         set((state) => ({ ...state, shoppingListsLoadingStatus: payload }), false, 'setShoppingListsLoadingStatus'),
       loadAvailableShoppingLists: loadAvailableShoppingListsAction,
@@ -78,6 +88,7 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
       createNewShoppingListItem: createShoppingListItemAction,
       removeShoppingList: deleteShoppingListAction,
       removeShoppingListItem: deleteShoppingListItemAction,
+      selectShoppingListItem: selectShoppingListItemAction,
       reset: () => set({ ...initialState, shoppingListsLoadingStatus: 'idle' }, false, 'resetShoppingListsStore'),
     }),
     { name: 'ShoppingListsStore' }
