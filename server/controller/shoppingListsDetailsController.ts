@@ -64,15 +64,15 @@ export const deleteShoppingListDetailsItem = async (req: UserRequest, res: Respo
 // @access Private
 export const selectShoppingListDetailsItem = async (req: UserRequest, res: Response) => {
   const { id: _id } = req.params;
-  const { id, isChecked } = req.body;
+  const { _id: productItemId, isChecked } = req.body;
 
   const user = req.currentUser;
 
   try {
     if (user) {
       const updatedShoppingList = await ShoppingList.findOneAndUpdate(
-        { _id, "shoppingListItems._id": id },
-        { $set: { "shoppingListItems.$.isChecked": isChecked } },
+        { _id, "shoppingListItems._id": productItemId },
+        { $set: { "shoppingListItems.$.isChecked": !isChecked } },
         { new: true }
       );
 

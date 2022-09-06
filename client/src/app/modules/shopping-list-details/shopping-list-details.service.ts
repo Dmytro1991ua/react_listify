@@ -1,3 +1,4 @@
+import { ShoppingListData, ShoppingListItem } from '../../app.interfaces';
 import { AXIOS_CONFIG } from '../../configs/axios';
 import { toastService } from '../../services/toast.service';
 import {
@@ -8,7 +9,7 @@ import {
 } from './shopping-list-details.constants';
 
 class ShoppingListDetailsService {
-  async createShoppingListItem(id: string, shoppingListItem: ShoppingListItem): Promise<ShoppingList | null> {
+  async createShoppingListItem(id: string, shoppingListItem: ShoppingListItem): Promise<ShoppingListData | null> {
     try {
       const response = await AXIOS_CONFIG.put(`/api/shopping-lists/${id}/product-item`, shoppingListItem);
 
@@ -24,7 +25,7 @@ class ShoppingListDetailsService {
     }
   }
 
-  async deleteShoppingListItem(id: string, productItemId: string): Promise<ShoppingList | null> {
+  async deleteShoppingListItem(id: string, productItemId: string): Promise<ShoppingListData | null> {
     try {
       const response = await AXIOS_CONFIG.delete(`/api/shopping-lists/${id}/delete-product-item`, {
         data: {
@@ -40,6 +41,20 @@ class ShoppingListDetailsService {
       return response.data;
     } catch (error) {
       toastService.error(FAILED_DELETE_SHOPPING_LIST_ITEM);
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async checkShoppingListItem(id: string, shoppingListItem: ShoppingListItem | null): Promise<ShoppingListData | null> {
+    try {
+      const response = await AXIOS_CONFIG.put(`/api/shopping-lists/${id}/select-product-item`, shoppingListItem);
+
+      if (!response.data) {
+        return null;
+      }
+
+      return response.data;
+    } catch (error) {
       throw new Error((error as Error).message);
     }
   }
