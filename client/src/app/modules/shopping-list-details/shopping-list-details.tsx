@@ -34,6 +34,7 @@ const ShoppingListDetails = (): ReactElement => {
   const shoppingListItem = useShoppingListsStore((state) => state.shoppingListItem);
   const createShoppingListItem = useShoppingListsStore((state) => state.createNewShoppingListItem);
   const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
+  const selectShoppingListItem = useShoppingListsStore((state) => state.selectShoppingListItem);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
 
   const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingListData | null>(null);
@@ -94,6 +95,15 @@ const ShoppingListDetails = (): ReactElement => {
     setIsCreateShoppingListModalOpen(true);
   }
 
+  async function handleProductItemSelection(id: string): Promise<void> {
+    try {
+      const selectedProductItem = _.find(currentShoppingList?.shoppingListItems, { _id: id }) ?? null;
+      await selectShoppingListItem(currentShoppingList?._id as string, selectedProductItem);
+    } catch (e) {
+      throw new Error((e as Error).message);
+    }
+  }
+
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     try {
       e.preventDefault();
@@ -146,6 +156,7 @@ const ShoppingListDetails = (): ReactElement => {
                 key={item._id}
                 currency={currentShoppingList.currency}
                 item={item}
+                onClick={handleProductItemSelection}
                 onDelete={handleOpenProductItemDeleteModal}
               />
             ))}

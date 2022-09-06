@@ -37,10 +37,16 @@ interface CardProps {
    */
   shoppingListId?: string;
   /**
+   * @param {string} Defines a specific product item id
+   * @default undefined
+   * @example 6310fa5023fc4b4f1fb0cd7a
+   */
+  productItemId?: string;
+  /**
    * @param {void} Defines a click event on specific shopping list detail card
    * @default undefined
    */
-  onClick?: () => void;
+  onClick?: (id: string) => void | Promise<void>;
   /**
    * @param {void} Defines a double click event on specific shopping list item card
    * Takes a specific shoppingListId to proceed to shopping list details page
@@ -49,11 +55,22 @@ interface CardProps {
   onDoubleClick?: (shoppingListId: string) => void;
 }
 
-const Card = ({ title, description, actions, shoppingListId, onClick, onDoubleClick }: CardProps): ReactElement => {
+const Card = ({
+  title,
+  description,
+  actions,
+  productItemId,
+  shoppingListId,
+  onClick,
+  onDoubleClick,
+}: CardProps): ReactElement => {
   const cartTitle = <CardTitle variant='h4'>{title}</CardTitle>;
 
   return (
-    <CustomCard onClick={onClick} onDoubleClick={() => onDoubleClick && onDoubleClick(shoppingListId as string)}>
+    <CustomCard
+      onClick={() => onClick && onClick(productItemId as string)}
+      onDoubleClick={() => onDoubleClick && onDoubleClick(shoppingListId as string)}
+    >
       <CardHeader disableTypography action={actions} component='header' subheader={description} title={cartTitle} />
     </CustomCard>
   );
