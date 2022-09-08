@@ -38,11 +38,13 @@ const ShoppingListDetails = (): ReactElement => {
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
 
   const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingListData | null>(null);
-  const [productItem, setProductItem] = useState('');
-  const [isProductItemDeleteModalOpen, setIsProductItemDeleteModalOpen] = useState(false);
-  const [isShoppingListDeleteModalOpen, setIsShoppingListDeleteModalOpen] = useState(false);
-  const [isCreateShoppingListModalOpen, setIsCreateShoppingListModalOpen] = useState(false);
-  const [shoppingListItemId, setShoppingListItemId] = useState('');
+  const [newProductItem, setNewProductItem] = useState('');
+
+  const [isProductItemDeleteModalOpen, setIsProductItemDeleteModalOpen] = useState<boolean>(false);
+  const [isShoppingListDeleteModalOpen, setIsShoppingListDeleteModalOpen] = useState<boolean>(false);
+  const [isCreateShoppingListModalOpen, setIsCreateShoppingListModalOpen] = useState<boolean>(false);
+
+  const [shoppingListItemId, setShoppingListItemId] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
@@ -65,7 +67,7 @@ const ShoppingListDetails = (): ReactElement => {
     }
   }, [availableShoppingLists, shoppingListId]);
 
-  const handleAddNewProduct = useMemo(() => _.debounce((value) => setProductItem(value), 300), []);
+  const handleAddNewProduct = useMemo(() => _.debounce((value) => setNewProductItem(value), 300), []);
   const sortedItemsByNameOrSelectedState = useMemo(
     () => sortedItems(currentShoppingList?.shoppingListItems ?? []),
     [currentShoppingList?.shoppingListItems]
@@ -78,7 +80,7 @@ const ShoppingListDetails = (): ReactElement => {
   function handleClearInput(): void {
     if (inputRef.current) {
       inputRef.current.value = '';
-      setProductItem('');
+      setNewProductItem('');
     }
   }
 
@@ -110,10 +112,10 @@ const ShoppingListDetails = (): ReactElement => {
 
       const payload: ShoppingListItem = {
         ...shoppingListItem,
-        name: productItem,
+        name: newProductItem,
       };
 
-      if (productItem) {
+      if (newProductItem) {
         await createShoppingListItem(currentShoppingList?._id as string, payload);
       }
 

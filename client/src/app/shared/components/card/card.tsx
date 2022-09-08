@@ -46,6 +46,12 @@ interface CardProps {
    * @param {void} Defines a click event on specific shopping list detail card
    * @default undefined
    */
+  /**
+   * @param {boolean} Defines if a specific shopping list item was selected
+   * @default undefined
+   * @example true/false
+   */
+  isSelected?: boolean;
   onClick?: (id: string) => void | Promise<void>;
   /**
    * @param {void} Defines a double click event on specific shopping list item card
@@ -61,6 +67,7 @@ const Card = ({
   actions,
   productItemId,
   shoppingListId,
+  isSelected,
   onClick,
   onDoubleClick,
 }: CardProps): ReactElement => {
@@ -68,6 +75,7 @@ const Card = ({
 
   return (
     <CustomCard
+      isSelected={isSelected}
       onClick={() => onClick && onClick(productItemId as string)}
       onDoubleClick={() => onDoubleClick && onDoubleClick(shoppingListId as string)}
     >
