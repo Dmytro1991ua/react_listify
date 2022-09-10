@@ -14,10 +14,14 @@ const commonIconsStyles = {
   height: '2rem',
 };
 
-export const CustomCard = styled(Card)`
+export const CustomCard = styled(Card, { shouldForwardProp: (prop) => prop !== 'isSelected' })<{
+  isSelected?: boolean;
+}>`
   padding: ${({ theme }) => theme.spacing(20)};
   background-color: ${({ theme }) => theme.palette.common.white};
   border: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
+  opacity: ${({ isSelected }) => (isSelected ? 0.5 : 1)};
+  text-decoration: ${({ isSelected }) => (isSelected ? 'line-through' : 'none')};
   ${({ theme }) => theme.mixins.formBoxShadowMixin};
   cursor: pointer;
 
@@ -40,7 +44,9 @@ export const CustomCard = styled(Card)`
   }
 `;
 
-export const CardTitle = styled(Typography)`
+export const CardTitle = styled(Typography, { shouldForwardProp: (prop) => prop !== 'isSelected' })<{
+  isSelected?: boolean;
+}>`
   margin: 0;
   font-size: ${({ theme }) => theme.spacing(24)};
   font-weight: bold;
