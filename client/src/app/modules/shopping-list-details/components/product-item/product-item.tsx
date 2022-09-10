@@ -17,14 +17,23 @@ interface ProductItemProps {
    */
   currency: string;
   onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
   onClick: (id: string) => Promise<void>;
 }
 
-const ProductItem = ({ item, currency, onDelete, onClick }: ProductItemProps): ReactElement => {
+const ProductItem = ({ item, currency, onDelete, onEdit, onClick }: ProductItemProps): ReactElement => {
   return (
     <Card
       key={item?._id}
-      actions={<CardActionsContent isShoppingList={false} shoppingListId={item?._id} onDelete={onDelete} />}
+      actions={
+        <CardActionsContent
+          isSelected={item.isChecked}
+          isShoppingList={false}
+          shoppingListId={item?._id}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
+      }
       description={<CardDescriptionContent currency={currency} isShoppingList={false} quantity={item?.quantity} />}
       isSelected={item.isChecked}
       productItemId={item._id}

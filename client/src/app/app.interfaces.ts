@@ -1,4 +1,7 @@
-import { Currencies } from './app.enums';
+import { FormikProps } from 'formik';
+
+import { Currencies, ProductUnits } from './app.enums';
+import { DropdownOption } from './shared/components/select/select.interfaces';
 
 export interface CurrentUser {
   uid: string;
@@ -22,7 +25,7 @@ export interface ShoppingListItem {
   name: string;
   category?: Category;
   quantity: number;
-  units: string;
+  units: ProductUnits;
   price: number;
   isChecked?: boolean;
 }
@@ -37,3 +40,17 @@ export interface ShoppingListData {
 export type LoadingStatus = 'loading' | 'idle' | 'failed';
 
 export type SortingItem = Partial<ShoppingListData & ShoppingListItem>;
+
+export interface CommonModalProps<T> {
+  formikInstance: FormikProps<T>;
+  open: boolean;
+  title?: string;
+  primaryBtnLabel?: string;
+  secondaryBtnLabel?: string;
+  fullWidth?: boolean;
+  isDirty?: boolean;
+  isShoppingList?: boolean;
+  options?: DropdownOption<string>[];
+  onClose: () => void;
+  onSubmit: () => Promise<void> | void;
+}

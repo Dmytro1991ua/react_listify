@@ -20,3 +20,14 @@ export enum Currencies {
   SwissFranc = '₣',
   CanadianDollar = 'CA$',
 }
+
+export enum ProductUnits {
+  Default = '',
+  Liter = 'L',
+  Kilogram = 'Kg',
+  Gram = 'g',
+  Milliliter = 'ml',
+  Ounce = 'oz',
+  Pound = 'lb',
+  Gallon = 'gal',
+}
