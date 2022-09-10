@@ -25,6 +25,12 @@ export interface CardActionsContentProps {
    */
   shoppingListId?: string;
   /**
+   * @param {boolean} Defines if a specific shopping list item was selected
+   * @default undefined
+   * @example true/false
+   */
+  isSelected?: boolean;
+  /**
    * @param {void} Defines a click event on menu in order to show a dropdown with options
    * Takes and event as an argument to determine current clicked option
    * @default undefined

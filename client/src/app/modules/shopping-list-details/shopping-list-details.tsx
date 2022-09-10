@@ -13,13 +13,16 @@ import {
 } from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal.schema';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
-import { sortedItems } from '../../utils';
+import { availableProductUnits, sortedDropdownItems, sortedItems } from '../../utils';
 import { CreateShoppingListFromInitialValues } from '../shopping-lists/shopping-lists.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
 import CreateShoppingListCopyModal from './components/create-shopping-list-copy-modal/create-shopping-list-copy-modal';
 import DeleteProductItemModal from './components/delete-product-item-modal/delete-product-item-modal';
 import DeleteShoppingListModal from './components/delete-shopping-list-modal/delete-shopping-list-modal';
+import EditProductItemModal from './components/edit-product-item-modall/edit-product-item-modal';
+import { EDIT_SHOPPING_LIST_ITEM_FORM_INITIAL_VALUE } from './components/edit-product-item-modall/edit-product-item-modal.schema';
+import { EditProductItemFormInitialValues } from './components/edit-product-item-modall/edit-product-item.modal.interfaces';
 import ProductItem from './components/product-item/product-item';
 import {
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE,
@@ -38,20 +41,39 @@ const ShoppingListDetails = (): ReactElement => {
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
 
   const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingListData | null>(null);
-  const [productItem, setProductItem] = useState('');
-  const [isProductItemDeleteModalOpen, setIsProductItemDeleteModalOpen] = useState(false);
-  const [isShoppingListDeleteModalOpen, setIsShoppingListDeleteModalOpen] = useState(false);
-  const [isCreateShoppingListModalOpen, setIsCreateShoppingListModalOpen] = useState(false);
-  const [shoppingListItemId, setShoppingListItemId] = useState('');
+  const [newProductItem, setNewProductItem] = useState('');
+
+  const [isProductItemDeleteModalOpen, setIsProductItemDeleteModalOpen] = useState<boolean>(false);
+  const [isShoppingListDeleteModalOpen, setIsShoppingListDeleteModalOpen] = useState<boolean>(false);
+  const [isCreateShoppingListModalOpen, setIsCreateShoppingListModalOpen] = useState<boolean>(false);
+  const [isProductItemEditModalOpen, setIsProductItemEditModalOpen] = useState<boolean>(false);
+
+  const [shoppingListItemId, setShoppingListItemId] = useState<string>('');
+  const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
+  const formikCreateFormInstance: FormikProps<CreateShoppingListFromInitialValues> =
     useFormik<CreateShoppingListFromInitialValues>({
       initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE(`Copy of ${currentShoppingList?.name}`),
       validationSchema: CREATE_SHOPPING_LIST_FORM_VALIDATION,
       enableReinitialize: true,
       onSubmit: (values, { resetForm }) => {
+        setValidateAfterSubmit(false);
         handleCreateShoppingListCopy(values);
+
+        resetForm();
+      },
+    });
+
+  const formikEditFormInstance: FormikProps<EditProductItemFormInitialValues> =
+    useFormik<EditProductItemFormInitialValues>({
+      initialValues: EDIT_SHOPPING_LIST_ITEM_FORM_INITIAL_VALUE(),
+      validationSchema: CREATE_SHOPPING_LIST_FORM_VALIDATION,
+      enableReinitialize: true,
+      validateOnBlur: validateAfterSubmit,
+      validateOnChange: validateAfterSubmit,
+      onSubmit: (values, { resetForm }) => {
+        handleEditProductItemFormSubmit(values);
 
         resetForm();
       },
@@ -65,7 +87,8 @@ const ShoppingListDetails = (): ReactElement => {
     }
   }, [availableShoppingLists, shoppingListId]);
 
-  const handleAddNewProduct = useMemo(() => _.debounce((value) => setProductItem(value), 300), []);
+  const handleAddNewProduct = useMemo(() => _.debounce((value) => setNewProductItem(value), 300), []);
+  const sortedAvailableProductUnits = sortedDropdownItems(availableProductUnits);
   const sortedItemsByNameOrSelectedState = useMemo(
     () => sortedItems(currentShoppingList?.shoppingListItems ?? []),
     [currentShoppingList?.shoppingListItems]
@@ -78,12 +101,17 @@ const ShoppingListDetails = (): ReactElement => {
   function handleClearInput(): void {
     if (inputRef.current) {
       inputRef.current.value = '';
-      setProductItem('');
+      setNewProductItem('');
     }
   }
 
   function handleOpenProductItemDeleteModal(id: string): void {
     setIsProductItemDeleteModalOpen(true);
+    setShoppingListItemId(id);
+  }
+
+  function handleOpenProductItemEditModal(id: string): void {
+    setIsProductItemEditModalOpen(true);
     setShoppingListItemId(id);
   }
 
@@ -93,6 +121,16 @@ const ShoppingListDetails = (): ReactElement => {
 
   function handleOpenCreateShoppingListModal(): void {
     setIsCreateShoppingListModalOpen(true);
+  }
+
+  function handleCloseProductItemEditModal(): void {
+    setIsProductItemEditModalOpen(false);
+    setValidateAfterSubmit(false);
+  }
+
+  function handleEditProductItem(): void {
+    setValidateAfterSubmit(true);
+    formikEditFormInstance.submitForm();
   }
 
   async function handleProductItemSelection(id: string): Promise<void> {
@@ -110,14 +148,24 @@ const ShoppingListDetails = (): ReactElement => {
 
       const payload: ShoppingListItem = {
         ...shoppingListItem,
-        name: productItem,
+        name: newProductItem,
       };
 
-      if (productItem) {
+      if (newProductItem) {
         await createShoppingListItem(currentShoppingList?._id as string, payload);
       }
 
       handleClearInput();
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async function handleEditProductItemFormSubmit(values: EditProductItemFormInitialValues): Promise<void> {
+    try {
+      setValidateAfterSubmit(true);
+      console.log(values);
+      handleCloseProductItemEditModal();
     } catch (error) {
       throw new Error((error as Error).message);
     }
@@ -158,6 +206,7 @@ const ShoppingListDetails = (): ReactElement => {
                 item={item}
                 onClick={handleProductItemSelection}
                 onDelete={handleOpenProductItemDeleteModal}
+                onEdit={handleOpenProductItemEditModal}
               />
             ))}
         </>
@@ -185,13 +234,20 @@ const ShoppingListDetails = (): ReactElement => {
         shoppingListItemId={shoppingListItemId}
         onModalOpen={setIsProductItemDeleteModalOpen}
       />
+      <EditProductItemModal
+        formikInstance={formikEditFormInstance}
+        open={isProductItemEditModalOpen}
+        options={sortedAvailableProductUnits}
+        onClose={handleCloseProductItemEditModal}
+        onSubmit={handleEditProductItem}
+      />
       <DeleteShoppingListModal
         isModalOpen={isShoppingListDeleteModalOpen}
         shoppingListId={currentShoppingList?._id as string}
         onModalOpen={setIsShoppingListDeleteModalOpen}
       />
       <CreateShoppingListCopyModal
-        formikInstance={formikInstance}
+        formikInstance={formikCreateFormInstance}
         isModalOpen={isCreateShoppingListModalOpen}
         onModalOpen={setIsCreateShoppingListModalOpen}
       />

@@ -1,9 +1,8 @@
 import { FormikProps, useFormik } from 'formik';
 import { ReactElement, useMemo, useState } from 'react';
 import { Bars } from 'react-loader-spinner';
-import { v4 as uuidv4 } from 'uuid';
 
-import { AppRoutes, Currencies } from '../../app.enums';
+import { AppRoutes } from '../../app.enums';
 import { ShoppingListData } from '../../app.interfaces';
 import history from '../../services/history.service';
 import CreateShoppingListModal from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal';
@@ -14,8 +13,7 @@ import {
 import DeleteConfirmationModal from '../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
-import { DropdownOption } from '../../shared/components/select/select.interfaces';
-import { sortedItems } from '../../utils';
+import { availableCurrencies, sortedDropdownItems, sortedItems } from '../../utils';
 import { useAuthStore } from '../auth/auth.store';
 import ShoppingList from './components/shopping-list/shopping-list';
 import {
@@ -41,11 +39,7 @@ const ShoppingLists = (): ReactElement => {
   const [shoppingListId, setShoppingListId] = useState('');
 
   const isMenuOpened = Boolean(anchorElement);
-  const availableCurrencies: DropdownOption<string>[] = Object.entries(Currencies).flatMap((currency) => ({
-    id: uuidv4(),
-    value: currency[1],
-    label: currency[1],
-  }));
+  const sortedAvailableCurrencies = sortedDropdownItems(availableCurrencies);
   const sortedItemsByName = useMemo(() => sortedItems(availableShoppingLists), [availableShoppingLists]);
 
   const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
@@ -93,10 +87,6 @@ const ShoppingLists = (): ReactElement => {
 
   function handleCloseDeleteModal(): void {
     setIsDeleteModalOpen(false);
-  }
-
-  function handleSelectFiledChange(event: React.ChangeEvent<HTMLInputElement>) {
-    formikInstance.setFieldValue('currency', event.target.value);
   }
 
   function handleCreateShoppingList(): void {
@@ -182,12 +172,11 @@ const ShoppingLists = (): ReactElement => {
         formikInstance={formikInstance}
         isDirty={!formikInstance.dirty}
         open={isCreateModalOpen}
-        options={availableCurrencies}
+        options={sortedAvailableCurrencies}
         primaryBtnLabel='Submit'
         secondaryBtnLabel='Close'
         title='Create a List'
         onClose={handleCloseCreateModal}
-        onSelectChange={handleSelectFiledChange}
         onSubmit={handleCreateShoppingList}
       />
       <DeleteConfirmationModal
