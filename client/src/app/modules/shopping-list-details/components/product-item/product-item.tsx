@@ -9,14 +9,17 @@ interface ProductItemProps {
   item: Partial<ShoppingListData & ShoppingListItem>;
   currency: string;
   onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
   onClick: (id: string) => Promise<void>;
 }
 
-const ProductItem = ({ item, currency, onDelete, onClick }: ProductItemProps): ReactElement => {
+const ProductItem = ({ item, currency, onDelete, onEdit, onClick }: ProductItemProps): ReactElement => {
   return (
     <Card
       key={item?._id}
-      actions={<CardActionsContent isShoppingList={false} shoppingListId={item?._id} onDelete={onDelete} />}
+      actions={
+        <CardActionsContent isShoppingList={false} shoppingListId={item?._id} onDelete={onDelete} onEdit={onEdit} />
+      }
       description={<CardDescriptionContent currency={currency} isShoppingList={false} quantity={item?.quantity} />}
       productItemId={item._id}
       title={item?.name}
