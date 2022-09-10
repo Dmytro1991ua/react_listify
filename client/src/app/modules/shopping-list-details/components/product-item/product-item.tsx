@@ -26,7 +26,13 @@ const ProductItem = ({ item, currency, onDelete, onEdit, onClick }: ProductItemP
     <Card
       key={item?._id}
       actions={
-        <CardActionsContent isShoppingList={false} shoppingListId={item?._id} onDelete={onDelete} onEdit={onEdit} />
+        <CardActionsContent
+          isSelected={item.isChecked}
+          isShoppingList={false}
+          shoppingListId={item?._id}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
       }
       description={<CardDescriptionContent currency={currency} isShoppingList={false} quantity={item?.quantity} />}
       isSelected={item.isChecked}
