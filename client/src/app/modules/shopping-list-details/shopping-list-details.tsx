@@ -4,7 +4,7 @@ import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { Audio } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 
-import { AppRoutes, ProductUnits } from '../../app.enums';
+import { AppRoutes, Currencies, ProductUnits } from '../../app.enums';
 import { ShoppingListData, ShoppingListItem } from '../../app.interfaces';
 import history from '../../services/history.service';
 import {
@@ -14,6 +14,7 @@ import {
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
 import { availableProductUnits, sortedDropdownItems, sortedItems } from '../../utils';
+import { useAuthStore } from '../auth/auth.store';
 import { CreateShoppingListFromInitialValues } from '../shopping-lists/shopping-lists.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
@@ -40,6 +41,7 @@ const ShoppingListDetails = (): ReactElement => {
   const selectShoppingListItem = useShoppingListsStore((state) => state.selectShoppingListItem);
   const editShoppingListItem = useShoppingListsStore((state) => state.editShoppingListItem);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
+  const user = useAuthStore((state) => state.user);
 
   const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingListData | null>(null);
   const [newProductItem, setNewProductItem] = useState('');
@@ -140,7 +142,7 @@ const ShoppingListDetails = (): ReactElement => {
     try {
       const payload: ShoppingListData = {
         name: values.name,
-        currency: currentShoppingList?.currency ?? '',
+        currency: currentShoppingList?.currency ?? Currencies.Default,
         shoppingListItems: currentShoppingList?.shoppingListItems ?? [],
       };
 
@@ -217,6 +219,7 @@ const ShoppingListDetails = (): ReactElement => {
             sortedItemsByNameOrSelectedState.map((item) => (
               <ProductItem
                 key={item._id}
+                calculateTotalPriceByQuantity={user?.calculateByQuantity}
                 currency={currentShoppingList.currency}
                 item={item}
                 onClick={handleProductItemSelection}
