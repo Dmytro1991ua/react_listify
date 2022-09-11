@@ -8,6 +8,7 @@ import {
 import {
   createShoppingListDetailsItem,
   deleteShoppingListDetailsItem,
+  editShoppingListDetailsItem,
   selectShoppingListDetailsItem,
 } from "../controller/shoppingListsDetailsController";
 
@@ -18,6 +19,7 @@ const router = express.Router();
 router.put("/:id/product-item", checkAuth, createShoppingListDetailsItem);
 router.delete("/:id/delete-product-item", checkAuth, deleteShoppingListDetailsItem);
 router.put("/:id/select-product-item", checkAuth, selectShoppingListDetailsItem);
+router.put("/:id/edit-product-item", checkAuth, editShoppingListDetailsItem);
 
 router.route("/").get(checkAuth, getAvailableShoppingLists).post(checkAuth, createShoppingList);
 router.route("/:id").delete(checkAuth, deleteShoppingList);
