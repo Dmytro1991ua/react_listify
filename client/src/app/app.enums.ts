@@ -10,6 +10,7 @@ export enum AppRoutes {
 }
 
 export enum Currencies {
+  Default = '',
   Dollar = '$',
   Euro = '€',
   Pound = '£',
