@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Currencies, ProductUnits } from './app.enums';
-import { SortingItem } from './app.interfaces';
+import { ShoppingListItem, SortingItem } from './app.interfaces';
 import { DropdownOption } from './shared/components/select/select.interfaces';
 
 /**
@@ -39,4 +39,12 @@ export const availableProductUnits: DropdownOption<string>[] = Object.entries(Pr
  */
 export const sortedDropdownItems = (items: DropdownOption<string>[]) => {
   return _.sortBy(items, 'label');
+};
+
+/**
+ * Function calculates the price of all product item of specific shopping list item and returns a total price
+ * @returns number
+ */
+export const calculateTotalPrice = (shoppingListItems: ShoppingListItem[]) => {
+  return _.sumBy(shoppingListItems, (item) => item.price);
 };

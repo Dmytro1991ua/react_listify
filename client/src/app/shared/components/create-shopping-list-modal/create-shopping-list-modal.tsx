@@ -2,6 +2,7 @@ import { Form, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
+import { Currencies } from '../../../app.enums';
 import { CommonModalProps } from '../../../app.interfaces';
 import { CreateShoppingListFromInitialValues } from '../../../modules/shopping-lists/shopping-lists.interfaces';
 import FormikInput from '../input/formik-input/formik-input';
@@ -43,7 +44,7 @@ const CreateShoppingListModal = ({
               label='Select Currency'
               name='currency'
               options={options}
-              value={formikInstance.values.currency ?? ''}
+              value={formikInstance.values.currency ?? Currencies.Dollar}
               onChange={(e) => formikInstance.setFieldValue('currency', e.target.value)}
             />
           )}
