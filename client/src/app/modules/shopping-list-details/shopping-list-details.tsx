@@ -238,6 +238,8 @@ const ShoppingListDetails = (): ReactElement => {
         formikInstance={formikEditFormInstance}
         open={isProductItemEditModalOpen}
         options={sortedAvailableProductUnits}
+        primaryBtnLabel='Change'
+        title='Edit Product Item'
         onClose={handleCloseProductItemEditModal}
         onSubmit={handleEditProductItem}
       />
