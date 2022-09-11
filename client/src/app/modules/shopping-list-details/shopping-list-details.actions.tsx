@@ -60,3 +60,26 @@ export const selectShoppingListItemAction = async (
     throw new Error((error as Error).message);
   }
 };
+
+export const editShoppingListItemAction = async (
+  id: string,
+  shoppingListItem: ShoppingListItem | null
+): Promise<void> => {
+  const editExistingShoppingListItem = useShoppingListsStore.getState().updateShoppingListItem;
+  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
+
+  setShoppingListsLoadingStatus('loading');
+
+  try {
+    const updatedShoppingList = await shoppingListDetailsService.editShoppingListItem(id, shoppingListItem);
+
+    if (updatedShoppingList) {
+      editExistingShoppingListItem(updatedShoppingList);
+    }
+
+    setShoppingListsLoadingStatus('idle');
+  } catch (error) {
+    setShoppingListsLoadingStatus('failed');
+    throw new Error((error as Error).message);
+  }
+};

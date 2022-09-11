@@ -4,7 +4,7 @@ import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { Audio } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 
-import { AppRoutes } from '../../app.enums';
+import { AppRoutes, ProductUnits } from '../../app.enums';
 import { ShoppingListData, ShoppingListItem } from '../../app.interfaces';
 import history from '../../services/history.service';
 import {
@@ -38,6 +38,7 @@ const ShoppingListDetails = (): ReactElement => {
   const createShoppingListItem = useShoppingListsStore((state) => state.createNewShoppingListItem);
   const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
   const selectShoppingListItem = useShoppingListsStore((state) => state.selectShoppingListItem);
+  const editShoppingListItem = useShoppingListsStore((state) => state.editShoppingListItem);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
 
   const [currentShoppingList, setCurrentShoppingList] = useState<ShoppingListData | null>(null);
@@ -51,6 +52,8 @@ const ShoppingListDetails = (): ReactElement => {
   const [shoppingListItemId, setShoppingListItemId] = useState<string>('');
   const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const getCurrentProductItem = _.find(currentShoppingList?.shoppingListItems, { _id: shoppingListItemId }) ?? null;
 
   const formikCreateFormInstance: FormikProps<CreateShoppingListFromInitialValues> =
     useFormik<CreateShoppingListFromInitialValues>({
@@ -67,7 +70,7 @@ const ShoppingListDetails = (): ReactElement => {
 
   const formikEditFormInstance: FormikProps<EditProductItemFormInitialValues> =
     useFormik<EditProductItemFormInitialValues>({
-      initialValues: EDIT_SHOPPING_LIST_ITEM_FORM_INITIAL_VALUE(),
+      initialValues: EDIT_SHOPPING_LIST_ITEM_FORM_INITIAL_VALUE(getCurrentProductItem),
       validationSchema: CREATE_SHOPPING_LIST_FORM_VALIDATION,
       enableReinitialize: true,
       validateOnBlur: validateAfterSubmit,
@@ -133,6 +136,22 @@ const ShoppingListDetails = (): ReactElement => {
     formikEditFormInstance.submitForm();
   }
 
+  async function handleCreateShoppingListCopy(values: CreateShoppingListFromInitialValues): Promise<void> {
+    try {
+      const payload: ShoppingListData = {
+        name: values.name,
+        currency: currentShoppingList?.currency ?? '',
+        shoppingListItems: currentShoppingList?.shoppingListItems ?? [],
+      };
+
+      await createShoppingList(payload);
+      handleOpenCreateShoppingListModal();
+      history.push(AppRoutes.ShoppingLists);
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
   async function handleProductItemSelection(id: string): Promise<void> {
     try {
       const selectedProductItem = _.find(currentShoppingList?.shoppingListItems, { _id: id }) ?? null;
@@ -164,24 +183,20 @@ const ShoppingListDetails = (): ReactElement => {
   async function handleEditProductItemFormSubmit(values: EditProductItemFormInitialValues): Promise<void> {
     try {
       setValidateAfterSubmit(true);
-      console.log(values);
-      handleCloseProductItemEditModal();
-    } catch (error) {
-      throw new Error((error as Error).message);
-    }
-  }
 
-  async function handleCreateShoppingListCopy(values: CreateShoppingListFromInitialValues): Promise<void> {
-    try {
-      const payload: ShoppingListData = {
+      const editedProductItem =
+        currentShoppingList?.shoppingListItems.find((item) => item._id === shoppingListItemId) ?? null;
+
+      const payload: ShoppingListItem = {
+        ...editedProductItem,
         name: values.name,
-        currency: currentShoppingList?.currency ?? '',
-        shoppingListItems: currentShoppingList?.shoppingListItems ?? [],
+        quantity: Number(values.quantity) ?? 0,
+        units: values.unit ? values.unit : ProductUnits.Default,
+        price: Number(values.price) ?? 0,
       };
 
-      await createShoppingList(payload);
-      handleOpenCreateShoppingListModal();
-      history.push(AppRoutes.ShoppingLists);
+      await editShoppingListItem(currentShoppingList?._id as string, payload);
+      handleCloseProductItemEditModal();
     } catch (error) {
       throw new Error((error as Error).message);
     }

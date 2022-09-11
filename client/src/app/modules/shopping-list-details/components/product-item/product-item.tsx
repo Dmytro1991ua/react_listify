@@ -34,7 +34,15 @@ const ProductItem = ({ item, currency, onDelete, onEdit, onClick }: ProductItemP
           onEdit={onEdit}
         />
       }
-      description={<CardDescriptionContent currency={currency} isShoppingList={false} quantity={item?.quantity} />}
+      description={
+        <CardDescriptionContent
+          currency={currency}
+          isShoppingList={false}
+          price={item?.price}
+          quantity={item?.quantity}
+          units={item?.units}
+        />
+      }
       isSelected={item.isChecked}
       productItemId={item._id}
       title={item?.name}
