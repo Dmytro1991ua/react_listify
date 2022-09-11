@@ -1,3 +1,5 @@
+import { ProductUnits } from '../../../../../app.enums';
+
 export interface CardDescriptionContentProps {
   /**
    * @param {number} Defines a product/unit quantity on specific shopping list card or shopping list details card
@@ -12,17 +14,23 @@ export interface CardDescriptionContentProps {
    */
   totalPrice?: number;
   /**
-   * @param {number} Defines a unit price on specific shopping list details card
+   * @param {number} Defines a price on specific shopping list details card
    * @default 0
    * @example 10,20
    */
   price?: number;
   /**
-   * @param {string} Defines a unit currency on specific shopping list details card
-   * @default $
-   * @example $
+   * @param {Currencies} Defines a currency on specific shopping list details card
+   * @default Currencies.Dollar
+   * @example Currencies.Euro
    */
   currency?: string;
+  /**
+   * @param {ProductUnits} Defines a  product unit on specific shopping list details card
+   * @default units,
+   * @example ProductUnits.Kilogram
+   */
+  units?: ProductUnits | string;
   /**
    * @param {boolean} Defines if we currently work with shopping list card in order to show a specific data related to this card
    * Establish difference between shopping list and shopping list details cards

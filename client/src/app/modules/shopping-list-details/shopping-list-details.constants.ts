@@ -6,3 +6,5 @@ export const SUCCESSFUL_CREATE_SHOPPING_LIST_ITEM = 'Successfully created new pr
 export const FAILED_CREATE_SHOPPING_LIST_ITEM = 'Failed to create new product item';
 export const SUCCESSFUL_DELETE_SHOPPING_LIST_ITEM = 'Successfully deleted a product item';
 export const FAILED_DELETE_SHOPPING_LIST_ITEM = 'Failed to deleted a product item';
+export const SUCCESSFUL_EDIT_SHOPPING_LIST_ITEM = 'Successfully updated a product item';
+export const FAILED_EDIT_SHOPPING_LIST_ITEM = 'Failed to update a product item';

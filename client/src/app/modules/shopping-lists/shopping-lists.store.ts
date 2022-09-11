@@ -1,9 +1,11 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { Currencies, ProductUnits } from '../../app.enums';
 import {
   createShoppingListItemAction,
   deleteShoppingListItemAction,
+  editShoppingListItemAction,
   selectShoppingListItemAction,
 } from './../shopping-list-details/shopping-list-details.actions';
 import {
@@ -17,14 +19,14 @@ const initialState: ShoppingListsStoreState = {
   shoppingLists: [],
   shoppingList: {
     name: '',
-    currency: '$',
+    currency: Currencies.Dollar,
     shoppingListItems: [],
   },
   shoppingListItem: {
     name: '',
     //category
     quantity: 0,
-    units: 'units',
+    units: ProductUnits.Default,
     price: 0,
     isChecked: false,
   },
@@ -81,6 +83,15 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
           'selectShoppingListItem'
         );
       },
+      updateShoppingListItem: (payload) => {
+        return set(
+          (state) => ({
+            shoppingLists: state.shoppingLists.map((list) => (list._id === payload._id ? payload : list)),
+          }),
+          false,
+          'selectShoppingListItem'
+        );
+      },
       setShoppingListsLoadingStatus: (payload) =>
         set((state) => ({ ...state, shoppingListsLoadingStatus: payload }), false, 'setShoppingListsLoadingStatus'),
       loadAvailableShoppingLists: loadAvailableShoppingListsAction,
@@ -89,6 +100,7 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
       removeShoppingList: deleteShoppingListAction,
       removeShoppingListItem: deleteShoppingListItemAction,
       selectShoppingListItem: selectShoppingListItemAction,
+      editShoppingListItem: editShoppingListItemAction,
       reset: () => set({ ...initialState, shoppingListsLoadingStatus: 'idle' }, false, 'resetShoppingListsStore'),
     }),
     { name: 'ShoppingListsStore' }
