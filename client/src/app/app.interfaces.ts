@@ -11,6 +11,7 @@ export interface CurrentUser {
   phoneNumber?: string | null;
   emailVerified?: boolean;
   currency?: Currencies;
+  calculateByQuantity?: boolean;
 }
 
 export interface Category {

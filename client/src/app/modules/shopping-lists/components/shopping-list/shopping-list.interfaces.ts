@@ -20,6 +20,12 @@ export interface ShoppingListProps {
    */
   isMenuOpened?: boolean;
   /**
+   * @param {boolean} Defines if calculateByQuantity property true of false in specific user (allows to calculate a product item price and total price of specific shopping list item)
+   * @default false
+   * @example false/true
+   */
+  calculateTotalPriceByQuantity?: boolean;
+  /**
    * @param {void} Defines a click event on menu and dropdown in order to close it
    * @default undefined
    */

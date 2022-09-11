@@ -4,6 +4,7 @@ import { ShoppingListData, ShoppingListItem } from '../../../../app.interfaces';
 import Card from '../../../../shared/components/card/card';
 import CardActionsContent from '../../../../shared/components/card/components/card-actions-content/card-actions-content';
 import CardDescriptionContent from '../../../../shared/components/card/components/card-description/card-description';
+import { calculateByQuantity } from '../../../../utils';
 
 interface ProductItemProps {
   /**
@@ -16,12 +17,25 @@ interface ProductItemProps {
    * @example Currencies.Dollar, Currencies.Euro
    */
   currency: string;
+  /**
+   * @param {boolean} Defines if calculateByQuantity property true of false in specific user (allows to calculate a product item price and total price of specific shopping list item)
+   * @default false
+   * @example false/true
+   */
+  calculateTotalPriceByQuantity?: boolean;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
   onClick: (id: string) => Promise<void>;
 }
 
-const ProductItem = ({ item, currency, onDelete, onEdit, onClick }: ProductItemProps): ReactElement => {
+const ProductItem = ({
+  item,
+  currency,
+  calculateTotalPriceByQuantity,
+  onDelete,
+  onEdit,
+  onClick,
+}: ProductItemProps): ReactElement => {
   return (
     <Card
       key={item?._id}
@@ -38,7 +52,11 @@ const ProductItem = ({ item, currency, onDelete, onEdit, onClick }: ProductItemP
         <CardDescriptionContent
           currency={currency}
           isShoppingList={false}
-          price={item?.price}
+          price={calculateByQuantity(
+            item?.price as number,
+            item?.quantity as number,
+            calculateTotalPriceByQuantity as boolean
+          )}
           quantity={item?.quantity}
           units={item?.units}
         />

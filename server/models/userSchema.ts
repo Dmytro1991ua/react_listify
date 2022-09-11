@@ -12,6 +12,7 @@ const userSchema = new Schema<FirebaseUser>(
     emailVerified: { type: Boolean, require: true },
     authTime: { type: String, require: true },
     currency: { type: String, enum: [Currencies], default: Currencies.Dollar },
+    calculateByQuantity: { type: Boolean, default: false },
   },
   {
     timestamps: true,
