@@ -2,7 +2,7 @@ import { FormikProps, useFormik } from 'formik';
 import { ReactElement, useMemo, useState } from 'react';
 import { Bars } from 'react-loader-spinner';
 
-import { AppRoutes } from '../../app.enums';
+import { AppRoutes, Currencies } from '../../app.enums';
 import { ShoppingListData } from '../../app.interfaces';
 import history from '../../services/history.service';
 import CreateShoppingListModal from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal';
@@ -103,7 +103,7 @@ const ShoppingLists = (): ReactElement => {
       const payload: ShoppingListData = {
         ...shoppingList,
         name: values.name,
-        currency: values.currency ?? '',
+        currency: values.currency ?? Currencies.Default,
       };
 
       await createShoppingList(payload);
