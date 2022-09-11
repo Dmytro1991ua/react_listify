@@ -8,6 +8,7 @@ const ShoppingList = ({
   list,
   anchorElement,
   isMenuOpened,
+  calculateTotalPriceByQuantity,
   onMenuClose,
   onMenuOpen,
   onDoubleClick,
@@ -36,7 +37,7 @@ const ShoppingList = ({
           isShoppingList
           currency={list?.currency}
           quantity={list?.shoppingListItems?.length}
-          totalPrice={calculateTotalPrice(list?.shoppingListItems ?? [])}
+          totalPrice={calculateTotalPrice(list?.shoppingListItems ?? [], calculateTotalPriceByQuantity as boolean)}
         />
       }
       shoppingListId={list?._id}

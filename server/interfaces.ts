@@ -21,6 +21,7 @@ export interface FirebaseUser {
   emailVerified: boolean;
   authTime: string;
   currency?: Currencies;
+  calculateByQuantity?: false;
 }
 
 export interface UserRequest extends express.Request {

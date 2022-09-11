@@ -14,6 +14,7 @@ const createNewUser = async (req: Request, res: Response, decodedIdToken: Decode
     emailVerified: decodedIdToken.email_verified,
     authTime: decodedIdToken.auth_time,
     currency: Currencies.Dollar,
+    calculateByQuantity: false,
   });
 
   try {

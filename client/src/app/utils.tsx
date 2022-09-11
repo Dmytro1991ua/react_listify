@@ -42,9 +42,31 @@ export const sortedDropdownItems = (items: DropdownOption<string>[]) => {
 };
 
 /**
- * Function calculates the price of all product item of specific shopping list item and returns a total price
+ * Function calculates the price of specific product item
  * @returns number
  */
-export const calculateTotalPrice = (shoppingListItems: ShoppingListItem[]) => {
-  return _.sumBy(shoppingListItems, (item) => item.price);
+export const calculateProductItemPrice = (price: number, quantity: number): number => {
+  return price * quantity;
+};
+
+/**
+ * Function calculates the price of specific product item based on user preferences (if calculateByQuantity is true or false)
+ * @returns number
+ */
+export const calculateByQuantity = (
+  price: number,
+  quantity: number,
+  calculateTotalPriceByQuantity: boolean
+): number => {
+  return calculateTotalPriceByQuantity ? calculateProductItemPrice(price, quantity) : price;
+};
+
+/**
+ * Function calculates the total price of all product item of specific shopping list item and returns a total price
+ * @returns number
+ */
+export const calculateTotalPrice = (shoppingListItems: ShoppingListItem[], calculateTotalPriceByQuantity: boolean) => {
+  return _.sumBy(shoppingListItems, (item) => {
+    return calculateTotalPriceByQuantity ? calculateProductItemPrice(item.price, item.quantity) : item.price;
+  });
 };

@@ -136,6 +136,7 @@ const ShoppingLists = (): ReactElement => {
           <ShoppingList
             key={list._id}
             anchorElement={anchorElement}
+            calculateTotalPriceByQuantity={user?.calculateByQuantity}
             isMenuOpened={isMenuOpened}
             list={list}
             onDoubleClick={handleCardDoubleClick}
