@@ -4,8 +4,10 @@ import { toastService } from '../../services/toast.service';
 import {
   FAILED_CREATE_SHOPPING_LIST_ITEM,
   FAILED_DELETE_SHOPPING_LIST_ITEM,
+  FAILED_EDIT_SHOPPING_LIST_ITEM,
   SUCCESSFUL_CREATE_SHOPPING_LIST_ITEM,
   SUCCESSFUL_DELETE_SHOPPING_LIST_ITEM,
+  SUCCESSFUL_EDIT_SHOPPING_LIST_ITEM,
 } from './shopping-list-details.constants';
 
 class ShoppingListDetailsService {
@@ -55,6 +57,22 @@ class ShoppingListDetailsService {
 
       return response.data;
     } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async editShoppingListItem(id: string, shoppingListItem: ShoppingListItem | null): Promise<ShoppingListData | null> {
+    try {
+      const response = await AXIOS_CONFIG.put(`/api/shopping-lists/${id}/edit-product-item`, shoppingListItem);
+
+      if (!response.data) {
+        return null;
+      }
+
+      toastService.success(SUCCESSFUL_EDIT_SHOPPING_LIST_ITEM);
+      return response.data;
+    } catch (error) {
+      toastService.error(FAILED_EDIT_SHOPPING_LIST_ITEM);
       throw new Error((error as Error).message);
     }
   }

@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 
+import { Currencies } from '../../../../../app.enums';
 import { CardDescription, CardDescriptionWrapper } from '../../card.styled';
 import { CardDescriptionContentProps } from './card-description.interfaces';
 
@@ -7,11 +8,12 @@ const CardDescriptionContent = ({
   quantity = 0,
   totalPrice = 0,
   price = 0,
-  currency = '$',
+  units = 'units',
+  currency = Currencies.Dollar,
   isShoppingList,
 }: CardDescriptionContentProps): ReactElement => {
   const shoppingListQuantityLabel = quantity === 1 && isShoppingList ? 'product' : 'products';
-  const shoppingListDetailsQuantityLabel = quantity === 1 && !isShoppingList ? 'unit' : 'units';
+  const shoppingListDetailsQuantityLabel = units ? units : 'units';
   const generalQuantityLabel = isShoppingList ? shoppingListQuantityLabel : shoppingListDetailsQuantityLabel;
   const isShoppingListTotalPrice = isShoppingList ? totalPrice : price;
 
