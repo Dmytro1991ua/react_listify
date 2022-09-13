@@ -25,6 +25,7 @@ import EditProductItemModal from './components/edit-product-item-modall/edit-pro
 import { EDIT_SHOPPING_LIST_ITEM_FORM_INITIAL_VALUE } from './components/edit-product-item-modall/edit-product-item-modal.schema';
 import { EditProductItemFormInitialValues } from './components/edit-product-item-modall/edit-product-item.modal.interfaces';
 import ProductItem from './components/product-item/product-item';
+import ProductItemsWidget from './components/product-items-widget/product-items-widget';
 import {
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE,
@@ -290,6 +291,7 @@ const ShoppingListDetails = (): ReactElement => {
         />
       </Form>
       {renderAvailableShoppingListItems}
+      <ProductItemsWidget currency={currentShoppingList?.currency ?? Currencies.Dollar} />
     </>
   );
 };
