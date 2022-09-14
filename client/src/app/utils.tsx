@@ -70,3 +70,18 @@ export const calculateTotalPrice = (shoppingListItems: ShoppingListItem[], calcu
     return calculateTotalPriceByQuantity ? calculateProductItemPrice(item.price, item.quantity) : item.price;
   });
 };
+
+/**
+ * Function calculates total To But or Purchased values, within Shopping list details widget, based on passed boolean flag
+ * @returns number
+ */
+export const calculateProductItemsByCheckedSate = (
+  shoppingListItems: ShoppingListItem[],
+  itemsState: boolean,
+  calculateTotalPriceByQuantity: boolean
+): number => {
+  const productItemsByCheckedSate = _.filter(shoppingListItems, (item) => item.isChecked === itemsState);
+  return _.sumBy(productItemsByCheckedSate, (item) =>
+    calculateTotalPriceByQuantity ? calculateProductItemPrice(item.price, item.quantity) : item.price
+  );
+};
