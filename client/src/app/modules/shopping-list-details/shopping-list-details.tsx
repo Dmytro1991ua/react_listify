@@ -291,7 +291,10 @@ const ShoppingListDetails = (): ReactElement => {
         />
       </Form>
       {renderAvailableShoppingListItems}
-      <ProductItemsWidget currency={currentShoppingList?.currency ?? Currencies.Dollar} />
+      <ProductItemsWidget
+        currency={currentShoppingList?.currency ?? Currencies.Dollar}
+        shoppingListItems={currentShoppingList?.shoppingListItems ?? []}
+      />
     </>
   );
 };
