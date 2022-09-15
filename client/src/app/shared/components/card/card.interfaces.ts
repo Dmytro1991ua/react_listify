@@ -40,15 +40,15 @@ export interface CardProps {
    */
   productItemId?: string;
   /**
-   * @param {void} Defines a click event on specific shopping list detail card
-   * @default undefined
-   */
-  /**
    * @param {boolean} Defines if a specific shopping list item was selected
    * @default undefined
    * @example true/false
    */
   isSelected?: boolean;
+  /**
+   * @param {void} Defines a click event on specific shopping list detail card
+   * @default undefined
+   */
   onClick?: (id: string) => void | Promise<void>;
   /**
    * @param {void} Defines a double click event on specific shopping list item card

@@ -1,6 +1,7 @@
 import { CardHeader } from '@mui/material';
 import { ReactElement } from 'react';
 
+import Checkbox from '../checkbox/checkbox';
 import { CardProps } from './card.interfaces';
 import { CardTitle, CustomCard } from './card.styled';
 
@@ -14,7 +15,14 @@ const Card = ({
   onClick,
   onDoubleClick,
 }: CardProps): ReactElement => {
-  const cartTitle = <CardTitle variant='h4'>{title}</CardTitle>;
+  const cartTitle = (
+    <>
+      {onClick && <Checkbox checked={isSelected} customSize='3rem' />}
+      <CardTitle isProductItem={Boolean(onClick)} isSelected={isSelected} variant='h4'>
+        {title}
+      </CardTitle>
+    </>
+  );
 
   return (
     <CustomCard

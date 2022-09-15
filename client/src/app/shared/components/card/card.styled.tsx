@@ -44,12 +44,16 @@ export const CustomCard = styled(Card, { shouldForwardProp: (prop) => prop !== '
   }
 `;
 
-export const CardTitle = styled(Typography, { shouldForwardProp: (prop) => prop !== 'isSelected' })<{
+export const CardTitle = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'isSelected' && prop !== 'isProductItem',
+})<{
   isSelected?: boolean;
+  isProductItem?: boolean;
 }>`
   margin: 0;
   font-size: ${({ theme }) => theme.spacing(24)};
   font-weight: bold;
+  margin-left: ${({ isProductItem }) => (isProductItem ? '1.2rem' : 0)};
 `;
 
 export const CardDescriptionWrapper = styled('div')`
