@@ -85,3 +85,23 @@ export const calculateProductItemsByCheckedSate = (
     calculateTotalPriceByQuantity ? calculateProductItemPrice(item.price, item.quantity) : item.price
   );
 };
+
+/**
+ * Function checks if all product item were selected (checked)
+ * @returns boolean
+ */
+export const areAllProductItemsChecked = (shoppingListItems: ShoppingListItem[]): boolean =>
+  shoppingListItems.every((item) => item.isChecked);
+
+/**
+ * Function returns all shopping list items with isChecked property equal to true (select all items)
+ * @returns ShoppingListItem[]
+ */
+export const toggleAllProductItems = (
+  shoppingListItems: ShoppingListItem[],
+  event: React.ChangeEvent<HTMLInputElement>
+): ShoppingListItem[] =>
+  _.map(shoppingListItems, (item) => ({
+    ...item,
+    isChecked: event.target.checked,
+  }));
