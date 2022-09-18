@@ -32,3 +32,9 @@ export enum ProductUnits {
   Pound = 'lb',
   Gallon = 'gal',
 }
+
+export enum UserImageSize {
+  Small = 's',
+  Medium = 'm',
+  Large = 'l',
+}

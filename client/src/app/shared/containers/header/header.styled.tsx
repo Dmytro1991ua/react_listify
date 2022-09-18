@@ -37,16 +37,6 @@ export const LogoIcon = styled(FaLeaf)`
   height: 1.5rem;
 `;
 
-export const ProfileImage = styled('img', { shouldForwardProp: (prop) => prop !== 'isActive' })<{ isActive: boolean }>`
-  width: 4.5rem;
-  height: 4.5rem;
-  background-color: ${({ theme }) => theme.palette.grey[500]};
-  border: ${({ theme, isActive }) =>
-    isActive ? `2.5px solid ${theme.palette.common.white}` : '2.5px solid transparent'};
-  border-radius: 50%;
-  cursor: pointer;
-`;
-
 export const DropdownMenu = styled(Menu)`
   & .MuiPopover-paper {
     margin-top: ${({ theme }) => theme.spacing(18)};

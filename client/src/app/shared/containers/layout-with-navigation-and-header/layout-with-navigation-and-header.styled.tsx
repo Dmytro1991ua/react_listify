@@ -12,7 +12,7 @@ export const MainContent = styled('section')`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: ${({ theme }) => `${theme.spacing(16)} ${theme.spacing(30)} ${theme.spacing(90)} ${theme.spacing(30)}`};
+  padding: ${({ theme }) => `${theme.spacing(16)} ${theme.spacing(30)}`};
 `;
 
 export const HeaderSpacer = styled('div')`
