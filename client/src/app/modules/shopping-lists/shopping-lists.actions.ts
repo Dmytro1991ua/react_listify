@@ -1,3 +1,4 @@
+import { ShoppingListData } from '../../app.interfaces';
 import { shoppingListsService } from './shopping-lists.service';
 import { useShoppingListsStore } from './shopping-lists.store';
 
@@ -18,7 +19,7 @@ export const loadAvailableShoppingListsAction = async (): Promise<void> => {
   }
 };
 
-export const createShoppingListAction = async (shoppingList: ShoppingList): Promise<void> => {
+export const createShoppingListAction = async (shoppingList: ShoppingListData): Promise<void> => {
   const createShoppingList = useShoppingListsStore.getState().createShoppingList;
   const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
 

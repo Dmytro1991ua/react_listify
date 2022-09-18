@@ -16,6 +16,7 @@ import SectionHeader from '../../shared/components/section-header/section-header
 import { availableCurrencies, sortedDropdownItems, sortedItems } from '../../utils';
 import { useAuthStore } from '../auth/auth.store';
 import ShoppingList from './components/shopping-list/shopping-list';
+import { createShoppingListAction, deleteShoppingListAction } from './shopping-lists.actions';
 import {
   SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_FALLBACK_MESSAGE_TITLE,
@@ -25,10 +26,8 @@ import { useShoppingListsStore } from './shopping-lists.store';
 import { ItemWrapper } from './shopping-lists.styled';
 
 const ShoppingLists = (): ReactElement => {
-  const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
   const shoppingList = useShoppingListsStore((state) => state.shoppingList);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
-  const deleteShoppingList = useShoppingListsStore((state) => state.removeShoppingList);
   const availableShoppingLists = useShoppingListsStore((state) => state.shoppingLists);
   const user = useAuthStore((state) => state.user);
 
@@ -106,7 +105,7 @@ const ShoppingLists = (): ReactElement => {
         currency: values.currency ?? Currencies.Default,
       };
 
-      await createShoppingList(payload);
+      await createShoppingListAction(payload);
       handleCloseCreateModal();
     } catch (error) {
       throw new Error((error as Error).message);
@@ -115,7 +114,7 @@ const ShoppingLists = (): ReactElement => {
 
   async function handleShoppingListDeletion(): Promise<void> {
     try {
-      await deleteShoppingList(shoppingListId);
+      await deleteShoppingListAction(shoppingListId);
       handleCloseDeleteModal();
     } catch (error) {
       throw new Error((error as Error).message);

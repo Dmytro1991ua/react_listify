@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { AppRoutes } from '../../../../app.enums';
 import history from '../../../../services/history.service';
 import DeleteConfirmationModal from '../../../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
-import { useShoppingListsStore } from '../../../shopping-lists/shopping-lists.store';
+import { deleteShoppingListAction } from '../../../shopping-lists/shopping-lists.actions';
 
 interface DeleteShoppingListModalProps {
   shoppingListId: string;
@@ -16,15 +16,13 @@ const DeleteShoppingListModal = ({
   isModalOpen,
   onModalOpen,
 }: DeleteShoppingListModalProps): ReactElement => {
-  const removeExistingShoppingList = useShoppingListsStore((state) => state.removeShoppingList);
-
   function handleCloseModal(): void {
     onModalOpen(false);
   }
 
   async function handleShoppingListDeletion(): Promise<void> {
     try {
-      await removeExistingShoppingList(shoppingListId);
+      await deleteShoppingListAction(shoppingListId);
 
       history.push(AppRoutes.ShoppingLists);
     } catch (error) {

@@ -3,15 +3,13 @@ import { ReactElement, useCallback, useEffect } from 'react';
 
 import Routes from './app-routes';
 import { auth } from './configs/firebase';
+import { validateUserAction } from './modules/auth/auth.actions';
 import { authService } from './modules/auth/auth.service';
 import { useAuthStore } from './modules/auth/auth.store';
-import { useShoppingListsStore } from './modules/shopping-lists/shopping-lists.store';
+import { loadAvailableShoppingListsAction } from './modules/shopping-lists/shopping-lists.actions';
 
 const App = (): ReactElement => {
-  const validateUser = useAuthStore((state) => state.validateUser);
   const setLoadingStatus = useAuthStore((state) => state.setUserLoadingStatus);
-
-  const loadAvailableShoppingLists = useShoppingListsStore((state) => state.loadAvailableShoppingLists);
 
   const setCurrentUser = useCallback(() => {
     return onAuthStateChanged(auth, async (user) => {
@@ -20,13 +18,13 @@ const App = (): ReactElement => {
           authService.setToken(token);
         });
 
-        await validateUser();
-        await loadAvailableShoppingLists();
+        await validateUserAction();
+        await loadAvailableShoppingListsAction();
       }
 
       setLoadingStatus('idle');
     });
-  }, [validateUser, setLoadingStatus, loadAvailableShoppingLists]);
+  }, [setLoadingStatus]);
 
   useEffect(() => {
     setCurrentUser();
