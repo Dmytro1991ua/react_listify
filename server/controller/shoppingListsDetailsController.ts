@@ -119,3 +119,30 @@ export const editShoppingListDetailsItem = async (req: UserRequest, res: Respons
     throw new Error((err as Error).message);
   }
 };
+
+// @dec Select (marked as checked) all shopping list details items(products)
+// @route  PUT /api/shopping-lists/:id/select-all-product-items
+// @access Private
+export const selectAllShoppingListDetailsItems = async (req: UserRequest, res: Response) => {
+  const { id: _id } = req.params;
+  const items = req.body;
+
+  const user = req.currentUser;
+
+  try {
+    if (user) {
+      const updatedShoppingList = await ShoppingList.findOneAndUpdate(
+        { _id },
+        { $set: { shoppingListItems: items } },
+        { new: true, multi: true }
+      );
+
+      res.status(200).json(updatedShoppingList);
+    } else {
+      res.status(401).send("Not authorized");
+    }
+  } catch (err) {
+    res.status(409);
+    throw new Error((err as Error).message);
+  }
+};

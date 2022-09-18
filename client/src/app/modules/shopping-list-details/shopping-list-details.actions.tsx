@@ -83,3 +83,22 @@ export const editShoppingListItemAction = async (
     throw new Error((error as Error).message);
   }
 };
+
+export const selectAllShoppingListItemsAction = async (
+  id: string,
+  shoppingListItems: ShoppingListItem[]
+): Promise<void> => {
+  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
+  const updateShoppingListItems = useShoppingListsStore.getState().selectAllShoppingListItems;
+
+  try {
+    const updatedShoppingList = await shoppingListDetailsService.selectAllShoppingListItems(id, shoppingListItems);
+
+    if (updatedShoppingList) {
+      updateShoppingListItems({ id: updatedShoppingList._id ?? '', items: updatedShoppingList.shoppingListItems });
+    }
+  } catch (error) {
+    setShoppingListsLoadingStatus('failed');
+    throw new Error((error as Error).message);
+  }
+};

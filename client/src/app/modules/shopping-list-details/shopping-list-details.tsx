@@ -7,13 +7,20 @@ import { useParams } from 'react-router-dom';
 import { AppRoutes, Currencies, ProductUnits } from '../../app.enums';
 import { ShoppingListData, ShoppingListItem } from '../../app.interfaces';
 import history from '../../services/history.service';
+import Checkbox from '../../shared/components/checkbox/checkbox';
 import {
   CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
   CREATE_SHOPPING_LIST_FORM_VALIDATION,
 } from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal.schema';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
-import { availableProductUnits, sortedDropdownItems, sortedItems } from '../../utils';
+import {
+  areAllProductItemsChecked,
+  availableProductUnits,
+  sortedDropdownItems,
+  sortedItems,
+  toggleAllProductItems,
+} from '../../utils';
 import { useAuthStore } from '../auth/auth.store';
 import { CreateShoppingListFromInitialValues } from '../shopping-lists/shopping-lists.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
@@ -30,7 +37,7 @@ import {
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE,
 } from './shopping-list-details.constants';
-import { AddIcon, Form, Input } from './shopping-list-details.styled';
+import { AddIcon, CheckboxLabel, Form, Input } from './shopping-list-details.styled';
 
 const ShoppingListDetails = (): ReactElement => {
   const { shoppingListId } = useParams<{ shoppingListId: string }>();
@@ -41,6 +48,7 @@ const ShoppingListDetails = (): ReactElement => {
   const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
   const selectShoppingListItem = useShoppingListsStore((state) => state.selectShoppingListItem);
   const editShoppingListItem = useShoppingListsStore((state) => state.editShoppingListItem);
+  const checkAllItems = useShoppingListsStore((state) => state.checkAllShoppingListItems);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
   const user = useAuthStore((state) => state.user);
 
@@ -54,7 +62,16 @@ const ShoppingListDetails = (): ReactElement => {
 
   const [shoppingListItemId, setShoppingListItemId] = useState<string>('');
   const [validateAfterSubmit, setValidateAfterSubmit] = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const sortedItemsByNameOrSelectedState = useMemo(
+    () => sortedItems(currentShoppingList?.shoppingListItems ?? []),
+    [currentShoppingList?.shoppingListItems]
+  );
+  const allProductItemsChecked = areAllProductItemsChecked(
+    (sortedItemsByNameOrSelectedState as ShoppingListItem[]) ?? []
+  );
 
   const getCurrentProductItem = _.find(currentShoppingList?.shoppingListItems, { _id: shoppingListItemId }) ?? null;
 
@@ -95,10 +112,6 @@ const ShoppingListDetails = (): ReactElement => {
 
   const handleAddNewProduct = useMemo(() => _.debounce((value) => setNewProductItem(value), 300), []);
   const sortedAvailableProductUnits = sortedDropdownItems(availableProductUnits);
-  const sortedItemsByNameOrSelectedState = useMemo(
-    () => sortedItems(currentShoppingList?.shoppingListItems ?? []),
-    [currentShoppingList?.shoppingListItems]
-  );
 
   function handleGoBack(): void {
     history.goBack();
@@ -137,6 +150,14 @@ const ShoppingListDetails = (): ReactElement => {
   function handleEditProductItem(): void {
     setValidateAfterSubmit(true);
     formikEditFormInstance.submitForm();
+  }
+
+  async function handleToggleAllProductItems(event: React.ChangeEvent<HTMLInputElement>): Promise<void> {
+    const updatedShoppingListItems = toggleAllProductItems(
+      sortedItemsByNameOrSelectedState as ShoppingListItem[],
+      event
+    );
+    await checkAllItems(currentShoppingList?._id ?? '', updatedShoppingListItems);
   }
 
   async function handleCreateShoppingListCopy(values: CreateShoppingListFromInitialValues): Promise<void> {
@@ -245,6 +266,19 @@ const ShoppingListDetails = (): ReactElement => {
     </>
   );
 
+  const renderCheckbox = (
+    <>
+      {currentShoppingList?.shoppingListItems && currentShoppingList.shoppingListItems.length > 0 && (
+        <CheckboxLabel
+          control={
+            <Checkbox checked={allProductItemsChecked} customSize='3rem' onChange={handleToggleAllProductItems} />
+          }
+          label='Select All Items'
+        />
+      )}
+    </>
+  );
+
   return (
     <>
       <DeleteProductItemModal
@@ -290,6 +324,7 @@ const ShoppingListDetails = (): ReactElement => {
           onChange={(e) => handleAddNewProduct(e.target.value)}
         />
       </Form>
+      {renderCheckbox}
       {renderAvailableShoppingListItems}
       <ProductItemsWidget
         currency={currentShoppingList?.currency ?? Currencies.Dollar}

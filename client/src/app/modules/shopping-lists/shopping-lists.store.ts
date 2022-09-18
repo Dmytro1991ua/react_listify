@@ -6,6 +6,7 @@ import {
   createShoppingListItemAction,
   deleteShoppingListItemAction,
   editShoppingListItemAction,
+  selectAllShoppingListItemsAction,
   selectShoppingListItemAction,
 } from './../shopping-list-details/shopping-list-details.actions';
 import {
@@ -92,6 +93,21 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
           'selectShoppingListItem'
         );
       },
+      selectAllShoppingListItems: ({ id, items }) => {
+        return set(
+          (state) => ({
+            shoppingLists: state.shoppingLists.map((list) => {
+              if (list._id === id) {
+                return { ...list, shoppingListItems: items };
+              }
+
+              return list;
+            }),
+          }),
+          false,
+          'selectAllShoppingListItemItems'
+        );
+      },
       setShoppingListsLoadingStatus: (payload) =>
         set((state) => ({ ...state, shoppingListsLoadingStatus: payload }), false, 'setShoppingListsLoadingStatus'),
       loadAvailableShoppingLists: loadAvailableShoppingListsAction,
@@ -101,6 +117,7 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
       removeShoppingListItem: deleteShoppingListItemAction,
       selectShoppingListItem: selectShoppingListItemAction,
       editShoppingListItem: editShoppingListItemAction,
+      checkAllShoppingListItems: selectAllShoppingListItemsAction,
       reset: () => set({ ...initialState, shoppingListsLoadingStatus: 'idle' }, false, 'resetShoppingListsStore'),
     }),
     { name: 'ShoppingListsStore' }
