@@ -12,6 +12,7 @@ export interface CurrentUser {
   emailVerified?: boolean;
   currency?: Currencies;
   calculateByQuantity?: boolean;
+  firebaseProviders?: string[];
 }
 
 export interface Category {

@@ -18,7 +18,9 @@ const App = (): ReactElement => {
           authService.setToken(token);
         });
 
-        await validateUserAction();
+        const userFirebaseProviders: string[] = user.providerData.map((item) => item.providerId);
+
+        await validateUserAction(userFirebaseProviders);
         await loadAvailableShoppingListsAction();
       }
 
