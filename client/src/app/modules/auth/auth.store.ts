@@ -1,7 +1,6 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { validateUserAction } from './auth.actions';
 import { AuthStoreActions, AuthStoreState } from './auth.interfaces';
 
 const initialState: AuthStoreState = {
@@ -18,7 +17,6 @@ export const useAuthStore = create<AuthStoreState & AuthStoreActions>()(
       },
       setUserLoadingStatus: (payload) =>
         set((state) => ({ ...state, userLoadingStatus: payload }), false, 'setUserLoadingStatus'),
-      validateUser: validateUserAction,
       reset: () => set({ ...initialState, userLoadingStatus: 'idle' }, false, 'resetAuthStore'),
     }),
     { name: 'AuthStore' }

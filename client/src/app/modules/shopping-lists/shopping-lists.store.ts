@@ -2,18 +2,6 @@ import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import { Currencies, ProductUnits } from '../../app.enums';
-import {
-  createShoppingListItemAction,
-  deleteShoppingListItemAction,
-  editShoppingListItemAction,
-  selectAllShoppingListItemsAction,
-  selectShoppingListItemAction,
-} from './../shopping-list-details/shopping-list-details.actions';
-import {
-  createShoppingListAction,
-  deleteShoppingListAction,
-  loadAvailableShoppingListsAction,
-} from './shopping-lists.actions';
 import { ShoppingListsStoreActions, ShoppingListsStoreState } from './shopping-lists.interfaces';
 
 const initialState: ShoppingListsStoreState = {
@@ -110,14 +98,6 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
       },
       setShoppingListsLoadingStatus: (payload) =>
         set((state) => ({ ...state, shoppingListsLoadingStatus: payload }), false, 'setShoppingListsLoadingStatus'),
-      loadAvailableShoppingLists: loadAvailableShoppingListsAction,
-      createNewShoppingList: createShoppingListAction,
-      createNewShoppingListItem: createShoppingListItemAction,
-      removeShoppingList: deleteShoppingListAction,
-      removeShoppingListItem: deleteShoppingListItemAction,
-      selectShoppingListItem: selectShoppingListItemAction,
-      editShoppingListItem: editShoppingListItemAction,
-      checkAllShoppingListItems: selectAllShoppingListItemsAction,
       reset: () => set({ ...initialState, shoppingListsLoadingStatus: 'idle' }, false, 'resetShoppingListsStore'),
     }),
     { name: 'ShoppingListsStore' }
