@@ -28,13 +28,5 @@ export type ShoppingListsStoreActions = {
   updateShoppingListItem: (shoppingList: ShoppingListData) => void;
   selectAllShoppingListItems: (payload: updateShoppingListItemsPayload) => void;
   setShoppingListsLoadingStatus: (loadingStatus: LoadingStatus) => void;
-  loadAvailableShoppingLists: () => Promise<void>;
-  createNewShoppingList: (shoppingList: ShoppingListData) => Promise<void>;
-  createNewShoppingListItem: (id: string, shoppingListItem: ShoppingListItem) => Promise<void>;
-  selectShoppingListItem: (id: string, shoppingListItem: ShoppingListItem | null) => Promise<void>;
-  editShoppingListItem: (id: string, shoppingListItem: ShoppingListItem | null) => Promise<void>;
-  removeShoppingList: (id: string) => Promise<void>;
-  removeShoppingListItem: (id: string, productItemId: string) => Promise<void>;
-  checkAllShoppingListItems: (id: string, shoppingListItems: ShoppingListItem[]) => Promise<void>;
   reset: () => void;
 };

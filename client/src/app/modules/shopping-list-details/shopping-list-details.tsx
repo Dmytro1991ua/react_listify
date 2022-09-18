@@ -22,6 +22,7 @@ import {
   toggleAllProductItems,
 } from '../../utils';
 import { useAuthStore } from '../auth/auth.store';
+import { createShoppingListAction } from '../shopping-lists/shopping-lists.actions';
 import { CreateShoppingListFromInitialValues } from '../shopping-lists/shopping-lists.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
@@ -34,6 +35,12 @@ import { EditProductItemFormInitialValues } from './components/edit-product-item
 import ProductItem from './components/product-item/product-item';
 import ProductItemsWidget from './components/product-items-widget/product-items-widget';
 import {
+  createShoppingListItemAction,
+  editShoppingListItemAction,
+  selectAllShoppingListItemsAction,
+  selectShoppingListItemAction,
+} from './shopping-list-details.actions';
+import {
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE,
 } from './shopping-list-details.constants';
@@ -44,11 +51,6 @@ const ShoppingListDetails = (): ReactElement => {
 
   const availableShoppingLists = useShoppingListsStore((state) => state.shoppingLists);
   const shoppingListItem = useShoppingListsStore((state) => state.shoppingListItem);
-  const createShoppingListItem = useShoppingListsStore((state) => state.createNewShoppingListItem);
-  const createShoppingList = useShoppingListsStore((state) => state.createNewShoppingList);
-  const selectShoppingListItem = useShoppingListsStore((state) => state.selectShoppingListItem);
-  const editShoppingListItem = useShoppingListsStore((state) => state.editShoppingListItem);
-  const checkAllItems = useShoppingListsStore((state) => state.checkAllShoppingListItems);
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';
   const user = useAuthStore((state) => state.user);
 
@@ -157,7 +159,7 @@ const ShoppingListDetails = (): ReactElement => {
       sortedItemsByNameOrSelectedState as ShoppingListItem[],
       event
     );
-    await checkAllItems(currentShoppingList?._id ?? '', updatedShoppingListItems);
+    await selectAllShoppingListItemsAction(currentShoppingList?._id ?? '', updatedShoppingListItems);
   }
 
   async function handleCreateShoppingListCopy(values: CreateShoppingListFromInitialValues): Promise<void> {
@@ -168,7 +170,7 @@ const ShoppingListDetails = (): ReactElement => {
         shoppingListItems: currentShoppingList?.shoppingListItems ?? [],
       };
 
-      await createShoppingList(payload);
+      await createShoppingListAction(payload);
       handleOpenCreateShoppingListModal();
       history.push(AppRoutes.ShoppingLists);
     } catch (error) {
@@ -179,7 +181,7 @@ const ShoppingListDetails = (): ReactElement => {
   async function handleProductItemSelection(id: string): Promise<void> {
     try {
       const selectedProductItem = _.find(currentShoppingList?.shoppingListItems, { _id: id }) ?? null;
-      await selectShoppingListItem(currentShoppingList?._id as string, selectedProductItem);
+      await selectShoppingListItemAction(currentShoppingList?._id as string, selectedProductItem);
     } catch (e) {
       throw new Error((e as Error).message);
     }
@@ -195,7 +197,7 @@ const ShoppingListDetails = (): ReactElement => {
       };
 
       if (newProductItem) {
-        await createShoppingListItem(currentShoppingList?._id as string, payload);
+        await createShoppingListItemAction(currentShoppingList?._id as string, payload);
       }
 
       handleClearInput();
@@ -219,7 +221,7 @@ const ShoppingListDetails = (): ReactElement => {
         price: Number(values.price) ?? 0,
       };
 
-      await editShoppingListItem(currentShoppingList?._id as string, payload);
+      await editShoppingListItemAction(currentShoppingList?._id as string, payload);
       handleCloseProductItemEditModal();
     } catch (error) {
       throw new Error((error as Error).message);

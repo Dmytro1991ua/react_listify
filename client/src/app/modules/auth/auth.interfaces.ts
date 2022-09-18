@@ -28,6 +28,5 @@ export type AuthStoreState = {
 export type AuthStoreActions = {
   setUser: (user: CurrentUser | null) => void;
   setUserLoadingStatus: (loadingStatus: LoadingStatus) => void;
-  validateUser: () => Promise<void>;
   reset: () => void;
 };
