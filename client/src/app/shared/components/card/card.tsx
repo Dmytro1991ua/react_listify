@@ -33,7 +33,12 @@ const Card = ({
   );
 
   return (
-    <CustomCard isSelected={isSelected} onClick={handleProductItemClick} onDoubleClick={handleShoppingListDoubleClick}>
+    <CustomCard
+      isSelected={isSelected}
+      isShoppingListDetails={Boolean(onClick)}
+      onClick={handleProductItemClick}
+      onDoubleClick={handleShoppingListDoubleClick}
+    >
       <CardHeader disableTypography action={actions} component='header' subheader={description} title={cartTitle} />
     </CustomCard>
   );

@@ -14,8 +14,11 @@ const commonIconsStyles = {
   height: '2rem',
 };
 
-export const CustomCard = styled(Card, { shouldForwardProp: (prop) => prop !== 'isSelected' })<{
+export const CustomCard = styled(Card, {
+  shouldForwardProp: (prop) => prop !== 'isSelected' && prop !== 'isShoppingListDetails',
+})<{
   isSelected?: boolean;
+  isShoppingListDetails?: boolean;
 }>`
   padding: ${({ theme }) => theme.spacing(20)};
   background-color: ${({ theme }) => theme.palette.common.white};
@@ -24,9 +27,10 @@ export const CustomCard = styled(Card, { shouldForwardProp: (prop) => prop !== '
   text-decoration: ${({ isSelected }) => (isSelected ? 'line-through' : 'none')};
   ${({ theme }) => theme.mixins.formBoxShadowMixin};
   cursor: pointer;
+  margin-bottom: ${({ theme }) => theme.spacing(20)};
 
-  &:not(:last-child) {
-    margin-bottom: ${({ theme }) => theme.spacing(20)};
+  &:last-of-type {
+    margin-bottom: ${({ theme, isShoppingListDetails }) => (isShoppingListDetails ? theme.spacing(90) : 0)};
   }
 
   header {

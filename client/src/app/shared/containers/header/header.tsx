@@ -2,13 +2,17 @@ import { Box, MenuItem, Toolbar } from '@mui/material';
 import { ReactElement, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import DefaultUser from '../../../../assets/images/auth/user.png';
-import { AppRoutes } from '../../../app.enums';
+import { AppRoutes, UserImageSize } from '../../../app.enums';
+import { useAuthStore } from '../../../modules/auth/auth.store';
+import FallbackImage from '../../components/fallback-image/fallback-image';
 import { DROPDOWN_MENU_CONFIGS } from './header.configs';
-import { DropdownMenu, HeaderWrapper, Logo, LogoIcon, LogoTitle, ProfileImage } from './header.styled';
+import { DropdownMenu, HeaderWrapper, Logo, LogoIcon, LogoTitle } from './header.styled';
 
 const Header = (): ReactElement => {
   const location = useLocation();
+
+  const user = useAuthStore((state) => state.user);
+  const isUserAuthenticated = Boolean(user);
 
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
 
@@ -32,7 +36,13 @@ const Header = (): ReactElement => {
         </Logo>
         <Box sx={{ marginLeft: 'auto' }}>
           <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handleMenuOpen}>
-            <ProfileImage alt='user' isActive={isProfileRoute} src={DefaultUser} />
+            <FallbackImage
+              altText="User's profile photo"
+              imageUrl={user?.photoURL as string}
+              isActive={isProfileRoute}
+              isUserAuthenticated={Boolean(isUserAuthenticated)}
+              size={UserImageSize.Small}
+            />
           </button>
           <DropdownMenu anchorEl={anchorElement} open={isMenuOpened} onClose={handleMenuClose}>
             {DROPDOWN_MENU_CONFIGS.map((item) => (
