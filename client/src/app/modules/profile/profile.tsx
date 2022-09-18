@@ -3,6 +3,7 @@ import { ReactElement } from 'react';
 import { toastService } from '../../services/toast.service';
 import SectionHeader from '../../shared/components/section-header/section-header';
 import { useAuthStore } from '../auth/auth.store';
+import ProfileUserInformationForm from './components/profile-user-information-form/profile-user-information-form';
 import {
   BlockTitle,
   CommonProfileBlock,
@@ -17,6 +18,7 @@ const Profile = (): ReactElement => {
   const renderUserInfoBlock = (
     <CommonProfileBlock>
       <CommonProfileBlockTitle variant='h4'>User Information</CommonProfileBlockTitle>
+      <ProfileUserInformationForm />
     </CommonProfileBlock>
   );
 

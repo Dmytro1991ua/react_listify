@@ -1,6 +1,8 @@
 import { Typography, styled } from '@mui/material';
 
-export const ProfileAccountSettingsWrapper = styled('div')<{ hasEmailAndPasswordProvider?: boolean }>`
+export const ProfileAccountSettingsWrapper = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'hasEmailAndPasswordProvider',
+})<{ hasEmailAndPasswordProvider?: boolean }>`
   display: grid;
   grid-template-columns: ${({ hasEmailAndPasswordProvider }) => (hasEmailAndPasswordProvider ? '1fr 1fr' : '1fr')};
   justify-items: ${({ hasEmailAndPasswordProvider }) => (hasEmailAndPasswordProvider ? 'flex-start' : 'center')};
@@ -21,6 +23,8 @@ export const CommonProfileBlock = styled('div')`
   border: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
   border-radius: ${({ theme }) => theme.spacing(10)};
   padding: ${({ theme }) => theme.spacing(16)};
+  background-color: ${({ theme }) => theme.palette.common.white};
+  ${({ theme }) => theme.mixins.formBoxShadowMixin};
 `;
 
 export const CommonProfileBlockTitle = styled(Typography)`
@@ -29,4 +33,10 @@ export const CommonProfileBlockTitle = styled(Typography)`
   padding-bottom: 0.8rem;
   margin-bottom: 2rem;
   border-bottom: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
+`;
+
+export const ContentWrapper = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;
