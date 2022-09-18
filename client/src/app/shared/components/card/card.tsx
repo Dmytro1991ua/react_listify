@@ -15,6 +15,14 @@ const Card = ({
   onClick,
   onDoubleClick,
 }: CardProps): ReactElement => {
+  function handleProductItemClick(): void {
+    onClick && onClick(productItemId as string);
+  }
+
+  function handleShoppingListDoubleClick(): void {
+    onDoubleClick && onDoubleClick(shoppingListId as string);
+  }
+
   const cartTitle = (
     <>
       {onClick && <Checkbox checked={isSelected} customSize='3rem' />}
@@ -25,11 +33,7 @@ const Card = ({
   );
 
   return (
-    <CustomCard
-      isSelected={isSelected}
-      onClick={() => onClick && onClick(productItemId as string)}
-      onDoubleClick={() => onDoubleClick && onDoubleClick(shoppingListId as string)}
-    >
+    <CustomCard isSelected={isSelected} onClick={handleProductItemClick} onDoubleClick={handleShoppingListDoubleClick}>
       <CardHeader disableTypography action={actions} component='header' subheader={description} title={cartTitle} />
     </CustomCard>
   );

@@ -76,6 +76,23 @@ class ShoppingListDetailsService {
       throw new Error((error as Error).message);
     }
   }
+
+  async selectAllShoppingListItems(
+    id: string,
+    shoppingListItems: ShoppingListItem[]
+  ): Promise<ShoppingListData | null> {
+    try {
+      const response = await AXIOS_CONFIG.put(`/api/shopping-lists/${id}/select-all-product-items`, shoppingListItems);
+
+      if (!response.data) {
+        return null;
+      }
+
+      return response.data;
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
 }
 
 export const shoppingListDetailsService = new ShoppingListDetailsService();

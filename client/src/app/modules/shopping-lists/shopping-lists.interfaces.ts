@@ -13,6 +13,11 @@ export type ShoppingListsStoreState = {
   shoppingListsLoadingStatus: LoadingStatus;
 };
 
+type updateShoppingListItemsPayload = {
+  id: string;
+  items: ShoppingListItem[];
+};
+
 export type ShoppingListsStoreActions = {
   setShoppingLists: (shoppingLists: ShoppingListData[]) => void;
   createShoppingList: (shoppingList: ShoppingListData) => void;
@@ -21,6 +26,7 @@ export type ShoppingListsStoreActions = {
   deleteShoppingListItem: (shoppingList: ShoppingListData) => void;
   checkShoppingListItem: (shoppingList: ShoppingListData) => void;
   updateShoppingListItem: (shoppingList: ShoppingListData) => void;
+  selectAllShoppingListItems: (payload: updateShoppingListItemsPayload) => void;
   setShoppingListsLoadingStatus: (loadingStatus: LoadingStatus) => void;
   loadAvailableShoppingLists: () => Promise<void>;
   createNewShoppingList: (shoppingList: ShoppingListData) => Promise<void>;
@@ -29,5 +35,6 @@ export type ShoppingListsStoreActions = {
   editShoppingListItem: (id: string, shoppingListItem: ShoppingListItem | null) => Promise<void>;
   removeShoppingList: (id: string) => Promise<void>;
   removeShoppingListItem: (id: string, productItemId: string) => Promise<void>;
+  checkAllShoppingListItems: (id: string, shoppingListItems: ShoppingListItem[]) => Promise<void>;
   reset: () => void;
 };
