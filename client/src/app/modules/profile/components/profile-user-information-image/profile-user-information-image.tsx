@@ -3,14 +3,13 @@ import { ReactElement } from 'react';
 import { UserImageSize } from '../../../../app.enums';
 import FallbackImage from '../../../../shared/components/fallback-image/fallback-image';
 import { useAuthStore } from '../../../auth/auth.store';
-import {
-  ImageWrapper,
-  ProfileAddButtonIcon,
-  ProfileImageContainer,
-  ProfileInputFile,
-} from './profile-user-information-image.styled';
+import { ImageWrapper, ProfileAddButtonIcon, ProfileImageContainer } from './profile-user-information-image.styled';
 
-const ProfileUserInformationImage = (): ReactElement => {
+interface ProfileUserInformationImageProps {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const ProfileUserInformationImage = ({ onChange }: ProfileUserInformationImageProps): ReactElement => {
   const user = useAuthStore((state) => state.user);
 
   const renderImage = (
@@ -19,12 +18,7 @@ const ProfileUserInformationImage = (): ReactElement => {
         <FallbackImage altText="User's profile photo" imageUrl={user?.photoURL as string} size={UserImageSize.Medium} />
         <ProfileAddButtonIcon onClick={(e) => e.stopPropagation()} />
       </label>
-      <ProfileInputFile
-        accept='.jpg, .jpeg, .png'
-        id='file'
-        type='file'
-        onChange={(e) => console.log(e.target.files)}
-      />
+      <input hidden accept='image/*' id='file' name='picture' type='file' onChange={onChange} />
     </ImageWrapper>
   );
 
