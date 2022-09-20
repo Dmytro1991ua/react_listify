@@ -1,9 +1,14 @@
+import { FormikProps, useFormik } from 'formik';
 import { ReactElement } from 'react';
 
-import { toastService } from '../../services/toast.service';
 import SectionHeader from '../../shared/components/section-header/section-header';
 import { useAuthStore } from '../auth/auth.store';
 import ProfileUserInformationForm from './components/profile-user-information-form/profile-user-information-form';
+import { ProfileUserInformationInitialValues } from './components/profile-user-information-form/profile-user-information-form.interfaces';
+import {
+  USER_INFORMATION_FORM_INITIAL_VALUE,
+  USER_INFORMATION_FORM_VALIDATION,
+} from './components/profile-user-information-form/profile-user-information-form.schema';
 import {
   BlockTitle,
   CommonProfileBlock,
@@ -15,10 +20,30 @@ const Profile = (): ReactElement => {
   const user = useAuthStore((state) => state.user);
   const hasEmailAndPasswordProvider = user?.firebaseProviders?.includes('password');
 
+  const formikUserInformationInstance: FormikProps<ProfileUserInformationInitialValues> =
+    useFormik<ProfileUserInformationInitialValues>({
+      initialValues: USER_INFORMATION_FORM_INITIAL_VALUE(user),
+      validationSchema: USER_INFORMATION_FORM_VALIDATION,
+      enableReinitialize: true,
+      onSubmit: (values, { resetForm }) => {
+        console.log(values);
+
+        resetForm();
+      },
+    });
+
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    if (!e.target.files) {
+      return;
+    }
+
+    formikUserInformationInstance.setFieldValue('picture', e.target.files[0]);
+  }
+
   const renderUserInfoBlock = (
     <CommonProfileBlock>
       <CommonProfileBlockTitle variant='h4'>User Information</CommonProfileBlockTitle>
-      <ProfileUserInformationForm />
+      <ProfileUserInformationForm formikInstance={formikUserInformationInstance} onChange={handleImageChange} />
     </CommonProfileBlock>
   );
 
@@ -52,7 +77,7 @@ const Profile = (): ReactElement => {
       <SectionHeader
         primaryBtnLabel='Save'
         title='Profile'
-        onPrimaryButtonClick={() => toastService.info('Not Implemented yet')}
+        onPrimaryButtonClick={formikUserInformationInstance.submitForm}
       />
       {renderAccountSettingsBlocks}
       {renderApplicationSettingsBlock}

@@ -15,10 +15,6 @@ export const ImageWrapper = styled('figure')`
   margin-bottom: ${({ theme }) => theme.spacing(10)};
 `;
 
-export const ProfileInputFile = styled('input')`
-  display: none;
-`;
-
 export const ProfileAddButtonIcon = styled(AddAPhoto)`
   position: absolute;
   bottom: 20%;
