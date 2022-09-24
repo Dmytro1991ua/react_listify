@@ -4,10 +4,10 @@ import { ReactElement } from 'react';
 
 import FormikInput from '../../../../shared/components/input/formik-input/formik-input';
 import { InputDivider } from '../../../shopping-list-details/components/edit-product-item-modall/edit-product-item-modal.styled';
-import { ProfileUserInformationInitialValues } from '../profile-user-information-form/profile-user-information-form.interfaces';
+import { ProfileFormsInitialValues } from '../../profile.interfaces';
 
 interface ProfileUserInformationFieldsProps {
-  formikInstance: FormikProps<ProfileUserInformationInitialValues>;
+  formikInstance: FormikProps<ProfileFormsInitialValues>;
 }
 
 const ProfileUserInformationFields = ({ formikInstance }: ProfileUserInformationFieldsProps): ReactElement => {
