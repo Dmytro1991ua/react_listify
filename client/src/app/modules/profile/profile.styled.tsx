@@ -1,5 +1,11 @@
 import { Typography, styled } from '@mui/material';
 
+export const SectionContentWrapper = styled('div')`
+  max-height: 54rem;
+  overflow-y: auto;
+  padding: ${({ theme }) => `${theme.spacing(0)} ${theme.spacing(60)}`};
+`;
+
 export const ProfileAccountSettingsWrapper = styled('div', {
   shouldForwardProp: (prop) => prop !== 'hasEmailAndPasswordProvider',
 })<{ hasEmailAndPasswordProvider?: boolean }>`
@@ -19,6 +25,8 @@ export const BlockTitle = styled(Typography)`
 `;
 
 export const CommonProfileBlock = styled('div')`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   border: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
   border-radius: ${({ theme }) => theme.spacing(10)};
@@ -40,4 +48,11 @@ export const ContentWrapper = styled('div')`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+`;
+
+export const CommonFormWrapper = styled('div')`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 `;
