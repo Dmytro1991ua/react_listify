@@ -10,35 +10,47 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import firebase from 'firebase/compat';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
 import { AppRoutes } from '../../app.enums';
-import { CurrentUser } from '../../app.interfaces';
+import { CurrentUser, UpdateUserInformation } from '../../app.interfaces';
 import { AXIOS_CONFIG } from '../../configs/axios';
-import { auth } from '../../configs/firebase';
+import { auth, storage } from '../../configs/firebase';
 import { appLifeCycleService } from '../../services/app-lifecycle.service';
 import history from '../../services/history.service';
 import { toastService } from '../../services/toast.service';
 import {
+  FAILED_PROFILE_UPDATE_MESSAGE,
   FAILED_RESET_PASSWORD_MESSAGE,
   FAILED_SIGN_IN_MESSAGE,
   FAILED_SIGN_IN_VIA_GOOGLE_MESSAGE,
   FAILED_SIGN_OUT_MESSAGE,
   FAILED_SIGN_UP_MESSAGE,
   SUCCESSFUL_FORGOT_PASSWORD_MESSAGE,
+  SUCCESSFUL_PROFILE_UPDATE_MESSAGE,
   SUCCESSFUL_RESET_PASSWORD_MESSAGE,
   SUCCESSFUL_SIGN_IN_MESSAGE,
   SUCCESSFUL_SIGN_IN_VIA_GOOGLE_MESSAGE,
   SUCCESSFUL_SIGN_OUT_MESSAGE,
   SUCCESSFUL_SIGN_UP_MESSAGE,
 } from './auth.contants';
+import { useAuthStore } from './auth.store';
 
 class AuthService {
-  async signUp(email: string, password: string, name?: string): Promise<void> {
+  async signUp(email: string, password: string, name: string): Promise<void> {
+    const updateUser = useAuthStore.getState().setUpdateUser;
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       await sendEmailVerification(auth.currentUser as User);
       await updateProfile(auth.currentUser as User, {
-        displayName: name,
+        displayName: name ?? auth.currentUser?.photoURL,
+        photoURL: null ?? auth.currentUser?.photoURL,
+      });
+
+      updateUser({
+        name: auth.currentUser?.displayName ?? '',
+        photoURL: auth.currentUser?.photoURL ?? '',
       });
 
       history.push(AppRoutes.SignIn);
@@ -122,6 +134,53 @@ class AuthService {
 
       return resp.data;
     } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async uploadFile(image: File, setProgress: (value: number) => void): Promise<void> {
+    try {
+      const currentUser = auth?.currentUser as User;
+      const imageRef = ref(storage, `usersImages/${currentUser?.uid}/${image.name}`);
+      const updateUserInfo = useAuthStore.getState().setUpdateUser;
+
+      const uploadTask = uploadBytesResumable(imageRef, image);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const percentUploaded = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
+          setProgress(percentUploaded);
+        },
+        (error) => {
+          toastService.error((error as Error).message);
+        },
+        async () => {
+          const url = await getDownloadURL(uploadTask.snapshot.ref);
+          updateUserInfo({ photoURL: url });
+          setProgress(0);
+        }
+      );
+    } catch (error) {
+      toastService.error('Failed to upload image');
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async updateUserData(userData: UpdateUserInformation): Promise<UpdateUserInformation | null> {
+    try {
+      const resp = await AXIOS_CONFIG.post('/api/users/profile', userData);
+
+      if (!resp.data) {
+        return null;
+      }
+
+      history.push(AppRoutes.ShoppingLists);
+      toastService.success(SUCCESSFUL_PROFILE_UPDATE_MESSAGE);
+      return resp.data;
+    } catch (error) {
+      toastService.error(FAILED_PROFILE_UPDATE_MESSAGE);
       throw new Error((error as Error).message);
     }
   }

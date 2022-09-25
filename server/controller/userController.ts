@@ -3,14 +3,15 @@ import { Response, Request } from "express";
 import { DecodedIdToken } from "firebase-admin/lib/auth/token-verifier";
 import { firebaseAuth } from "../config/firebase.config";
 import { Currencies } from "../enums";
+import { UserRequest } from "../interfaces";
 import { User } from "../models/userSchema";
 
 const createNewUser = async (req: Request, res: Response, decodedIdToken: DecodedIdToken): Promise<void> => {
   const newUser = new User({
-    name: decodedIdToken.name,
+    name: decodedIdToken.name ?? "",
     uid: decodedIdToken.user_id,
     email: decodedIdToken.email,
-    photoURL: decodedIdToken.picture,
+    photoURL: decodedIdToken.picture ?? "",
     emailVerified: decodedIdToken.email_verified,
     authTime: decodedIdToken.auth_time,
     currency: Currencies.Dollar,
@@ -36,7 +37,6 @@ const updateNewUser = async (req: Request, res: Response, decodedIdToken: Decode
     const updatedUser = await User.findOneAndUpdate(
       filterUsers,
       {
-        name: decodedIdToken.name,
         emailVerified: decodedIdToken.email_verified,
         authTime: decodedIdToken.auth_time,
       },
@@ -75,5 +75,23 @@ export const getUser = async (req: Request, res: Response): Promise<Response<any
     }
   } catch (err) {
     return res.status(500).send({ success: false, message: (err as Error).message });
+  }
+};
+
+// @desc Update user name and photoUrl inside profile page
+// @route POST /api/users/profile
+// @access Private
+export const updateUserProfile = async (req: UserRequest, res: Response) => {
+  const user = req.currentUser;
+
+  try {
+    const update = { name: req.body.name, photoURL: req.body.photoURL };
+    const filter = { uid: user && user.uid };
+    const updatedDocument = await User.findOneAndUpdate(filter, update, { new: true });
+
+    return res.status(200).send(updatedDocument);
+  } catch (err) {
+    res.status(404);
+    throw new Error("User not found");
   }
 };

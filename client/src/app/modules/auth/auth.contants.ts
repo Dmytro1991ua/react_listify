@@ -10,3 +10,6 @@ export const FAILED_SIGN_IN_MESSAGE = 'Failed to sign in into the application';
 export const FAILED_SIGN_OUT_MESSAGE = 'Failed to log out';
 export const FAILED_RESET_PASSWORD_MESSAGE = 'Failed to change a password';
 export const FAILED_SIGN_IN_VIA_GOOGLE_MESSAGE = 'Failed to logged in via Google';
+
+export const SUCCESSFUL_PROFILE_UPDATE_MESSAGE = 'Successfully update user profile data';
+export const FAILED_PROFILE_UPDATE_MESSAGE = 'Failed to update user profile data';

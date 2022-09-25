@@ -56,3 +56,8 @@ export interface CommonModalProps<T> {
   onClose: () => void;
   onSubmit: () => Promise<void> | void;
 }
+
+export interface UpdateUserInformation {
+  name?: string;
+  photoURL?: string;
+}

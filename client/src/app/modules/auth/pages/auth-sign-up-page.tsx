@@ -20,7 +20,7 @@ const AuthSignUpPage = (): ReactElement => {
   ): Promise<void> {
     const { name, email, password } = values;
 
-    await authService.signUp(email, password, name);
+    await authService.signUp(email, password, name ?? '');
 
     actions.resetForm();
   }
