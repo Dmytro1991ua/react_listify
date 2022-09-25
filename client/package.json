@@ -24,6 +24,7 @@
     "firebase": "^9.8.4",
     "formik": "^2.2.9",
     "formik-mui": "^4.0.0-alpha.3",
+    "immer": "^9.0.15",
     "lodash": "^4.17.21",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

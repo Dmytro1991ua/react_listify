@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -17,6 +18,13 @@ export const useAuthStore = create<AuthStoreState & AuthStoreActions>()(
       },
       setUserLoadingStatus: (payload) =>
         set((state) => ({ ...state, userLoadingStatus: payload }), false, 'setUserLoadingStatus'),
+      setUpdateUser: (payload) => {
+        return set(
+          produce((state) => ({ user: { ...state.user, ...payload } })),
+          false,
+          'setUpdateUser'
+        );
+      },
       reset: () => set({ ...initialState, userLoadingStatus: 'idle' }, false, 'resetAuthStore'),
     }),
     { name: 'AuthStore' }

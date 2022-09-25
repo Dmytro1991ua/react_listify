@@ -1,8 +1,10 @@
 import { FormikProps, useFormik } from 'formik';
-import { ReactElement } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 
 import SectionHeader from '../../shared/components/section-header/section-header';
 import { availableCurrencies, sortedDropdownItems } from '../../utils';
+import { updateUserDataAction } from '../auth/auth.actions';
+import { authService } from '../auth/auth.service';
 import { useAuthStore } from '../auth/auth.store';
 import ProfileChangePasswordForm from './components/profile-change-password-form/profile-change-password-form';
 import ProfileUserInformationForm from './components/profile-user-information-form/profile-user-information-form';
@@ -21,25 +23,52 @@ const Profile = (): ReactElement => {
   const user = useAuthStore((state) => state.user);
   const hasEmailAndPasswordProvider = user?.firebaseProviders?.includes('password');
 
+  const [imageUpload, setImageUpload] = useState<File | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
+  //TODO: Remove later on
+  console.log(uploadProgress);
+
   const sortedAvailableCurrencies = sortedDropdownItems(availableCurrencies);
 
   const formikProfileFormsInstance: FormikProps<ProfileFormsInitialValues> = useFormik<ProfileFormsInitialValues>({
     initialValues: PROFILE_FORM_INITIAL_VALUES(user),
     validationSchema: PROFILE_FORM_VALIDATION_SCHEMA,
     enableReinitialize: true,
-    onSubmit: (values, { resetForm }) => {
-      console.log(values);
+    onSubmit: async (values, { resetForm }) => {
+      await handleFormSubmit(values);
 
       resetForm();
     },
   });
+
+  const uploadUserImage = useCallback(async () => {
+    try {
+      imageUpload && (await authService.uploadFile(imageUpload, setUploadProgress));
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }, [imageUpload]);
+
+  useEffect(() => {
+    uploadUserImage();
+  }, [imageUpload, uploadUserImage]);
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>): void {
     if (!e.target.files) {
       return;
     }
 
-    formikProfileFormsInstance.setFieldValue('picture', e.target.files[0]);
+    setImageUpload(e.target.files[0]);
+    formikProfileFormsInstance.setFieldValue('picture', imageUpload);
+  }
+
+  async function handleFormSubmit(values: ProfileFormsInitialValues): Promise<void> {
+    try {
+      await updateUserDataAction({ name: values.name, photoURL: values.picture });
+    } catch (err) {
+      throw new Error((err as Error).message);
+    }
   }
 
   const renderUserInfoBlock = (
@@ -79,7 +108,8 @@ const Profile = (): ReactElement => {
   return (
     <section>
       <SectionHeader
-        disabled={!formikProfileFormsInstance.dirty}
+        //TODO Uncomment out later on
+        // disabled={!(formikProfileFormsInstance.isValid && formikProfileFormsInstance.dirty)}
         primaryBtnLabel='Save'
         title='Profile'
         onPrimaryButtonClick={formikProfileFormsInstance.submitForm}
