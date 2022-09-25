@@ -14,7 +14,7 @@ interface ProfileUserInformationFormProps {
 const ProfileUserInformationForm = ({ formikInstance, onChange }: ProfileUserInformationFormProps): ReactElement => {
   return (
     <ContentWrapper>
-      <ProfileUserInformationImage onChange={onChange} />
+      <ProfileUserInformationImage formikInstance={formikInstance} onChange={onChange} />
       <ProfileUserInformationFields formikInstance={formikInstance} />
     </ContentWrapper>
   );

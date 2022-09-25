@@ -1,4 +1,4 @@
-import { CurrentUser, LoadingStatus } from '../../app.interfaces';
+import { CurrentUser, LoadingStatus, UpdateUserInformation } from '../../app.interfaces';
 
 export interface SignInFormInitialValues {
   email: string;
@@ -28,5 +28,6 @@ export type AuthStoreState = {
 export type AuthStoreActions = {
   setUser: (user: CurrentUser | null) => void;
   setUserLoadingStatus: (loadingStatus: LoadingStatus) => void;
+  setUpdateUser: (userInfo: UpdateUserInformation) => void;
   reset: () => void;
 };
