@@ -1,12 +1,16 @@
 import {
+  EmailAuthProvider,
   User,
+  UserCredential,
   confirmPasswordReset,
   createUserWithEmailAndPassword,
   getIdToken,
+  reauthenticateWithCredential,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
+  updatePassword,
   updateProfile,
 } from 'firebase/auth';
 import firebase from 'firebase/compat';
@@ -20,6 +24,7 @@ import { appLifeCycleService } from '../../services/app-lifecycle.service';
 import history from '../../services/history.service';
 import { toastService } from '../../services/toast.service';
 import {
+  FAILED_PASSWORD_CHANGED_MESSAGE,
   FAILED_PROFILE_UPDATE_MESSAGE,
   FAILED_RESET_PASSWORD_MESSAGE,
   FAILED_SIGN_IN_MESSAGE,
@@ -27,6 +32,7 @@ import {
   FAILED_SIGN_OUT_MESSAGE,
   FAILED_SIGN_UP_MESSAGE,
   SUCCESSFUL_FORGOT_PASSWORD_MESSAGE,
+  SUCCESSFUL_PASSWORD_CHANGED_MESSAGE,
   SUCCESSFUL_PROFILE_UPDATE_MESSAGE,
   SUCCESSFUL_RESET_PASSWORD_MESSAGE,
   SUCCESSFUL_SIGN_IN_MESSAGE,
@@ -181,6 +187,34 @@ class AuthService {
       return resp.data;
     } catch (error) {
       toastService.error(FAILED_PROFILE_UPDATE_MESSAGE);
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async userReauthentication(currentPassword: string): Promise<UserCredential> {
+    try {
+      const currentUser = auth?.currentUser as User;
+      const userCredentials = EmailAuthProvider.credential(currentUser?.email ?? '', currentPassword);
+
+      return reauthenticateWithCredential(currentUser, userCredentials);
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async changeUserPassword(currentPassword: string, newPassword: string) {
+    try {
+      const currentUser = auth?.currentUser as User;
+      const userReauthenticated = await this.userReauthentication(currentPassword);
+
+      if (userReauthenticated) {
+        await updatePassword(currentUser, newPassword);
+      }
+
+      history.push(AppRoutes.ShoppingLists);
+      toastService.success(SUCCESSFUL_PASSWORD_CHANGED_MESSAGE);
+    } catch (error) {
+      toastService.error(FAILED_PASSWORD_CHANGED_MESSAGE);
       throw new Error((error as Error).message);
     }
   }
