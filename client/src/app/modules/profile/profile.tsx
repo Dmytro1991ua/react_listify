@@ -9,6 +9,7 @@ import { useAuthStore } from '../auth/auth.store';
 import ProfileChangePasswordForm from './components/profile-change-password-form/profile-change-password-form';
 import ProfileUserInformationForm from './components/profile-user-information-form/profile-user-information-form';
 import ProfileUserPreferencesForm from './components/profile-user-preferences-form/profile-user-preferences-form';
+import { FILE_SIZE, SUPPORTED_IMAGE_EXTENSIONS } from './profile.constants';
 import { ProfileFormsInitialValues } from './profile.interfaces';
 import { PROFILE_FORM_INITIAL_VALUES, PROFILE_FORM_VALIDATION_SCHEMA } from './profile.schema';
 import {
@@ -26,29 +27,32 @@ const Profile = (): ReactElement => {
   const [imageUpload, setImageUpload] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
 
-  //TODO: Remove later on
-  console.log(uploadProgress);
-
-  const sortedAvailableCurrencies = sortedDropdownItems(availableCurrencies);
-
   const formikProfileFormsInstance: FormikProps<ProfileFormsInitialValues> = useFormik<ProfileFormsInitialValues>({
     initialValues: PROFILE_FORM_INITIAL_VALUES(user),
     validationSchema: PROFILE_FORM_VALIDATION_SCHEMA,
     enableReinitialize: true,
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
       await handleFormSubmit(values);
 
+      setSubmitting(false);
       resetForm();
     },
   });
 
+  const sortedAvailableCurrencies = sortedDropdownItems(availableCurrencies);
+  const hasToBeUploaded =
+    imageUpload && imageUpload.size < FILE_SIZE && SUPPORTED_IMAGE_EXTENSIONS.includes(imageUpload?.type);
+
+  //TODO Rework Submit button disable behavior
+  const isDisabled = !formikProfileFormsInstance.isValid || !formikProfileFormsInstance.dirty;
+
   const uploadUserImage = useCallback(async () => {
     try {
-      imageUpload && (await authService.uploadFile(imageUpload, setUploadProgress));
+      hasToBeUploaded && (await authService.uploadFile(imageUpload, setUploadProgress));
     } catch (error) {
       throw new Error((error as Error).message);
     }
-  }, [imageUpload]);
+  }, [imageUpload, hasToBeUploaded]);
 
   useEffect(() => {
     uploadUserImage();
@@ -60,12 +64,12 @@ const Profile = (): ReactElement => {
     }
 
     setImageUpload(e.target.files[0]);
-    formikProfileFormsInstance.setFieldValue('picture', imageUpload);
+    formikProfileFormsInstance.setFieldValue('picture', e.target.files[0]);
   }
 
   async function handleFormSubmit(values: ProfileFormsInitialValues): Promise<void> {
     try {
-      await updateUserDataAction({ name: values.name, photoURL: values.picture });
+      await updateUserDataAction({ name: values.name, photoURL: values.picture ?? '' });
     } catch (err) {
       throw new Error((err as Error).message);
     }
@@ -74,7 +78,11 @@ const Profile = (): ReactElement => {
   const renderUserInfoBlock = (
     <CommonProfileBlock>
       <CommonProfileBlockTitle variant='h4'>User Information</CommonProfileBlockTitle>
-      <ProfileUserInformationForm formikInstance={formikProfileFormsInstance} onChange={handleImageChange} />
+      <ProfileUserInformationForm
+        formikInstance={formikProfileFormsInstance}
+        uploadProgress={uploadProgress}
+        onChange={handleImageChange}
+      />
     </CommonProfileBlock>
   );
 
@@ -108,8 +116,7 @@ const Profile = (): ReactElement => {
   return (
     <section>
       <SectionHeader
-        //TODO Uncomment out later on
-        // disabled={!(formikProfileFormsInstance.isValid && formikProfileFormsInstance.dirty)}
+        disabled={isDisabled}
         primaryBtnLabel='Save'
         title='Profile'
         onPrimaryButtonClick={formikProfileFormsInstance.submitForm}

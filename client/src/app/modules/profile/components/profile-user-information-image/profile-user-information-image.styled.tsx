@@ -18,10 +18,10 @@ export const ImageWrapper = styled('figure')`
 export const ProfileAddButtonIcon = styled(AddAPhoto)`
   position: absolute;
   bottom: 20%;
-  right: -5%;
-  width: 5rem;
-  height: 5rem;
-  fill: ${({ theme }) => theme.palette.success.dark};
+  right: -1%;
+  width: 3.5rem;
+  height: 3.5rem;
+  fill: ${({ theme }) => theme.palette.common.black};
   transition transform 300ms ease-in-out ;
   cursor: pointer ;
 
