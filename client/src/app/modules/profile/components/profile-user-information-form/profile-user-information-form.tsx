@@ -9,13 +9,25 @@ import ProfileUserInformationImage from '../profile-user-information-image/profi
 interface ProfileUserInformationFormProps {
   formikInstance: FormikProps<ProfileFormsInitialValues>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  uploadProgress: number;
 }
 
-const ProfileUserInformationForm = ({ formikInstance, onChange }: ProfileUserInformationFormProps): ReactElement => {
+const ProfileUserInformationForm = ({
+  formikInstance,
+  uploadProgress,
+  onChange,
+}: ProfileUserInformationFormProps): ReactElement => {
   return (
     <ContentWrapper>
-      <ProfileUserInformationImage formikInstance={formikInstance} onChange={onChange} />
-      <ProfileUserInformationFields formikInstance={formikInstance} />
+      <ProfileUserInformationImage
+        formikInstance={formikInstance}
+        uploadProgress={uploadProgress}
+        onChange={onChange}
+      />
+      <ProfileUserInformationFields
+        formikInstance={formikInstance}
+        isUploading={uploadProgress > 0 || Boolean(formikInstance.errors.picture)}
+      />
     </ContentWrapper>
   );
 };

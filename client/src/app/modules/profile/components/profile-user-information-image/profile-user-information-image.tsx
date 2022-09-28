@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { FormikProps, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 
@@ -5,14 +6,20 @@ import { UserImageSize } from '../../../../app.enums';
 import FallbackImage from '../../../../shared/components/fallback-image/fallback-image';
 import { useAuthStore } from '../../../auth/auth.store';
 import { ProfileFormsInitialValues } from '../../profile.interfaces';
+import ProgressBar from '../progress-bar/progress-bar';
 import { ImageWrapper, ProfileAddButtonIcon, ProfileImageContainer } from './profile-user-information-image.styled';
 
 interface ProfileUserInformationImageProps {
   formikInstance: FormikProps<ProfileFormsInitialValues>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  uploadProgress: number;
 }
 
-const ProfileUserInformationImage = ({ formikInstance, onChange }: ProfileUserInformationImageProps): ReactElement => {
+const ProfileUserInformationImage = ({
+  formikInstance,
+  uploadProgress,
+  onChange,
+}: ProfileUserInformationImageProps): ReactElement => {
   const user = useAuthStore((state) => state.user);
 
   const renderImage = (
@@ -28,6 +35,12 @@ const ProfileUserInformationImage = ({ formikInstance, onChange }: ProfileUserIn
         </label>
         <input hidden accept='image/*' id='file' name='picture' type='file' onChange={onChange} />
       </ImageWrapper>
+      {formikInstance.errors.picture && (
+        <Typography color='error.main' variant='h5'>
+          {formikInstance.errors.picture}
+        </Typography>
+      )}
+      {uploadProgress > 0 && !formikInstance.errors.picture && <ProgressBar uploadProgress={uploadProgress} />}
     </FormikProvider>
   );
 
