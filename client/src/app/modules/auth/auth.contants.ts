@@ -13,3 +13,6 @@ export const FAILED_SIGN_IN_VIA_GOOGLE_MESSAGE = 'Failed to logged in via Google
 
 export const SUCCESSFUL_PROFILE_UPDATE_MESSAGE = 'Successfully update user profile data';
 export const FAILED_PROFILE_UPDATE_MESSAGE = 'Failed to update user profile data';
+
+export const SUCCESSFUL_PASSWORD_CHANGED_MESSAGE = 'Successfully changed password';
+export const FAILED_PASSWORD_CHANGED_MESSAGE = 'Failed to changed password';

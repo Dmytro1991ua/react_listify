@@ -70,6 +70,7 @@ const Profile = (): ReactElement => {
   async function handleFormSubmit(values: ProfileFormsInitialValues): Promise<void> {
     try {
       await updateUserDataAction({ name: values.name, photoURL: values.picture ?? '' });
+      await authService.changeUserPassword(values.currentPassword ?? '', values.newPassword ?? '');
     } catch (err) {
       throw new Error((err as Error).message);
     }
