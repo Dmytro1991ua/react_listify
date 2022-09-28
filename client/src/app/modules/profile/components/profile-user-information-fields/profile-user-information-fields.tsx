@@ -1,28 +1,32 @@
-import { Box } from '@mui/material';
-import { Form, FormikProps, FormikProvider } from 'formik';
+import { FormikProps, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 
 import FormikInput from '../../../../shared/components/input/formik-input/formik-input';
 import { InputDivider } from '../../../shopping-list-details/components/edit-product-item-modall/edit-product-item-modal.styled';
 import { ProfileFormsInitialValues } from '../../profile.interfaces';
+import { FormWrapper, UserInformationForm } from './profile-user-information-fields.styled';
 
 interface ProfileUserInformationFieldsProps {
   formikInstance: FormikProps<ProfileFormsInitialValues>;
+  isUploading: boolean;
 }
 
-const ProfileUserInformationFields = ({ formikInstance }: ProfileUserInformationFieldsProps): ReactElement => {
+const ProfileUserInformationFields = ({
+  formikInstance,
+  isUploading,
+}: ProfileUserInformationFieldsProps): ReactElement => {
   return (
     <FormikProvider value={formikInstance}>
-      <Box sx={{ flex: 1, marginLeft: '2rem' }}>
-        <Form>
+      <FormWrapper>
+        <UserInformationForm isUploading={isUploading}>
           <InputDivider>
             <FormikInput disabled fullWidth id='email' name='email' placeholder='Enter your email' />
           </InputDivider>
           <InputDivider>
             <FormikInput fullWidth id='name' name='name' placeholder='Enter your name' />
           </InputDivider>
-        </Form>
-      </Box>
+        </UserInformationForm>
+      </FormWrapper>
     </FormikProvider>
   );
 };

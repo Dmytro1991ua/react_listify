@@ -7,7 +7,7 @@ import { ProfileFormsInitialValues } from './profile.interfaces';
 
 export const PROFILE_FORM_INITIAL_VALUES = (currentUser: CurrentUser | null): ProfileFormsInitialValues => {
   return {
-    picture: currentUser?.photoURL ?? '',
+    picture: currentUser?.photoURL ?? null,
     email: currentUser?.email ?? '',
     name: currentUser?.name ?? '',
     currentPassword: '',
@@ -30,12 +30,12 @@ export const PROFILE_FORM_VALIDATION_SCHEMA: yup.SchemaOf<ProfileFormsInitialVal
 
         return yup
           .mixed()
-          .test('fileSize', 'The file is too large', (value) => {
-            return !value || (value && value.size <= FILE_SIZE);
-          })
-          .test('type', 'Unsupported image format', function (value) {
-            return !value || (value && SUPPORTED_IMAGE_EXTENSIONS.includes(value.type));
-          });
+          .test('fileSize', 'Uploaded image is too large', (value) => !value || (value && value.size <= FILE_SIZE))
+          .test(
+            'type',
+            'Unsupported image format',
+            (value) => !value || (value && SUPPORTED_IMAGE_EXTENSIONS.includes(value?.type))
+          );
       }),
     email: yup.string().label('Email'),
     name: yup.string().label('Name'),
