@@ -21,6 +21,7 @@ const ProfileUserPreferencesFields = ({ formikInstance, options }: ProfileUserPr
           <FieldLabel variant='h5'>Calculate prices by quantity:</FieldLabel>
           <Switch
             checked={formikInstance.values.calculatedPrice as boolean}
+            name='calculatedPrice'
             size='small'
             onChange={(e) => formikInstance.setFieldValue('calculatedPrice', e.target.checked)}
           />
@@ -31,7 +32,7 @@ const ProfileUserPreferencesFields = ({ formikInstance, options }: ProfileUserPr
             fullWidth
             icon={IoMdArrowDropdown}
             label='Select Currency'
-            name='currency'
+            name='defaultCurrency'
             options={options}
             value={formikInstance.values.defaultCurrency ?? Currencies.Dollar}
             onChange={(e) => formikInstance.setFieldValue('defaultCurrency', e.target.value)}

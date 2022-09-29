@@ -67,10 +67,33 @@ const Profile = (): ReactElement => {
     formikProfileFormsInstance.setFieldValue('picture', e.target.files[0]);
   }
 
+  async function updateUserInfoAndPassword(values: ProfileFormsInitialValues): Promise<false | void> {
+    return (
+      !values.currentPassword &&
+      !values.newPassword &&
+      !values.confirmPassword &&
+      (await updateUserDataAction({
+        name: values.name,
+        photoURL: values.picture ?? '',
+        currency: values.defaultCurrency,
+        calculateByQuantity: values.calculatedPrice,
+      }))
+    );
+  }
+
+  async function updateUserPreferences(values: ProfileFormsInitialValues): Promise<void | '' | undefined> {
+    return (
+      values.currentPassword &&
+      values.newPassword &&
+      values.confirmPassword &&
+      (await authService.changeUserPassword(values.currentPassword, values.newPassword))
+    );
+  }
+
   async function handleFormSubmit(values: ProfileFormsInitialValues): Promise<void> {
     try {
-      await updateUserDataAction({ name: values.name, photoURL: values.picture ?? '' });
-      await authService.changeUserPassword(values.currentPassword ?? '', values.newPassword ?? '');
+      await updateUserInfoAndPassword(values);
+      await updateUserPreferences(values);
     } catch (err) {
       throw new Error((err as Error).message);
     }
