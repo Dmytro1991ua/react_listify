@@ -13,8 +13,8 @@ export const PROFILE_FORM_INITIAL_VALUES = (currentUser: CurrentUser | null): Pr
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
-    calculatedPrice: false,
-    defaultCurrency: Currencies.Dollar,
+    calculatedPrice: currentUser?.calculateByQuantity ?? false,
+    defaultCurrency: currentUser?.currency ?? Currencies.Dollar,
   };
 };
 

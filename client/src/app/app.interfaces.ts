@@ -60,4 +60,6 @@ export interface CommonModalProps<T> {
 export interface UpdateUserInformation {
   name?: string;
   photoURL?: string;
+  currency?: Currencies;
+  calculateByQuantity?: boolean;
 }
