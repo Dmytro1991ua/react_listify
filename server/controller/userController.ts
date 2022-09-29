@@ -85,7 +85,12 @@ export const updateUserProfile = async (req: UserRequest, res: Response) => {
   const user = req.currentUser;
 
   try {
-    const update = { name: req.body.name, photoURL: req.body.photoURL };
+    const update = {
+      name: req.body.name,
+      photoURL: req.body.photoURL,
+      currency: req.body.currency,
+      calculateByQuantity: req.body.calculateByQuantity,
+    };
     const filter = { uid: user && user.uid };
     const updatedDocument = await User.findOneAndUpdate(filter, update, { new: true });
 
