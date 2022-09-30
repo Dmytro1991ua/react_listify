@@ -1,7 +1,7 @@
 import { Currencies } from '../../app.enums';
 
 export interface ProfileFormsInitialValues {
-  picture?: string | null;
+  picture?: string;
   email?: string;
   name?: string;
   currentPassword?: string;
