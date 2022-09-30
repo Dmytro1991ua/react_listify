@@ -31,10 +31,9 @@ const Profile = (): ReactElement => {
     initialValues: PROFILE_FORM_INITIAL_VALUES(user),
     validationSchema: PROFILE_FORM_VALIDATION_SCHEMA,
     enableReinitialize: true,
-    onSubmit: async (values, { resetForm, setSubmitting }) => {
+    onSubmit: async (values, { resetForm }) => {
       await handleFormSubmit(values);
 
-      setSubmitting(false);
       resetForm();
     },
   });
@@ -42,9 +41,6 @@ const Profile = (): ReactElement => {
   const sortedAvailableCurrencies = sortedDropdownItems(availableCurrencies);
   const hasToBeUploaded =
     imageUpload && imageUpload.size < FILE_SIZE && SUPPORTED_IMAGE_EXTENSIONS.includes(imageUpload?.type);
-
-  //TODO Rework Submit button disable behavior
-  const isDisabled = !formikProfileFormsInstance.isValid || !formikProfileFormsInstance.dirty;
 
   const uploadUserImage = useCallback(async () => {
     try {
@@ -140,7 +136,6 @@ const Profile = (): ReactElement => {
   return (
     <section>
       <SectionHeader
-        disabled={isDisabled}
         primaryBtnLabel='Save'
         title='Profile'
         onPrimaryButtonClick={formikProfileFormsInstance.submitForm}

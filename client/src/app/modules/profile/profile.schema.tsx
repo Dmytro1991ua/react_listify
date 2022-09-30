@@ -7,7 +7,7 @@ import { ProfileFormsInitialValues } from './profile.interfaces';
 
 export const PROFILE_FORM_INITIAL_VALUES = (currentUser: CurrentUser | null): ProfileFormsInitialValues => {
   return {
-    picture: currentUser?.photoURL ?? null,
+    picture: currentUser?.photoURL ?? '',
     email: currentUser?.email ?? '',
     name: currentUser?.name ?? '',
     currentPassword: '',
