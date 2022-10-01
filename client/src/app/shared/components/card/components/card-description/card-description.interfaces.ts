@@ -38,4 +38,16 @@ export interface CardDescriptionContentProps {
    * @example true/false
    */
   isShoppingList?: boolean;
+  /**
+   * @param {number} Defines ToBuyLabel for a specific shopping list
+   * @default 0
+   * @example 10
+   */
+  toBuyLabel?: number;
+  /**
+   * @param {number} Defines ToPurchasedLabel for a specific shopping list
+   * @default 0
+   * @example 20
+   */
+  toPurchasedLabel?: number;
 }

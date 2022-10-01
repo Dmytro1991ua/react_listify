@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material';
 import { ReactElement } from 'react';
 
 import { Currencies } from '../../../../../app.enums';
@@ -11,16 +12,36 @@ const CardDescriptionContent = ({
   units = 'units',
   currency = Currencies.Dollar,
   isShoppingList,
+  toBuyLabel = 0,
+  toPurchasedLabel = 0,
 }: CardDescriptionContentProps): ReactElement => {
-  const shoppingListQuantityLabel = quantity === 1 && isShoppingList ? 'product' : 'products';
   const shoppingListDetailsQuantityLabel = units ? units : 'units';
-  const generalQuantityLabel = isShoppingList ? shoppingListQuantityLabel : shoppingListDetailsQuantityLabel;
   const isShoppingListTotalPrice = isShoppingList ? totalPrice : price;
+
+  const tooltipTitle = `To Buy: ${toBuyLabel} / Purchased: ${toPurchasedLabel}`;
+
+  const renderTooltipContent = (
+    <>
+      {isShoppingList ? (
+        <Tooltip arrow enterDelay={500} leaveDelay={200} title={tooltipTitle}>
+          <span>
+            {toBuyLabel}/{toPurchasedLabel}&nbsp;products
+          </span>
+        </Tooltip>
+      ) : (
+        <span>
+          {quantity}&nbsp;{shoppingListDetailsQuantityLabel}
+        </span>
+      )}
+    </>
+  );
 
   return (
     <CardDescriptionWrapper>
       <CardDescription variant='h5'>
-        {quantity}&nbsp;{generalQuantityLabel}
+        <Tooltip arrow enterDelay={500} leaveDelay={200} title='Test'>
+          {renderTooltipContent}
+        </Tooltip>
       </CardDescription>
       <CardDescription variant='h5'>
         {isShoppingListTotalPrice}&nbsp;{currency}

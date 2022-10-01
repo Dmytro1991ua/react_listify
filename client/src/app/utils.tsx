@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Currencies, ProductUnits } from './app.enums';
-import { ShoppingListItem, SortingItem } from './app.interfaces';
+import { ShoppingListData, ShoppingListItem, SortingItem } from './app.interfaces';
 import { DropdownOption } from './shared/components/select/select.interfaces';
 
 /**
@@ -105,3 +105,11 @@ export const toggleAllProductItems = (
     ...item,
     isChecked: event.target.checked,
   }));
+
+/**
+ * Function determine nad return value for To Buy and Purchased shopping list item based on isChecked property
+ * @returns number | undefined
+ */
+export const toBuyOrPurchasedLabel = (shoppingList: ShoppingListData, value: boolean): number | undefined => {
+  return shoppingList?.shoppingListItems?.filter((item) => item.isChecked === value).length;
+};

@@ -1,3 +1,4 @@
+import { green } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
 import { CUSTOM_BUTTON_CONFIGS } from './button.configs';
@@ -16,6 +17,20 @@ export const CUSTOM_THEME = createTheme({
     },
     MuiButton: {
       variants: CUSTOM_BUTTON_CONFIGS,
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: green[900],
+          color: 'fff',
+          padding: '12px',
+          fontSize: '14px',
+          fontWeight: 'bold',
+        },
+        arrow: {
+          color: green[900],
+        },
+      },
     },
   },
   mixins: MIXINS_OPTIONS,
