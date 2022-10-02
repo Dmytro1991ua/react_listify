@@ -1,8 +1,9 @@
 import { Box, MenuItem, Toolbar } from '@mui/material';
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { AppRoutes, UserImageSize } from '../../../app.enums';
+import { useDropdownMenu } from '../../../cdk/hooks/useDropdownMenu';
 import { useAuthStore } from '../../../modules/auth/auth.store';
 import FallbackImage from '../../components/fallback-image/fallback-image';
 import { DROPDOWN_MENU_CONFIGS } from './header.configs';
@@ -14,18 +15,9 @@ const Header = (): ReactElement => {
   const user = useAuthStore((state) => state.user);
   const isUserAuthenticated = Boolean(user);
 
-  const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
+  const { anchorElement, isDropdownMenuOpened, onDropdownMenuClose, onDropdownMenuOpen } = useDropdownMenu();
 
-  const isMenuOpened = Boolean(anchorElement);
   const isProfileRoute = location.pathname === AppRoutes.Profile;
-
-  function handleMenuOpen(event: React.MouseEvent<HTMLButtonElement>): void {
-    setAnchorElement(event.currentTarget);
-  }
-
-  function handleMenuClose(): void {
-    setAnchorElement(null);
-  }
 
   return (
     <HeaderWrapper elevation={0} variant='outlined'>
@@ -35,7 +27,7 @@ const Header = (): ReactElement => {
           <LogoIcon />
         </Logo>
         <Box sx={{ marginLeft: 'auto' }}>
-          <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handleMenuOpen}>
+          <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={onDropdownMenuOpen}>
             <FallbackImage
               altText="User's profile photo"
               imageUrl={user?.photoURL as string}
@@ -44,13 +36,13 @@ const Header = (): ReactElement => {
               size={UserImageSize.Small}
             />
           </button>
-          <DropdownMenu anchorEl={anchorElement} open={isMenuOpened} onClose={handleMenuClose}>
+          <DropdownMenu anchorEl={anchorElement} open={isDropdownMenuOpened} onClose={onDropdownMenuClose}>
             {DROPDOWN_MENU_CONFIGS.map((item) => (
               <MenuItem
                 key={item.id}
                 onClick={() => {
                   item.onClick();
-                  handleMenuClose();
+                  onDropdownMenuClose();
                 }}
               >
                 {item.icon} {item.label}
