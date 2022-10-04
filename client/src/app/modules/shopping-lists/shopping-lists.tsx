@@ -16,7 +16,7 @@ import SectionHeader from '../../shared/components/section-header/section-header
 import { availableCurrencies, sortedDropdownItems, sortedItems } from '../../utils';
 import { useAuthStore } from '../auth/auth.store';
 import ShoppingList from './components/shopping-list/shopping-list';
-import { useShoppingListModal } from './hooks/useCreateShoppingListModal';
+import { useShoppingListsModal } from './hooks/useShoppingListsModal';
 import {
   SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_FALLBACK_MESSAGE_TITLE,
@@ -61,7 +61,7 @@ const ShoppingLists = (): ReactElement => {
     onCreateShoppingList,
     onShoppingListDeletion,
     onCreateShoppingListFormSubmit,
-  } = useShoppingListModal({ formikInstance, shoppingListId, setValidateAfterSubmit });
+  } = useShoppingListsModal({ formikInstance, shoppingListId, setValidateAfterSubmit });
   const { anchorElement, isDropdownMenuOpened, onDropdownMenuClose, onDropdownMenuOpen } = useDropdownMenu();
 
   function handleCardDoubleClick(id: string): void {
