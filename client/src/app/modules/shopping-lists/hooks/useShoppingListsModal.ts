@@ -25,7 +25,7 @@ type ReturnedHookType = {
   onCreateShoppingListFormSubmit: (values: CreateShoppingListFromInitialValues) => Promise<void>;
 };
 
-export const useShoppingListModal = ({
+export const useShoppingListsModal = ({
   formikInstance,
   shoppingListId,
   setValidateAfterSubmit,

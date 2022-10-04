@@ -36,7 +36,7 @@ const DeleteShoppingListModal = ({
       open={isModalOpen}
       primaryBtnLabel='Yes'
       secondaryBtnLabel='No'
-      title='Are you sure you want to delete shopping list details?'
+      title='Are you sure you want to delete shopping list with details?'
       onClose={handleCloseModal}
       onSubmit={handleShoppingListDeletion}
     />
