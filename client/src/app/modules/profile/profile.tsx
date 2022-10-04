@@ -1,15 +1,14 @@
 import { FormikProps, useFormik } from 'formik';
-import { ReactElement, useCallback, useEffect, useState } from 'react';
+import { ReactElement } from 'react';
 
 import SectionHeader from '../../shared/components/section-header/section-header';
 import { availableCurrencies, sortedDropdownItems } from '../../utils';
-import { updateUserDataAction } from '../auth/auth.actions';
-import { authService } from '../auth/auth.service';
 import { useAuthStore } from '../auth/auth.store';
 import ProfileChangePasswordForm from './components/profile-change-password-form/profile-change-password-form';
 import ProfileUserInformationForm from './components/profile-user-information-form/profile-user-information-form';
 import ProfileUserPreferencesForm from './components/profile-user-preferences-form/profile-user-preferences-form';
-import { FILE_SIZE, SUPPORTED_IMAGE_EXTENSIONS } from './profile.constants';
+import { useProfileFormSubmit } from './hooks/useProfileFormSubmit';
+import { useUploadImage } from './hooks/useUploadImage';
 import { ProfileFormsInitialValues } from './profile.interfaces';
 import { PROFILE_FORM_INITIAL_VALUES, PROFILE_FORM_VALIDATION_SCHEMA } from './profile.schema';
 import {
@@ -22,10 +21,6 @@ import {
 
 const Profile = (): ReactElement => {
   const user = useAuthStore((state) => state.user);
-  const hasEmailAndPasswordProvider = user?.firebaseProviders?.includes('password');
-
-  const [imageUpload, setImageUpload] = useState<File | null>(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   const formikProfileFormsInstance: FormikProps<ProfileFormsInitialValues> = useFormik<ProfileFormsInitialValues>({
     initialValues: PROFILE_FORM_INITIAL_VALUES(user),
@@ -38,61 +33,15 @@ const Profile = (): ReactElement => {
     },
   });
 
+  const { uploadProgress, onImageChange } = useUploadImage({ formikInstance: formikProfileFormsInstance });
+
+  const { onProfileFormSubmit } = useProfileFormSubmit();
+
+  const hasEmailAndPasswordProvider = user?.firebaseProviders?.includes('password');
   const sortedAvailableCurrencies = sortedDropdownItems(availableCurrencies);
-  const hasToBeUploaded =
-    imageUpload && imageUpload.size < FILE_SIZE && SUPPORTED_IMAGE_EXTENSIONS.includes(imageUpload?.type);
-
-  const uploadUserImage = useCallback(async () => {
-    try {
-      hasToBeUploaded && (await authService.uploadFile(imageUpload, setUploadProgress));
-    } catch (error) {
-      throw new Error((error as Error).message);
-    }
-  }, [imageUpload, hasToBeUploaded]);
-
-  useEffect(() => {
-    uploadUserImage();
-  }, [imageUpload, uploadUserImage]);
-
-  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    if (!e.target.files) {
-      return;
-    }
-
-    setImageUpload(e.target.files[0]);
-    formikProfileFormsInstance.setFieldValue('picture', e.target.files[0]);
-  }
-
-  async function updateUserInfoAndPassword(values: ProfileFormsInitialValues): Promise<false | void> {
-    return (
-      !values.currentPassword &&
-      !values.newPassword &&
-      !values.confirmPassword &&
-      (await updateUserDataAction({
-        name: values.name,
-        photoURL: values.picture ?? '',
-        currency: values.defaultCurrency,
-        calculateByQuantity: values.calculatedPrice,
-      }))
-    );
-  }
-
-  async function updateUserPreferences(values: ProfileFormsInitialValues): Promise<void | '' | undefined> {
-    return (
-      values.currentPassword &&
-      values.newPassword &&
-      values.confirmPassword &&
-      (await authService.changeUserPassword(values.currentPassword, values.newPassword))
-    );
-  }
 
   async function handleFormSubmit(values: ProfileFormsInitialValues): Promise<void> {
-    try {
-      await updateUserInfoAndPassword(values);
-      await updateUserPreferences(values);
-    } catch (err) {
-      throw new Error((err as Error).message);
-    }
+    await onProfileFormSubmit(values);
   }
 
   const renderUserInfoBlock = (
@@ -101,7 +50,7 @@ const Profile = (): ReactElement => {
       <ProfileUserInformationForm
         formikInstance={formikProfileFormsInstance}
         uploadProgress={uploadProgress}
-        onChange={handleImageChange}
+        onChange={onImageChange}
       />
     </CommonProfileBlock>
   );
