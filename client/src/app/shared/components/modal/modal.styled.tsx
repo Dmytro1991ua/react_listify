@@ -9,7 +9,7 @@ export const DialogContainer = styled(Dialog)`
     &.MuiDialog-paper {
       position: relative;
       width: 100%;
-      max-width: 60rem;
+      max-width: 65rem;
       height: auto;
       align-items: center;
       justify-content: center;

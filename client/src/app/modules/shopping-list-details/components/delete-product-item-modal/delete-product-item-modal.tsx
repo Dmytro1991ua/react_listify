@@ -7,24 +7,20 @@ interface DeleteProductItemModalPros {
   shoppingListId: string;
   shoppingListItemId: string;
   isModalOpen: boolean;
-  onModalOpen: (value: boolean) => void;
+  onModalClose: () => void;
 }
 
 const DeleteProductItemModal = ({
   shoppingListId,
   shoppingListItemId,
   isModalOpen,
-  onModalOpen,
+  onModalClose,
 }: DeleteProductItemModalPros): ReactElement => {
-  function handleCloseModal(): void {
-    onModalOpen(false);
-  }
-
   async function handleProductItemDeletion(): Promise<void> {
     try {
       await deleteShoppingListItemAction(shoppingListId, shoppingListItemId);
 
-      handleCloseModal();
+      onModalClose();
     } catch (error) {
       throw new Error((error as Error).message);
     }
@@ -37,7 +33,7 @@ const DeleteProductItemModal = ({
       primaryBtnLabel='Yes'
       secondaryBtnLabel='No'
       title='Are you sure you want to delete it?'
-      onClose={handleCloseModal}
+      onClose={onModalClose}
       onSubmit={handleProductItemDeletion}
     />
   );
