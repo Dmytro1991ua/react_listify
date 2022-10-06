@@ -5,7 +5,14 @@ import { ProductUnits } from '../../../app.enums';
 import { ShoppingListItem } from '../../../app.interfaces';
 import { useShoppingListsStore } from '../../shopping-lists/shopping-lists.store';
 import { EditProductItemFormInitialValues } from '../components/edit-product-item-modall/edit-product-item.modal.interfaces';
-import { createShoppingListItemAction, editShoppingListItemAction } from '../shopping-list-details.actions';
+import { deleteShoppingListItemAction, updateShoppingListItemAction } from '../shopping-list-details.actions';
+import {
+  FAILED_CREATE_SHOPPING_LIST_ITEM,
+  FAILED_EDIT_SHOPPING_LIST_ITEM,
+  SUCCESSFUL_CREATE_SHOPPING_LIST_ITEM,
+  SUCCESSFUL_EDIT_SHOPPING_LIST_ITEM,
+} from '../shopping-list-details.constants';
+import { shoppingListDetailsService } from '../shopping-list-details.service';
 
 type HookProps = {
   shoppingListId: string;
@@ -13,6 +20,7 @@ type HookProps = {
   shoppingListItems: ShoppingListItem[];
   onSetValidateAfterSubmit: (value: boolean) => void;
   onCloseModal: () => void;
+  onCloseDeleteModal: () => void;
 };
 
 type ReturnedHookType = {
@@ -20,13 +28,15 @@ type ReturnedHookType = {
   onAddNewProduct: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onCreateProductItemFormSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   onEditProductItemFormSubmit: (values: EditProductItemFormInitialValues) => Promise<void>;
+  onProductItemDeletion: () => Promise<void>;
 };
 
-export const useCreateAndEditProductItem = ({
+export const useCRUDProductItem = ({
   shoppingListId,
   shoppingListItemId,
   shoppingListItems,
   onCloseModal,
+  onCloseDeleteModal,
   onSetValidateAfterSubmit,
 }: HookProps): ReturnedHookType => {
   const shoppingListItem = useShoppingListsStore((state) => state.shoppingListItem);
@@ -57,7 +67,13 @@ export const useCreateAndEditProductItem = ({
       };
 
       if (newProductItem) {
-        await createShoppingListItemAction(shoppingListId, payload);
+        await updateShoppingListItemAction({
+          shoppingListItem: payload,
+          url: `/api/shopping-lists/${shoppingListId}/product-item`,
+          serviceMethod: shoppingListDetailsService.updateShoppingListItem,
+          successMessage: SUCCESSFUL_CREATE_SHOPPING_LIST_ITEM,
+          failedMessage: FAILED_CREATE_SHOPPING_LIST_ITEM,
+        });
       }
 
       handleClearInput();
@@ -80,12 +96,34 @@ export const useCreateAndEditProductItem = ({
         price: Number(values.price) ?? 0,
       };
 
-      await editShoppingListItemAction(shoppingListId, payload);
+      await updateShoppingListItemAction({
+        shoppingListItem: payload,
+        url: `/api/shopping-lists/${shoppingListId}/edit-product-item`,
+        serviceMethod: shoppingListDetailsService.updateShoppingListItem,
+        successMessage: SUCCESSFUL_EDIT_SHOPPING_LIST_ITEM,
+        failedMessage: FAILED_EDIT_SHOPPING_LIST_ITEM,
+      });
       onCloseModal();
     } catch (error) {
       throw new Error((error as Error).message);
     }
   }
 
-  return { inputRef, onAddNewProduct, onCreateProductItemFormSubmit, onEditProductItemFormSubmit };
+  async function onProductItemDeletion(): Promise<void> {
+    try {
+      await deleteShoppingListItemAction(shoppingListId, shoppingListItemId);
+
+      onCloseDeleteModal();
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  return {
+    inputRef,
+    onAddNewProduct,
+    onCreateProductItemFormSubmit,
+    onEditProductItemFormSubmit,
+    onProductItemDeletion,
+  };
 };
