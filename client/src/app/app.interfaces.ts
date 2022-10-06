@@ -63,3 +63,18 @@ export interface UpdateUserInformation {
   currency?: Currencies;
   calculateByQuantity?: boolean;
 }
+
+export interface UpdateShoppingListItemServicePayload {
+  shoppingListItem: ShoppingListItem | null;
+  url: string;
+  successMessage?: string;
+  failedMessage?: string;
+}
+
+export interface UpdateShoppingListItemActionPayload {
+  shoppingListItem: ShoppingListItem | null;
+  url: string;
+  serviceMethod: (payload: UpdateShoppingListItemServicePayload) => Promise<ShoppingListData | null>;
+  successMessage?: string;
+  failedMessage?: string;
+}

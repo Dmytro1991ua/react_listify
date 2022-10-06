@@ -23,8 +23,8 @@ import { EDIT_SHOPPING_LIST_ITEM_FORM_INITIAL_VALUE } from './components/edit-pr
 import { EditProductItemFormInitialValues } from './components/edit-product-item-modall/edit-product-item.modal.interfaces';
 import ProductItem from './components/product-item/product-item';
 import ProductItemsWidget from './components/product-items-widget/product-items-widget';
-import { useCreateAndEditProductItem } from './hooks/useCreateAndEditProductItem';
 import { useCreateShoppingListCopy } from './hooks/useCreateShoppingListCopy';
+import { useCRUDProductItem } from './hooks/useCRUDProductItem';
 import { useGetCurrentShoppingList } from './hooks/useGetCurrentShoppingList';
 import { useSelectProductItem } from './hooks/useSelectProductItem';
 import { useShoppingListDetailsModal } from './hooks/useShoppingListDetailsModal';
@@ -103,14 +103,20 @@ const ShoppingListDetails = (): ReactElement => {
     onSetValidateAfterSubmit: setValidateAfterSubmit,
   });
 
-  const { inputRef, onAddNewProduct, onCreateProductItemFormSubmit, onEditProductItemFormSubmit } =
-    useCreateAndEditProductItem({
-      shoppingListId: currentShoppingList?._id as string,
-      shoppingListItemId,
-      onSetValidateAfterSubmit: setValidateAfterSubmit,
-      shoppingListItems: currentShoppingList?.shoppingListItems ?? [],
-      onCloseModal: onCloseProductItemEditModal,
-    });
+  const {
+    inputRef,
+    onAddNewProduct,
+    onCreateProductItemFormSubmit,
+    onEditProductItemFormSubmit,
+    onProductItemDeletion,
+  } = useCRUDProductItem({
+    shoppingListId: currentShoppingList?._id as string,
+    shoppingListItemId,
+    onSetValidateAfterSubmit: setValidateAfterSubmit,
+    shoppingListItems: currentShoppingList?.shoppingListItems ?? [],
+    onCloseModal: onCloseProductItemEditModal,
+    onCloseDeleteModal: onCloseProductItemDeleteModal,
+  });
 
   const { onToggleAllProductItems } = useToggleAllProductItems({
     id: currentShoppingList?._id ?? '',
@@ -191,9 +197,8 @@ const ShoppingListDetails = (): ReactElement => {
     <>
       <DeleteProductItemModal
         isModalOpen={isProductItemDeleteModalOpen}
-        shoppingListId={currentShoppingList?._id as string}
-        shoppingListItemId={shoppingListItemId}
-        onModalClose={onCloseProductItemDeleteModal}
+        onDelete={onProductItemDeletion}
+        onModalClose={onCloseShoppingListDeleteModal}
       />
       <EditProductItemModal
         formikInstance={formikEditFormInstance}

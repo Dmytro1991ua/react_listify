@@ -1,21 +1,19 @@
-import { ShoppingListItem } from '../../app.interfaces';
+import { ShoppingListItem, UpdateShoppingListItemActionPayload } from '../../app.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { shoppingListDetailsService } from './shopping-list-details.service';
 
-export const createShoppingListItemAction = async (id: string, shoppingListItem: ShoppingListItem): Promise<void> => {
-  const createNewShoppingListItem = useShoppingListsStore.getState().createShoppingListItem;
-  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
+export const updateShoppingListItemAction = async (payload: UpdateShoppingListItemActionPayload): Promise<void> => {
+  const { shoppingListItem, url, successMessage, failedMessage, serviceMethod } = payload;
 
-  setShoppingListsLoadingStatus('loading');
+  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
+  const updateShoppingList = useShoppingListsStore.getState().updateShoppingList;
 
   try {
-    const updatedShoppingList = await shoppingListDetailsService.createShoppingListItem(id, shoppingListItem);
+    const updatedShoppingList = await serviceMethod({ shoppingListItem, url, successMessage, failedMessage });
 
     if (updatedShoppingList) {
-      createNewShoppingListItem(updatedShoppingList);
+      updateShoppingList(updatedShoppingList);
     }
-
-    setShoppingListsLoadingStatus('idle');
   } catch (error) {
     setShoppingListsLoadingStatus('failed');
     throw new Error((error as Error).message);
@@ -23,7 +21,7 @@ export const createShoppingListItemAction = async (id: string, shoppingListItem:
 };
 
 export const deleteShoppingListItemAction = async (id: string, productItemId: string): Promise<void> => {
-  const deleteExistingShoppingListItem = useShoppingListsStore.getState().deleteShoppingListItem;
+  const deleteExistingShoppingListItem = useShoppingListsStore.getState().updateShoppingList;
   const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
 
   setShoppingListsLoadingStatus('loading');
@@ -42,60 +40,18 @@ export const deleteShoppingListItemAction = async (id: string, productItemId: st
   }
 };
 
-export const selectShoppingListItemAction = async (
-  id: string,
-  shoppingListItem: ShoppingListItem | null
-): Promise<void> => {
-  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
-  const selectShoppingListItem = useShoppingListsStore.getState().checkShoppingListItem;
-
-  try {
-    const updatedShoppingList = await shoppingListDetailsService.checkShoppingListItem(id, shoppingListItem);
-
-    if (updatedShoppingList) {
-      selectShoppingListItem(updatedShoppingList);
-    }
-  } catch (error) {
-    setShoppingListsLoadingStatus('failed');
-    throw new Error((error as Error).message);
-  }
-};
-
-export const editShoppingListItemAction = async (
-  id: string,
-  shoppingListItem: ShoppingListItem | null
-): Promise<void> => {
-  const editExistingShoppingListItem = useShoppingListsStore.getState().updateShoppingListItem;
-  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
-
-  setShoppingListsLoadingStatus('loading');
-
-  try {
-    const updatedShoppingList = await shoppingListDetailsService.editShoppingListItem(id, shoppingListItem);
-
-    if (updatedShoppingList) {
-      editExistingShoppingListItem(updatedShoppingList);
-    }
-
-    setShoppingListsLoadingStatus('idle');
-  } catch (error) {
-    setShoppingListsLoadingStatus('failed');
-    throw new Error((error as Error).message);
-  }
-};
-
 export const selectAllShoppingListItemsAction = async (
   id: string,
   shoppingListItems: ShoppingListItem[]
 ): Promise<void> => {
   const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
-  const updateShoppingListItems = useShoppingListsStore.getState().selectAllShoppingListItems;
+  const updateShoppingList = useShoppingListsStore.getState().selectAllShoppingListItems;
 
   try {
     const updatedShoppingList = await shoppingListDetailsService.selectAllShoppingListItems(id, shoppingListItems);
 
     if (updatedShoppingList) {
-      updateShoppingListItems({ id: updatedShoppingList._id ?? '', items: updatedShoppingList.shoppingListItems });
+      updateShoppingList({ id: updatedShoppingList._id ?? '', items: updatedShoppingList.shoppingListItems });
     }
   } catch (error) {
     setShoppingListsLoadingStatus('failed');
