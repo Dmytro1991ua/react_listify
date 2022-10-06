@@ -1,7 +1,8 @@
 import _ from 'lodash';
 
 import { ShoppingListItem } from '../../../app.interfaces';
-import { selectShoppingListItemAction } from '../shopping-list-details.actions';
+import { updateShoppingListItemAction } from '../shopping-list-details.actions';
+import { shoppingListDetailsService } from '../shopping-list-details.service';
 
 type HookProps = {
   shoppingListId: string;
@@ -16,7 +17,11 @@ export const useSelectProductItem = ({ shoppingListId, shoppingListItems }: Hook
   async function onSelectProductItem(id: string): Promise<void> {
     try {
       const selectedProductItem = _.find(shoppingListItems, { _id: id }) ?? null;
-      await selectShoppingListItemAction(shoppingListId, selectedProductItem);
+      await updateShoppingListItemAction({
+        shoppingListItem: selectedProductItem,
+        url: `/api/shopping-lists/${shoppingListId}/select-product-item`,
+        serviceMethod: shoppingListDetailsService.updateShoppingListItem,
+      });
     } catch (e) {
       throw new Error((e as Error).message);
     }

@@ -45,40 +45,13 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
           'deleteShoppingList'
         );
       },
-      createShoppingListItem: (payload) => {
+      updateShoppingList: (payload) => {
         return set(
           (state) => ({
             shoppingLists: state.shoppingLists.map((list) => (list._id === payload._id ? payload : list)),
           }),
           false,
-          'createShoppingListItem'
-        );
-      },
-      deleteShoppingListItem: (payload) => {
-        return set(
-          (state) => ({
-            shoppingLists: state.shoppingLists.map((list) => (list._id === payload._id ? payload : list)),
-          }),
-          false,
-          'deleteShoppingListItem'
-        );
-      },
-      checkShoppingListItem: (payload) => {
-        return set(
-          (state) => ({
-            shoppingLists: state.shoppingLists.map((list) => (list._id === payload._id ? payload : list)),
-          }),
-          false,
-          'selectShoppingListItem'
-        );
-      },
-      updateShoppingListItem: (payload) => {
-        return set(
-          (state) => ({
-            shoppingLists: state.shoppingLists.map((list) => (list._id === payload._id ? payload : list)),
-          }),
-          false,
-          'selectShoppingListItem'
+          'updateShoppingList'
         );
       },
       selectAllShoppingListItems: ({ id, items }) => {

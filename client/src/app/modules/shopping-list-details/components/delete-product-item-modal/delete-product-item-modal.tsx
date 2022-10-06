@@ -1,31 +1,14 @@
 import { ReactElement } from 'react';
 
 import DeleteConfirmationModal from '../../../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
-import { deleteShoppingListItemAction } from '../../shopping-list-details.actions';
 
 interface DeleteProductItemModalPros {
-  shoppingListId: string;
-  shoppingListItemId: string;
   isModalOpen: boolean;
   onModalClose: () => void;
+  onDelete: () => Promise<void>;
 }
 
-const DeleteProductItemModal = ({
-  shoppingListId,
-  shoppingListItemId,
-  isModalOpen,
-  onModalClose,
-}: DeleteProductItemModalPros): ReactElement => {
-  async function handleProductItemDeletion(): Promise<void> {
-    try {
-      await deleteShoppingListItemAction(shoppingListId, shoppingListItemId);
-
-      onModalClose();
-    } catch (error) {
-      throw new Error((error as Error).message);
-    }
-  }
-
+const DeleteProductItemModal = ({ isModalOpen, onModalClose, onDelete }: DeleteProductItemModalPros): ReactElement => {
   return (
     <DeleteConfirmationModal
       fullWidth
@@ -34,7 +17,7 @@ const DeleteProductItemModal = ({
       secondaryBtnLabel='No'
       title='Are you sure you want to delete it?'
       onClose={onModalClose}
-      onSubmit={handleProductItemDeletion}
+      onSubmit={onDelete}
     />
   );
 };
