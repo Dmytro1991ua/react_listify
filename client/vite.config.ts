@@ -1,15 +1,32 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import legacy from "@vitejs/plugin-legacy";
-import eslint from "vite-plugin-eslint";
+/// <reference types="vitest" />
+/// <reference types="vite/client" />
+
+import legacy from '@vitejs/plugin-legacy';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import eslint from 'vite-plugin-eslint';
+import type { UserConfig as VitestUserConfigInterface } from 'vitest/config';
+
+const vitestConfig: VitestUserConfigInterface = {
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/setup-tests.ts'],
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      all: true,
+    },
+  },
+};
 
 export default defineConfig({
+  test: vitestConfig.test,
   plugins: [
     react(),
     eslint(),
     legacy({
-      targets: ["ie >= 11"],
-      additionalLegacyPolyfills: ["regenerator-runtime/runtime"],
+      targets: ['ie >= 11'],
+      additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
     }),
   ],
 });
