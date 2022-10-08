@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "types": ["vite/client"],
+    "types": ["vite/client", "node", "jest", "@testing-library/jest-dom", "@types/jest"],
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
@@ -20,7 +20,7 @@
       "react": ["./node_modules/@types/react"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"],
+  "include": ["vite.config.ts", "src/**/*.{ts,tsx}", "src/**/*.d.ts", "src/**/*.test.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "exclude": ["node_modules", "build"]
 }
