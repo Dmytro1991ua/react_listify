@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview --port 8000",
-    "test": "vitest",
+    "test": "vitest watch",
+    "test:no-watch": "vitest run",
     "test:ui": "vitest --ui --api 1666",
     "coverage": "vitest --coverage",
     "lint": "npm run _eslint & npm run _stylelint",
@@ -15,7 +16,8 @@
     "_eslint": "eslint ./src/ --ext .ts,.tsx --max-warnings=0 --fix",
     "_stylelint": "stylelint \"./src/**/*.styled.tsx\"",
     "prepare": "cd .. && husky install client/.husky",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "pre-push": "npm run test:no-watch"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
@@ -84,7 +86,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "npm run test --watchAll=false --bail"
+      "pre-push": "npm run test:no-watch"
     }
   },
   "lint-staged": {
