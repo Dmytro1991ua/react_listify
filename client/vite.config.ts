@@ -20,7 +20,6 @@ const vitestConfig: VitestUserConfigInterface = {
 };
 
 export default defineConfig({
-  test: vitestConfig.test,
   plugins: [
     react(),
     eslint(),
@@ -29,4 +28,8 @@ export default defineConfig({
       additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
     }),
   ],
+  server: {
+    port: 5500,
+  },
+  test: vitestConfig.test,
 });
