@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview --port 8000",
-    "test": "vitest",
+    "test": "vitest watch",
+    "test:no-watch": "vitest run",
     "test:ui": "vitest --ui --api 1666",
     "coverage": "vitest --coverage",
     "lint": "npm run _eslint & npm run _stylelint",
@@ -15,7 +16,8 @@
     "_eslint": "eslint ./src/ --ext .ts,.tsx --max-warnings=0 --fix",
     "_stylelint": "stylelint \"./src/**/*.styled.tsx\"",
     "prepare": "cd .. && husky install client/.husky",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "pre-push": "npm run test:no-watch"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
@@ -42,6 +44,7 @@
     "@stylelint/postcss-css-in-js": "^0.38.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
+    "@testing-library/user-event": "^14.4.3",
     "@types/eslint": "^8.4.5",
     "@types/history": "^4.7.11",
     "@types/jest": "^29.1.2",
@@ -83,7 +86,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "npm run test"
+      "pre-push": "npm run test:no-watch"
     }
   },
   "lint-staged": {

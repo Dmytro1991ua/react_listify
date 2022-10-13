@@ -38,7 +38,7 @@ const Navigation = (): ReactElement => {
         <NavigationLogoSubTitle isExpanded={isExpanded}>Your smart shopping list</NavigationLogoSubTitle>
       </Box>
 
-      <ExpandButton variant='raised' onClick={handleDrawerExpandAndCollapse}>
+      <ExpandButton ariaLabel='expand-btn' variant='raised' onClick={handleDrawerExpandAndCollapse}>
         {isExpanded ? <BsChevronLeft /> : <BsChevronRight />}
       </ExpandButton>
 
