@@ -51,10 +51,17 @@ interface ButtonProps {
    * @default undefined
    */
   className?: string;
+  /**
+   * @param {string} arialLabel - defines an additional text on button itself in order to grab during the test
+   * @default undefined
+   * @example 'true', 'false'
+   */
+  ariaLabel?: string;
   onClick: () => void;
 }
 
 const Button = ({
+  ariaLabel,
   variant,
   children,
   disabled,
@@ -73,6 +80,7 @@ const Button = ({
 
   return (
     <CustomButton
+      aria-label={ariaLabel}
       className={className}
       disabled={disabled}
       endIcon={endIcon}

@@ -22,12 +22,16 @@ const Header = (): ReactElement => {
   return (
     <HeaderWrapper elevation={0} variant='outlined'>
       <Toolbar>
-        <Logo to={AppRoutes.ShoppingLists}>
+        <Logo data-testid='logo' to={AppRoutes.ShoppingLists}>
           <LogoTitle variant='h3'>Listify</LogoTitle>
           <LogoIcon />
         </Logo>
         <Box sx={{ marginLeft: 'auto' }}>
-          <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={onDropdownMenuOpen}>
+          <button
+            data-testid='menu-btn'
+            style={{ backgroundColor: 'transparent', border: 'none' }}
+            onClick={onDropdownMenuOpen}
+          >
             <FallbackImage
               altText="User's profile photo"
               imageUrl={user?.photoURL as string}
