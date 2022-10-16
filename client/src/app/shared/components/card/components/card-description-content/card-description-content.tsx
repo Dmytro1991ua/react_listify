@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 
 import { Currencies } from '../../../../../app.enums';
 import { CardDescription, CardDescriptionWrapper } from '../../card.styled';
-import { CardDescriptionContentProps } from './card-description.interfaces';
+import { CardDescriptionContentProps } from './card-description-content.interface';
 
 const CardDescriptionContent = ({
   quantity = 0,
@@ -24,12 +24,12 @@ const CardDescriptionContent = ({
     <>
       {isShoppingList ? (
         <Tooltip arrow enterDelay={500} leaveDelay={200} title={tooltipTitle}>
-          <span>
+          <span data-testid='product-quantity'>
             {toBuyLabel}/{toPurchasedLabel}&nbsp;products
           </span>
         </Tooltip>
       ) : (
-        <span>
+        <span data-testid='unit-quantity'>
           {quantity}&nbsp;{shoppingListDetailsQuantityLabel}
         </span>
       )}

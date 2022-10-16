@@ -1,7 +1,7 @@
 import { Field } from 'formik';
 import { ReactElement } from 'react';
 
-import { TextInputProps } from '../text-input/text-input';
+import { TextInputProps } from '../text-input/text-input.interface';
 import { FormTextInputCustom } from './formik-input.styled';
 
 /**
@@ -27,6 +27,7 @@ const FormikInput = ({ name, startIcon, endIcon, ...props }: TextInputProps): Re
       }}
       component={FormTextInputCustom}
       id={name}
+      inputProps={{ 'aria-label': 'formik-input' }}
       name={name}
     />
   );

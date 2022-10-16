@@ -46,7 +46,7 @@ const SectionHeader = ({
   const renderGoBackButton = (
     <>
       {isShoppingListDetails && (
-        <Button variant='transparent' onClick={() => onGoBack && onGoBack()}>
+        <Button ariaLabel='go-back' variant='transparent' onClick={() => onGoBack && onGoBack()}>
           <BackIcon />
         </Button>
       )}

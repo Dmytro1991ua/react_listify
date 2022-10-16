@@ -26,6 +26,10 @@ describe('Layout with navigation and header', () => {
     </MemoryRouter>
   );
 
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
   it('should render components with props without crashing', async () => {
     render(<Component />);
 

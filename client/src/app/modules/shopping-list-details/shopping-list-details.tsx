@@ -217,7 +217,8 @@ const ShoppingListDetails = (): ReactElement => {
       <CreateShoppingListCopyModal
         formikInstance={formikCreateFormInstance}
         isModalOpen={isCreateShoppingListModalOpen}
-        onModalOpen={onOpenCreateShoppingListModal}
+        title='Make a copy of the list'
+        onModalClose={onCloseCreateShoppingListModal}
       />
       <SectionHeader
         isShoppingListDetails

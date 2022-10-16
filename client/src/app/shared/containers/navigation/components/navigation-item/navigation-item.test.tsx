@@ -40,6 +40,10 @@ const profileRoutProps = {
 };
 
 describe('NavigationItem', () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
   it('should render component with props and shopping list route without crashing', async () => {
     render(
       <MemoryRouter>
