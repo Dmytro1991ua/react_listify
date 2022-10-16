@@ -58,7 +58,7 @@ export const useShoppingListDetailsModal = ({
   }
 
   function onCloseCreateShoppingListModal(): void {
-    setIsShoppingListDeleteModalOpen(false);
+    setIsCreateShoppingListModalOpen(false);
   }
 
   function onCloseProductItemEditModal(): void {

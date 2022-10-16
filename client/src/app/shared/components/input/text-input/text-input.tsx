@@ -1,7 +1,7 @@
 import { InputAdornment } from '@mui/material';
 import { ReactElement } from 'react';
 
-import { TextInputProps } from './text-input.intefaces';
+import { TextInputProps } from './text-input.interface';
 import { TextInputCustom } from './text-input.styled';
 
 /**
@@ -18,6 +18,7 @@ const TextInput = ({ startIcon, endIcon, minValue, maxValue, ...rest }: TextInpu
         startAdornment: <InputAdornment position='start'>{startIcon}</InputAdornment>,
         endAdornment: <InputAdornment position='end'>{endIcon}</InputAdornment>,
         inputProps: {
+          'aria-label': 'text-input',
           min: minValue,
           max: maxValue,
         },

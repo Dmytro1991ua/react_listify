@@ -7,16 +7,18 @@ import { CreateShoppingListFromInitialValues } from '../../../shopping-lists/sho
 interface CreateShoppingListCopyModalProps {
   formikInstance: FormikProps<CreateShoppingListFromInitialValues>;
   isModalOpen: boolean;
-  onModalOpen: (value: boolean) => void;
+  title: string;
+  onModalClose: (value: boolean) => void;
 }
 
 const CreateShoppingListCopyModal = ({
   formikInstance,
   isModalOpen,
-  onModalOpen,
+  title,
+  onModalClose,
 }: CreateShoppingListCopyModalProps): ReactElement => {
   function handleCloseModal(): void {
-    onModalOpen(false);
+    onModalClose(false);
 
     formikInstance.resetForm();
   }
@@ -28,7 +30,7 @@ const CreateShoppingListCopyModal = ({
       open={isModalOpen}
       primaryBtnLabel='Submit'
       secondaryBtnLabel='Close'
-      title='Create a List'
+      title={title}
       onClose={handleCloseModal}
       onSubmit={formikInstance.submitForm}
     />
