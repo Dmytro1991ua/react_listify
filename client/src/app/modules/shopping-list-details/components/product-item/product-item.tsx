@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import Card from '../../../../shared/components/card/card';
 import CardActionsContent from '../../../../shared/components/card/components/card-actions-content/card-actions-content';
-import CardDescriptionContent from '../../../../shared/components/card/components/card-description/card-description';
+import CardDescriptionContent from '../../../../shared/components/card/components/card-description-content/card-description-content';
 import { calculateByQuantity } from '../../../../utils';
 import { ProductItemProps } from './product-item.interfaces';
 

@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { ShoppingListData } from '../../../../app.interfaces';
 import Card from '../../../../shared/components/card/card';
 import CardActionsContent from '../../../../shared/components/card/components/card-actions-content/card-actions-content';
-import CardDescriptionContent from '../../../../shared/components/card/components/card-description/card-description';
+import CardDescriptionContent from '../../../../shared/components/card/components/card-description-content/card-description-content';
 import { calculateTotalPrice, toBuyOrPurchasedLabel } from '../../../../utils';
 import { ShoppingListProps } from './shopping-list.interfaces';
 

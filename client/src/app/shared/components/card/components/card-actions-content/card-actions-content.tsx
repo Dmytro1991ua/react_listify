@@ -39,7 +39,7 @@ const CardActionsContent = ({
 
   const shoppingListActions = (
     <>
-      <CardActionButton onClick={handleOpenListIconClick}>
+      <CardActionButton aria-label='menu-btn' onClick={handleOpenListIconClick}>
         <OpenIcon />
       </CardActionButton>
 
@@ -67,11 +67,11 @@ const CardActionsContent = ({
   const shoppingListDetailsActions = (
     <>
       {!isSelected && (
-        <CardActionButton onClick={handleProductItemEdit}>
+        <CardActionButton aria-label='edit-btn' onClick={handleProductItemEdit}>
           <EditIcon />
         </CardActionButton>
       )}
-      <CardActionButton onClick={handleProductItemDelete}>
+      <CardActionButton aria-label='delete-btn' onClick={handleProductItemDelete}>
         <DeleteIcon />
       </CardActionButton>
     </>

@@ -23,6 +23,10 @@ describe('Header', () => {
     </MemoryRouter>
   );
 
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
   it('should render component without crashing', () => {
     render(<Component />);
 
@@ -45,8 +49,6 @@ describe('Header', () => {
     render(<Component />);
 
     const menuButton = screen.getByTestId('menu-btn');
-
-    expect(menuButton).toBeInTheDocument();
 
     await waitFor(() => expect(menuButton).toBeInTheDocument());
 

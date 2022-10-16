@@ -1,6 +1,7 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import Navigation from './navigation';
 
@@ -10,6 +11,10 @@ describe('Navigation', () => {
       <Navigation />
     </MemoryRouter>
   );
+
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
 
   it('should render component without crashing', async () => {
     render(<Component />);

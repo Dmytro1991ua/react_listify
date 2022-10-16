@@ -74,7 +74,7 @@ const Modal = ({
   return (
     <DialogContainer open={open} transitionDuration={{ enter: 0, exit: 0 }} onClose={onClose}>
       <DialogTitle>{title}</DialogTitle>
-      <DialogCloseBtn variant='transparent' onClick={onClose}>
+      <DialogCloseBtn ariaLabel='close-btn' variant='transparent' onClick={onClose}>
         <DialogCloseIcon />
       </DialogCloseBtn>
       <DialogContent>{children}</DialogContent>

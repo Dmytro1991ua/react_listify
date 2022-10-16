@@ -34,6 +34,7 @@ const Card = ({
 
   return (
     <CustomCard
+      data-testid='card'
       isSelected={isSelected}
       isShoppingListDetails={Boolean(onClick)}
       onClick={handleProductItemClick}
