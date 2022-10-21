@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 
 import { Currencies } from '../../../../../app.enums';
 import { CardDescription, CardDescriptionWrapper } from '../../card.styled';
-import { CardDescriptionContentProps } from './card-description-content.interface';
+import { CardDescriptionContentProps } from './card-description-content.interfaces';
 
 const CardDescriptionContent = ({
   quantity = 0,

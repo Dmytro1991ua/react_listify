@@ -43,11 +43,11 @@ const AuthSignUpForm = ({
                   <InputLabel htmlFor='email'>Email</InputLabel>
                   <FormikInput id='email' name='email' placeholder='Enter your email' type='email' />
                 </FormInputContainer>
-                <FormInputContainer fullWidth variant='standard'>
+                <FormInputContainer fullWidth data-testid='password' variant='standard'>
                   <InputLabel htmlFor='password'>Password</InputLabel>
                   <FormikInput id='password' name='password' placeholder='Enter your password' type='password' />
                 </FormInputContainer>
-                <FormInputContainer fullWidth variant='standard'>
+                <FormInputContainer fullWidth data-testid='confirm-password' variant='standard'>
                   <InputLabel htmlFor='confirmPassword'>Confirm Password</InputLabel>
                   <FormikInput
                     id='confirmPassword'
@@ -58,6 +58,7 @@ const AuthSignUpForm = ({
                 </FormInputContainer>
                 <FormSubmitButton
                   fullWidth
+                  ariaLabel='submit-btn'
                   disabled={isSubmitting}
                   type='submit'
                   variant='primaryContained'
@@ -67,6 +68,7 @@ const AuthSignUpForm = ({
                 </FormSubmitButton>
                 <FormSubmitButton
                   fullWidth
+                  ariaLabel='google-submit-btn'
                   disabled={isSubmitting}
                   type='submit'
                   variant='secondaryContained'

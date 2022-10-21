@@ -31,7 +31,7 @@ describe('<FormikSelect>', () => {
 
     const switcher = screen.getByRole('checkbox');
 
-    act(() => user.click(switcher));
+    await act(async () => user.click(switcher));
 
     await waitFor(() => expect(mockOnChange).toHaveBeenCalled());
   });
