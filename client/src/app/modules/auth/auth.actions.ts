@@ -4,6 +4,7 @@ import { useAuthStore } from './auth.store';
 
 export const validateUserAction = async (firebaseProviders: string[]): Promise<void> => {
   const setUser = useAuthStore.getState().setUser;
+
   try {
     const validatedUser = await authService.validateUser();
 

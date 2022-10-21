@@ -15,6 +15,10 @@ const defaultProps = {
 };
 
 describe('<Button />', () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
   it('should render component with props without crashing', () => {
     render(
       <Button {...defaultProps} type='submit' variant='primaryContained'>
@@ -36,7 +40,7 @@ describe('<Button />', () => {
 
     const btn = screen.getByRole('button');
 
-    act(() => user.click(btn));
+    await act(async () => user.click(btn));
 
     await waitFor(() => expect(mockOnClick).toHaveBeenCalledTimes(1));
   });

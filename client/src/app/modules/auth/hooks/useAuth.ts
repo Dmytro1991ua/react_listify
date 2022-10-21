@@ -78,10 +78,7 @@ export const useAuth = (): ReturnedHookType => {
 
     const getOobCodeFromUrl = queryParams.get('oobCode');
 
-    if (getOobCodeFromUrl) {
-      await authService.resetPassword(getOobCodeFromUrl, newPassword);
-    }
-
+    await authService.resetPassword(getOobCodeFromUrl ?? '', newPassword);
     actions.resetForm();
   }
 

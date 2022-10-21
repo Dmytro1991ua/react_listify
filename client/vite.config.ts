@@ -15,6 +15,19 @@ const vitestConfig: VitestUserConfigInterface = {
     coverage: {
       reporter: ['text', 'json', 'html'],
       all: true,
+      exclude: [
+        'node_modules/**',
+        'coverage',
+        'vite.config.ts',
+        'assets/**',
+        '**/*.interfaces.ts',
+        '**/*.d.ts',
+        '**/*.interfaces.d.ts',
+        '**/*.configs.{ts,tsx}',
+        '**/*.schema.{ts,tsx}',
+        '**/*.styled.tsx',
+        '**/*.constants.ts',
+      ],
     },
   },
 };

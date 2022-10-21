@@ -32,7 +32,7 @@ describe('Navigation', () => {
 
     expect(expandButton).toBeInTheDocument();
 
-    act(() => user.click(expandButton));
+    await act(async () => user.click(expandButton));
 
     await waitFor(() => expect(screen.getByText(/Your smart shopping list/)).toBeInTheDocument());
   });

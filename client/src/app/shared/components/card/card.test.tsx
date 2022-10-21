@@ -58,7 +58,7 @@ describe('<Card />', () => {
 
     const card = screen.getByTestId('card');
 
-    act(() => user.dblClick(card));
+    await act(async () => user.dblClick(card));
 
     await waitFor(() => expect(mockDoubleClick).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(screen.getByText(/Test Shopping List Card Title/)).toBeInTheDocument());
@@ -73,7 +73,7 @@ describe('<Card />', () => {
 
     const card = screen.getByTestId('card');
 
-    act(() => user.click(card));
+    await act(async () => user.click(card));
 
     await waitFor(() => expect(mockOnClick).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(screen.getByText(/Test Shopping List Details Card Title/)).toBeInTheDocument());

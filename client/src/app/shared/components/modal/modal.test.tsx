@@ -39,7 +39,7 @@ describe('<FormikInput />', () => {
 
     expect(backdrop).toBeInTheDocument();
 
-    act(() => user.click(backdrop));
+    await act(async () => user.click(backdrop));
 
     await waitFor(() => expect(mockOnModalClose).toHaveBeenCalledTimes(1));
   });
@@ -53,7 +53,7 @@ describe('<FormikInput />', () => {
 
     expect(closeBtn).toBeInTheDocument();
 
-    act(() => user.click(closeBtn));
+    await act(async () => user.click(closeBtn));
 
     await waitFor(() => expect(mockOnModalClose).toHaveBeenCalledTimes(1));
   });
@@ -67,7 +67,7 @@ describe('<FormikInput />', () => {
 
     expect(cancelBtn).toBeInTheDocument();
 
-    act(() => user.click(cancelBtn));
+    await act(async () => user.click(cancelBtn));
 
     await waitFor(() => expect(mockOnModalClose).toHaveBeenCalledTimes(1));
   });
