@@ -45,6 +45,7 @@ const AuthSignInForm = ({
                 </FormInputContainer>
                 <FormSubmitButton
                   fullWidth
+                  ariaLabel='submit-btn'
                   disabled={isSubmitting}
                   type='submit'
                   variant='primaryContained'
@@ -54,6 +55,7 @@ const AuthSignInForm = ({
                 </FormSubmitButton>
                 <FormSubmitButton
                   fullWidth
+                  ariaLabel='google-submit-btn'
                   disabled={isSubmitting}
                   type='submit'
                   variant='secondaryContained'

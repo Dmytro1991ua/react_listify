@@ -37,7 +37,7 @@ describe('<CardActionsContent', () => {
 
     await waitFor(() => expect(menuBtn).toBeInTheDocument());
 
-    act(() => user.click(menuBtn));
+    await act(async () => user.click(menuBtn));
 
     await waitFor(() => expect(mockOnMenuOpen).toHaveBeenCalledTimes(1));
   });
@@ -74,8 +74,8 @@ describe('<CardActionsContent', () => {
     await waitFor(() => expect(editBtn).toBeInTheDocument());
     await waitFor(() => expect(deleteBtn).toBeInTheDocument());
 
-    act(() => user.click(editBtn));
-    act(() => user.click(deleteBtn));
+    await act(async () => user.click(editBtn));
+    await act(async () => user.click(deleteBtn));
 
     await waitFor(() => expect(defaultProps.onEdit).toHaveBeenCalled());
     await waitFor(() => expect(defaultProps.onDelete).toHaveBeenCalled());

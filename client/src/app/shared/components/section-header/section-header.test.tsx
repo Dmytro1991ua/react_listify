@@ -58,7 +58,7 @@ describe('<SectionHeader>', () => {
 
     expect(goBackBtn).toBeInTheDocument();
 
-    act(() => user.click(goBackBtn));
+    await act(async () => user.click(goBackBtn));
 
     await waitFor(() => expect(mockHistoryGoBack).toHaveBeenCalledTimes(1));
   });
@@ -70,7 +70,7 @@ describe('<SectionHeader>', () => {
 
     expect(primaryBtn).toBeInTheDocument();
 
-    act(() => user.click(primaryBtn));
+    await act(async () => user.click(primaryBtn));
 
     await waitFor(() => expect(mockOnPrimaryButtonClick).toHaveBeenCalledTimes(1));
   });
@@ -84,7 +84,7 @@ describe('<SectionHeader>', () => {
 
     expect(secondaryBtn).toBeInTheDocument();
 
-    act(() => user.click(secondaryBtn));
+    await act(async () => user.click(secondaryBtn));
 
     await waitFor(() => expect(mockOnSecondaryButtonClick).toHaveBeenCalledTimes(1));
   });

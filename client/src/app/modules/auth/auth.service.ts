@@ -39,7 +39,7 @@ import {
   SUCCESSFUL_SIGN_IN_VIA_GOOGLE_MESSAGE,
   SUCCESSFUL_SIGN_OUT_MESSAGE,
   SUCCESSFUL_SIGN_UP_MESSAGE,
-} from './auth.contants';
+} from './auth.constants';
 import { useAuthStore } from './auth.store';
 
 class AuthService {

@@ -40,9 +40,9 @@ describe('Header', () => {
 
     expect(logo).toBeInTheDocument();
 
-    act(() => user.click(logo));
+    await act(async () => user.click(logo));
 
-    expect(logo).toHaveAttribute('href', '/shopping-lists');
+    expect(logo).toHaveAttribute('href', AppRoutes.ShoppingLists);
   });
 
   it('should open dropdown menu on button click', async () => {
@@ -52,7 +52,7 @@ describe('Header', () => {
 
     await waitFor(() => expect(menuButton).toBeInTheDocument());
 
-    act(() => user.click(menuButton));
+    await act(async () => user.click(menuButton));
 
     await waitFor(() => expect(screen.getByText(/Profile/)).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText(/Logout/)).toBeInTheDocument());
@@ -67,11 +67,11 @@ describe('Header', () => {
 
     await waitFor(() => expect(menuButton).toBeInTheDocument());
 
-    act(() => user.click(menuButton));
+    await act(async () => user.click(menuButton));
 
     await waitFor(() => expect(screen.getByText(/Profile/)).toBeInTheDocument());
 
-    act(() => user.click(screen.getByText(/Profile/)));
+    await act(async () => user.click(screen.getByText(/Profile/)));
 
     await waitFor(() => expect(window.location.pathname).toBe(AppRoutes.Profile));
   });
@@ -85,11 +85,11 @@ describe('Header', () => {
 
     await waitFor(() => expect(menuButton).toBeInTheDocument());
 
-    act(() => user.click(menuButton));
+    await act(async () => user.click(menuButton));
 
     await waitFor(() => expect(screen.getByText(/Logout/)).toBeInTheDocument());
 
-    act(() => user.click(screen.getByText(/Logout/)));
+    await act(async () => user.click(screen.getByText(/Logout/)));
 
     await waitFor(() => expect(window.location.pathname).toBe(AppRoutes.SignIn));
   });

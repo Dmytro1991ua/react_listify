@@ -1,7 +1,7 @@
 import { InputAdornment } from '@mui/material';
 import { ReactElement } from 'react';
 
-import { TextInputProps } from './text-input.interface';
+import { TextInputProps } from './text-input.interfaces';
 import { TextInputCustom } from './text-input.styled';
 
 /**

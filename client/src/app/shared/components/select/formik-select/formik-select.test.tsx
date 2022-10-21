@@ -51,15 +51,16 @@ describe('<FormikSelect>', () => {
 
     expect(select).toBeInTheDocument();
 
-    act(() => user.click(select));
+    await act(async () => user.click(select));
+
+    const backdrop = screen.getByRole('presentation');
 
     await waitFor(() => expect(screen.getByText(/Test option label/)).toBeInTheDocument());
+    await waitFor(() => expect(backdrop).toBeInTheDocument());
 
     const option = screen.getByRole('option');
 
-    act(() => user.click(option));
-
-    const backdrop = screen.getByRole('presentation');
+    await act(async () => user.click(option));
 
     await waitFor(() => expect(backdrop).not.toBeInTheDocument());
   });

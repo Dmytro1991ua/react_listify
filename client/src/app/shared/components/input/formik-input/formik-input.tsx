@@ -1,7 +1,7 @@
 import { Field } from 'formik';
 import { ReactElement } from 'react';
 
-import { TextInputProps } from '../text-input/text-input.interface';
+import { TextInputProps } from '../text-input/text-input.interfaces';
 import { FormTextInputCustom } from './formik-input.styled';
 
 /**

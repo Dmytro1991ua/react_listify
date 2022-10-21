@@ -63,7 +63,7 @@ describe('NavigationItem', () => {
 
     const shoppingListLink = screen.getByRole('button', { name: /Shopping List/ });
 
-    act(() => user.click(shoppingListLink));
+    await act(async () => user.click(shoppingListLink));
 
     await waitFor(() => expect(shoppingListRoutProps.item.onClick).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(profileRoutProps.item.onClick).toHaveBeenCalledTimes(0));
@@ -88,7 +88,7 @@ describe('NavigationItem', () => {
 
     const profileLink = screen.getByRole('button', { name: /Profile/ });
 
-    act(() => user.click(profileLink));
+    await act(async () => user.click(profileLink));
 
     await waitFor(() => expect(profileRoutProps.item.onClick).toHaveBeenCalledTimes(1));
   });
