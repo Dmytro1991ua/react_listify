@@ -10,7 +10,6 @@ describe('<AuthForgotPasswordPage />', () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
-
   it('should render component without crashing', () => {
     render(
       <ThemeProvider theme={CUSTOM_THEME}>

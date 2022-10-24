@@ -9,6 +9,7 @@ const mockOnPrimaryButtonClick = vi.fn();
 const mockOnSecondaryButtonClick = vi.fn();
 
 vi.doMock('react-router-dom', () => ({
+  ...vi.importActual('react-router-dom'),
   useHistory: () => ({
     goBack: mockHistoryGoBack,
   }),
