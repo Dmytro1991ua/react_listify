@@ -30,14 +30,15 @@ const GeneralSelect = <T,>({
       fullWidth={fullWidth}
       helperText={error}
       label={labelVisibility}
-      value={value}
+      value={value ?? ''}
       onChange={onChange}
     >
-      {options.map((option) => (
-        <MenuItem key={option.id} value={`${option.value}`}>
-          {option.label}
-        </MenuItem>
-      ))}
+      {options &&
+        options.map((option) => (
+          <MenuItem key={option.id} value={`${option.value}`}>
+            {option.label}
+          </MenuItem>
+        ))}
     </CustomSelect>
   );
 };

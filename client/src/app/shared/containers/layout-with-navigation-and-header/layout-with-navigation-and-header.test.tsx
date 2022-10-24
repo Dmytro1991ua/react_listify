@@ -5,15 +5,13 @@ import { vi } from 'vitest';
 import { AppRoutes } from '../../../app.enums';
 import LayoutWithNavigationAndHeader from './layout-with-navigation-and-header';
 
-vi.doMock('react-router-dom', () => {
-  return {
-    __esModule: true,
-    useLocation: vi.fn().mockReturnValue({
-      pathname: AppRoutes.ShoppingLists,
-    }),
-    Link: vi.fn(),
-  };
-});
+vi.doMock('react-router-dom', () => ({
+  ...vi.importActual('react-router-dom'),
+  useLocation: vi.fn().mockReturnValue({
+    pathname: AppRoutes.ShoppingLists,
+  }),
+  Link: vi.fn(),
+}));
 
 const defaultProps = {
   children: <p>Children</p>,

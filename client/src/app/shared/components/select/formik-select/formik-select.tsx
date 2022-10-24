@@ -18,7 +18,7 @@ const FormikSelect = <T,>({ name, ...props }: Partial<SelectProps<T>>): ReactEle
             label={props.label}
             name={field.name}
             options={props.options ?? []}
-            value={field.value}
+            value={field.value ?? ''}
             onChange={(e: React.ChangeEvent<HTMLInputElement> & { target: { value: T | undefined } }) => {
               form.setFieldValue(field.name, e.target.value);
               if (props.onChange) {
