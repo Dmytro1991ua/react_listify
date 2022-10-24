@@ -6,15 +6,13 @@ import { vi } from 'vitest';
 import { AppRoutes } from '../../../app.enums';
 import Header from './header';
 
-vi.doMock('react-router-dom', () => {
-  return {
-    __esModule: true,
-    useLocation: vi.fn().mockReturnValue({
-      pathname: AppRoutes.ShoppingLists,
-    }),
-    Link: vi.fn(),
-  };
-});
+vi.doMock('react-router-dom', () => ({
+  ...vi.importActual('react-router-dom'),
+  useLocation: vi.fn().mockReturnValue({
+    pathname: AppRoutes.ShoppingLists,
+  }),
+  Link: vi.fn(),
+}));
 
 describe('Header', () => {
   const Component = (): JSX.Element => (

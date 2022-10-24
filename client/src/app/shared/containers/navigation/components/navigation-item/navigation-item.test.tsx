@@ -8,14 +8,12 @@ import { AppRoutes } from '../../../../../app.enums';
 import { ProfileIcon, ShoppingCartIcon } from '../../navigation.styled';
 import NavigationItem from './navigation-item';
 
-vi.doMock('react-router-dom', () => {
-  return {
-    __esModule: true,
-    useLocation: vi.fn().mockReturnValue({
-      pathname: AppRoutes.ShoppingLists,
-    }),
-  };
-});
+vi.doMock('react-router-dom', () => ({
+  ...vi.importActual('react-router-dom'),
+  useLocation: vi.fn().mockReturnValue({
+    pathname: AppRoutes.ShoppingLists,
+  }),
+}));
 
 const shoppingListRoutProps = {
   item: {
