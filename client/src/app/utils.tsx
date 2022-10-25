@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Currencies, ProductUnits } from './app.enums';
-import { ShoppingListData, ShoppingListItem, SortingItem } from './app.interfaces';
+import { ShoppingListItem, SortingItem } from './app.interfaces';
 import { DropdownOption } from './shared/components/select/select.interfaces';
 
 /**
@@ -65,14 +65,17 @@ export const calculateByQuantity = (
  * Function calculates the total price of all product item of specific shopping list item and returns a total price
  * @returns number
  */
-export const calculateTotalPrice = (shoppingListItems: ShoppingListItem[], calculateTotalPriceByQuantity: boolean) => {
+export const calculateTotalPrice = (
+  shoppingListItems: ShoppingListItem[],
+  calculateTotalPriceByQuantity: boolean
+): number => {
   return _.sumBy(shoppingListItems, (item) => {
     return calculateTotalPriceByQuantity ? calculateProductItemPrice(item.price, item.quantity) : item.price;
   });
 };
 
 /**
- * Function calculates total To But or Purchased values, within Shopping list details widget, based on passed boolean flag
+ * Function calculates total To Buy or Purchased values, within Shopping list details widget, based on passed boolean flag
  * @returns number
  */
 export const calculateProductItemsByCheckedSate = (
@@ -97,19 +100,16 @@ export const areAllProductItemsChecked = (shoppingListItems: ShoppingListItem[])
  * Function returns all shopping list items with isChecked property equal to true (select all items)
  * @returns ShoppingListItem[]
  */
-export const toggleAllProductItems = (
-  shoppingListItems: ShoppingListItem[],
-  event: React.ChangeEvent<HTMLInputElement>
-): ShoppingListItem[] =>
+export const toggleAllProductItems = (shoppingListItems: ShoppingListItem[], isChecked: boolean): ShoppingListItem[] =>
   _.map(shoppingListItems, (item) => ({
     ...item,
-    isChecked: event.target.checked,
+    isChecked,
   }));
 
 /**
- * Function determine nad return value for To Buy and Purchased shopping list item based on isChecked property
+ * Function determine and return value for To Buy and Purchased shopping list item based on isChecked property
  * @returns number | undefined
  */
-export const toBuyOrPurchasedLabel = (shoppingList: ShoppingListData, value: boolean): number | undefined => {
-  return shoppingList?.shoppingListItems?.filter((item) => item.isChecked === value).length;
+export const toBuyOrPurchasedLabel = (shoppingListItems: ShoppingListItem[], value: boolean): number | undefined => {
+  return shoppingListItems?.filter((item) => item.isChecked === value).length;
 };
