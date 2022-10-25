@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { ShoppingListData } from '../../../../app.interfaces';
 import Card from '../../../../shared/components/card/card';
 import CardActionsContent from '../../../../shared/components/card/components/card-actions-content/card-actions-content';
 import CardDescriptionContent from '../../../../shared/components/card/components/card-description-content/card-description-content';
@@ -20,11 +19,11 @@ const ShoppingList = ({
   onRedirectToDetails,
 }: ShoppingListProps) => {
   const toBuyLabel = useMemo(() => {
-    return toBuyOrPurchasedLabel(list as ShoppingListData, false);
+    return toBuyOrPurchasedLabel(list?.shoppingListItems ?? [], false);
   }, [list]);
 
   const purchasedLabel = useMemo(() => {
-    return toBuyOrPurchasedLabel(list as ShoppingListData, true);
+    return toBuyOrPurchasedLabel(list?.shoppingListItems ?? [], true);
   }, [list]);
 
   return (

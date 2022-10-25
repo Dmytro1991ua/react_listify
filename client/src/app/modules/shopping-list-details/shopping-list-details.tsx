@@ -186,7 +186,13 @@ const ShoppingListDetails = (): ReactElement => {
     <>
       {currentShoppingList?.shoppingListItems && currentShoppingList.shoppingListItems.length > 0 && (
         <CheckboxLabel
-          control={<Checkbox checked={allProductItemsChecked} customSize='3rem' onChange={onToggleAllProductItems} />}
+          control={
+            <Checkbox
+              checked={allProductItemsChecked}
+              customSize='3rem'
+              onChange={(e) => onToggleAllProductItems(e.target.checked)}
+            />
+          }
           label='Select All Items'
         />
       )}
