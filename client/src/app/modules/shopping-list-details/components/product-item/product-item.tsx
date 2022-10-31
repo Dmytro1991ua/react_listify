@@ -10,6 +10,7 @@ const ProductItem = ({
   item,
   currency,
   calculateTotalPriceByQuantity,
+  isShoppingList,
   onDelete,
   onEdit,
   onClick,
@@ -20,7 +21,7 @@ const ProductItem = ({
       actions={
         <CardActionsContent
           isSelected={item.isChecked}
-          isShoppingList={false}
+          isShoppingList={isShoppingList}
           shoppingListId={item?._id}
           onDelete={onDelete}
           onEdit={onEdit}
@@ -29,7 +30,7 @@ const ProductItem = ({
       description={
         <CardDescriptionContent
           currency={currency}
-          isShoppingList={false}
+          isShoppingList={isShoppingList}
           price={calculateByQuantity(
             item?.price as number,
             item?.quantity as number,

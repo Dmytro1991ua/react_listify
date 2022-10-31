@@ -2,7 +2,7 @@ import { ShoppingListData, ShoppingListItem } from '../../../../app.interfaces';
 
 export interface ShoppingListProps {
   /**
-   * @param {ShoppingList} Defines a specific shopping list item to work with
+   * @param {ShoppingListData} Defines a specific shopping list item to work with
    * Takes an id of that card as an argument
    * @default undefined
    */
@@ -19,6 +19,7 @@ export interface ShoppingListProps {
    * @example false/true
    */
   isMenuOpened?: boolean;
+  isShoppingList?: boolean;
   /**
    * @param {boolean} Defines if calculateByQuantity property true of false in specific user (allows to calculate a product item price and total price of specific shopping list item)
    * @default false

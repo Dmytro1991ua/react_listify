@@ -98,6 +98,7 @@ describe('<AuthForgotPasswordForm />', () => {
 
     await act(async () => user.type(nameInput, mockEmail || '{tab}'));
     await act(async () => user.type(emailInput, mockEmail || '{tab}'));
+    await act(async () => user.type(passwordInput, mockPassword || '{tab}'));
     await act(async () => user.type(confirmPasswordInput, mockPassword || '{tab}'));
 
     await waitFor(() => expect(nameInput.value).toBe(mockName));

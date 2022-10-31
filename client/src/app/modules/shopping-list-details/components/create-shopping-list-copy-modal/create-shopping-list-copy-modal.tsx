@@ -8,7 +8,7 @@ interface CreateShoppingListCopyModalProps {
   formikInstance: FormikProps<CreateShoppingListFromInitialValues>;
   isModalOpen: boolean;
   title: string;
-  onModalClose: (value: boolean) => void;
+  onModalClose: () => void;
 }
 
 const CreateShoppingListCopyModal = ({
@@ -17,12 +17,6 @@ const CreateShoppingListCopyModal = ({
   title,
   onModalClose,
 }: CreateShoppingListCopyModalProps): ReactElement => {
-  function handleCloseModal(): void {
-    onModalClose(false);
-
-    formikInstance.resetForm();
-  }
-
   return (
     <CreateShoppingListModal
       fullWidth
@@ -31,7 +25,7 @@ const CreateShoppingListCopyModal = ({
       primaryBtnLabel='Submit'
       secondaryBtnLabel='Close'
       title={title}
-      onClose={handleCloseModal}
+      onClose={onModalClose}
       onSubmit={formikInstance.submitForm}
     />
   );

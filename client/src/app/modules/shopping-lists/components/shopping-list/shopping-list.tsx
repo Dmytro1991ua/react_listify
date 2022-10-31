@@ -11,6 +11,7 @@ const ShoppingList = ({
   anchorElement,
   isMenuOpened,
   calculateTotalPriceByQuantity,
+  isShoppingList,
   onMenuClose,
   onMenuOpen,
   onDoubleClick,
@@ -31,9 +32,9 @@ const ShoppingList = ({
       key={list?._id}
       actions={
         <CardActionsContent
-          isShoppingList
           anchorElement={anchorElement}
           isMenuOpened={isMenuOpened}
+          isShoppingList={isShoppingList}
           shoppingListId={list?._id}
           onMenuClose={onMenuClose}
           onMenuOpen={onMenuOpen}
@@ -44,8 +45,8 @@ const ShoppingList = ({
       }
       description={
         <CardDescriptionContent
-          isShoppingList
           currency={list?.currency}
+          isShoppingList={isShoppingList}
           quantity={list?.shoppingListItems?.length}
           toBuyLabel={toBuyLabel}
           toPurchasedLabel={purchasedLabel}
