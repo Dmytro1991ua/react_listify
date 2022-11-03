@@ -1,10 +1,12 @@
 import { FormikProps } from 'formik';
 import { useState } from 'react';
 
+import { CreateShoppingListFromInitialValues } from '../../shopping-lists/shopping-lists.interfaces';
 import { EditProductItemFormInitialValues } from '../components/edit-product-item-modall/edit-product-item.modal.interfaces';
 
 type HookProps = {
-  formikInstance: FormikProps<EditProductItemFormInitialValues>;
+  formikEditFormInstance: FormikProps<EditProductItemFormInitialValues>;
+  formikCreateFormInstance: FormikProps<CreateShoppingListFromInitialValues>;
   onSetShoppingListItemId: (value: string) => void;
   onSetValidateAfterSubmit: (value: boolean) => void;
 };
@@ -26,7 +28,8 @@ type ReturnedHookType = {
 };
 
 export const useShoppingListDetailsModal = ({
-  formikInstance,
+  formikEditFormInstance,
+  formikCreateFormInstance,
   onSetShoppingListItemId,
   onSetValidateAfterSubmit,
 }: HookProps): ReturnedHookType => {
@@ -59,6 +62,7 @@ export const useShoppingListDetailsModal = ({
 
   function onCloseCreateShoppingListModal(): void {
     setIsCreateShoppingListModalOpen(false);
+    formikCreateFormInstance.resetForm();
   }
 
   function onCloseProductItemEditModal(): void {
@@ -72,7 +76,7 @@ export const useShoppingListDetailsModal = ({
 
   function onEditProductItem(): void {
     onSetValidateAfterSubmit(true);
-    formikInstance.submitForm();
+    formikEditFormInstance.submitForm();
   }
 
   return {

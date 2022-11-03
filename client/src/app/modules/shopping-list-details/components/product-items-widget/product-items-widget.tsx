@@ -18,12 +18,12 @@ const ProductItemsWidget = ({ currency, shoppingListItems }: ProductItemsWidgetP
   const calculatedToBuy = calculateProductItemsByCheckedSate(
     shoppingListItems,
     false,
-    user?.calculateByQuantity ?? false
+    user?.calculateByQuantity as boolean
   );
   const calculatedPurchased = calculateProductItemsByCheckedSate(
     shoppingListItems,
     true,
-    user?.calculateByQuantity ?? false
+    user?.calculateByQuantity as boolean
   );
 
   function commonLayout(label: string, price: number): JSX.Element {

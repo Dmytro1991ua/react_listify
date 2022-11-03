@@ -17,6 +17,7 @@ export interface ProductItemProps {
    * @example false/true
    */
   calculateTotalPriceByQuantity?: boolean;
+  isShoppingList?: boolean;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
   onClick: (id: string) => Promise<void>;
