@@ -92,6 +92,7 @@ const ShoppingLists = (): ReactElement => {
             anchorElement={anchorElement}
             calculateTotalPriceByQuantity={user?.calculateByQuantity}
             isMenuOpened={isDropdownMenuOpened}
+            isShoppingList={true}
             list={list}
             onDoubleClick={handleCardDoubleClick}
             onMenuClose={onDropdownMenuClose}

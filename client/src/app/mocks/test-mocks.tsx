@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 
-import { ProductUnits } from '../app.enums';
+import { Currencies, ProductUnits } from '../app.enums';
 
 export const COMMON_DEFAULT_FORMIK_INSTANCE = {
   formikInstance: {
@@ -60,6 +60,17 @@ export const expectedShoppingListsSortingResult = [
   ...defaultCheckedShoppingListItems,
 ];
 
+export const defaultShoppingLists = [
+  { _id: '1', name: 'Terra', currency: Currencies.Dollar, shoppingListItems: defaultShoppingListItems },
+  { _id: '2', name: 'Varus', currency: Currencies.Euro, shoppingListItems: defaultShoppingListItems },
+  { _id: '3', name: 'carrefour', currency: Currencies.Pound, shoppingListItems: [] },
+];
+
+export const defaultSortedShoppingLists = [
+  { _id: '3', name: 'carrefour', currency: Currencies.Pound, shoppingListItems: [] },
+  { _id: '1', name: 'Terra', currency: Currencies.Dollar, shoppingListItems: defaultShoppingListItems },
+  { _id: '2', name: 'Varus', currency: Currencies.Euro, shoppingListItems: defaultShoppingListItems },
+];
 export const defaultSortedDropdownItems = [
   { id: '1', value: 'Apple', label: 'Apple' },
   { id: '2', value: 'Salmon', label: 'Salmon' },

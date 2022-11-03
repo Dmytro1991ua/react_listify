@@ -23,8 +23,8 @@ import { EDIT_SHOPPING_LIST_ITEM_FORM_INITIAL_VALUE } from './components/edit-pr
 import { EditProductItemFormInitialValues } from './components/edit-product-item-modall/edit-product-item.modal.interfaces';
 import ProductItem from './components/product-item/product-item';
 import ProductItemsWidget from './components/product-items-widget/product-items-widget';
-import { useCreateShoppingListCopy } from './hooks/useCreateShoppingListCopy';
 import { useCRUDProductItem } from './hooks/useCRUDProductItem';
+import { useCRUDShoppingList } from './hooks/useCRUDShoppingList';
 import { useGetCurrentShoppingList } from './hooks/useGetCurrentShoppingList';
 import { useSelectProductItem } from './hooks/useSelectProductItem';
 import { useShoppingListDetailsModal } from './hooks/useShoppingListDetailsModal';
@@ -98,7 +98,8 @@ const ShoppingListDetails = (): ReactElement => {
     onCloseProductItemDeleteModal,
     onEditProductItem,
   } = useShoppingListDetailsModal({
-    formikInstance: formikEditFormInstance,
+    formikEditFormInstance,
+    formikCreateFormInstance,
     onSetShoppingListItemId: setShoppingListItemId,
     onSetValidateAfterSubmit: setValidateAfterSubmit,
   });
@@ -123,9 +124,10 @@ const ShoppingListDetails = (): ReactElement => {
     sortedItemsByNameOrSelectedState,
   });
 
-  const { onCreateShoppingListCopy } = useCreateShoppingListCopy({
+  const { onCreateShoppingListCopy, onShoppingListDeletion } = useCRUDShoppingList({
     currency: currentShoppingList?.currency ?? Currencies.Default,
     shoppingListItems: currentShoppingList?.shoppingListItems ?? [],
+    shoppingListId,
     onCloseModal: onCloseCreateShoppingListModal,
   });
 
@@ -159,6 +161,7 @@ const ShoppingListDetails = (): ReactElement => {
                 key={item._id}
                 calculateTotalPriceByQuantity={user?.calculateByQuantity}
                 currency={currentShoppingList.currency}
+                isShoppingList={false}
                 item={item}
                 onClick={onSelectProductItem}
                 onDelete={onOpenProductItemDeleteModal}
@@ -204,7 +207,7 @@ const ShoppingListDetails = (): ReactElement => {
       <DeleteProductItemModal
         isModalOpen={isProductItemDeleteModalOpen}
         onDelete={onProductItemDeletion}
-        onModalClose={onCloseShoppingListDeleteModal}
+        onModalClose={onCloseProductItemDeleteModal}
       />
       <EditProductItemModal
         formikInstance={formikEditFormInstance}
@@ -217,8 +220,8 @@ const ShoppingListDetails = (): ReactElement => {
       />
       <DeleteShoppingListModal
         isModalOpen={isShoppingListDeleteModalOpen}
-        shoppingListId={currentShoppingList?._id as string}
-        onModalOpen={onCloseShoppingListDeleteModal}
+        onModalClose={onCloseShoppingListDeleteModal}
+        onSubmit={onShoppingListDeletion}
       />
       <CreateShoppingListCopyModal
         formikInstance={formikCreateFormInstance}
