@@ -20,7 +20,7 @@ const defaultProps = {
   isSignInViaGoogleLoading: false,
 };
 
-describe('<AuthForgotPasswordForm />', () => {
+describe('<AuthSignUpForm />', () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });

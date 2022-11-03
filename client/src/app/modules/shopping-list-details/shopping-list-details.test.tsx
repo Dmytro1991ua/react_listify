@@ -3,16 +3,19 @@ import { render, screen } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
-import { vi } from 'vitest';
+import { SpyInstance, vi } from 'vitest';
 
 import { Currencies, ProductUnits } from '../../app.enums';
+import { ShoppingListData, UpdateShoppingListItemActionPayload } from '../../app.interfaces';
 import { CUSTOM_THEME } from '../../cdk/theme/theme';
 import { COMMON_DEFAULT_FORMIK_INSTANCE, defaultShoppingLists } from '../../mocks/test-mocks';
+import * as shoppingListsActions from '../shopping-lists/shopping-lists.actions';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { useCRUDProductItem } from './hooks/useCRUDProductItem';
 import { useCRUDShoppingList } from './hooks/useCRUDShoppingList';
 import * as useCustomHookGetCurrentShoppingList from './hooks/useGetCurrentShoppingList';
 import ShoppingListDetails from './shopping-list-details';
+import * as shoppingListDetailsActions from './shopping-list-details.actions';
 
 describe('<ShoppingListDetails />', () => {
   const Component = (): JSX.Element => (
@@ -26,6 +29,9 @@ describe('<ShoppingListDetails />', () => {
   );
 
   describe('<ShoppingListDetails /> renders product items', () => {
+    let shoppingListCreateActionsSpy: SpyInstance<[shoppingList: ShoppingListData], Promise<void>>;
+    let productItemEditSpy: SpyInstance<[payload: UpdateShoppingListItemActionPayload], Promise<void>>;
+
     beforeEach(() => {
       vi.resetAllMocks();
       vi.spyOn(useCustomHookGetCurrentShoppingList, 'useGetCurrentShoppingList').mockImplementation(() => ({
@@ -36,6 +42,8 @@ describe('<ShoppingListDetails />', () => {
         getCurrentProductItem: null,
         sortedItemsByNameOrSelectedState: defaultShoppingLists[0].shoppingListItems,
       }));
+      shoppingListCreateActionsSpy = vi.spyOn(shoppingListsActions, 'createShoppingListAction');
+      productItemEditSpy = vi.spyOn(shoppingListDetailsActions, 'updateShoppingListItemAction');
     });
 
     it('should render component without crashing when product items are loading', async () => {
@@ -94,7 +102,7 @@ describe('<ShoppingListDetails />', () => {
         })
       );
 
-      expect(screen.getByTestId('audio-loading')).toBeInTheDocument();
+      expect(shoppingListCreateActionsSpy).toHaveBeenCalled();
     });
 
     it('should call onEditProductItemFormSubmit method and show loading spinner on shopping list copy creation', () => {
@@ -120,7 +128,7 @@ describe('<ShoppingListDetails />', () => {
         })
       );
 
-      expect(screen.getByTestId('audio-loading')).toBeInTheDocument();
+      expect(productItemEditSpy).toHaveBeenCalled();
     });
   });
 

@@ -1,17 +1,21 @@
 import { ThemeProvider } from '@mui/material';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
-import { vi } from 'vitest';
+import { SpyInstance, vi } from 'vitest';
 
 import { Currencies } from '../../app.enums';
+import { ShoppingListData } from '../../app.interfaces';
 import { CUSTOM_THEME } from '../../cdk/theme/theme';
-import { COMMON_DEFAULT_FORMIK_INSTANCE, expectedShoppingListsSortingResult } from '../../mocks/test-mocks';
+import { COMMON_DEFAULT_FORMIK_INSTANCE, defaultSortedShoppingLists } from '../../mocks/test-mocks';
 import * as utils from '../../utils';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
 import { useShoppingListsModal } from './hooks/useShoppingListsModal';
 import ShoppingLists from './shopping-lists';
+import * as shoppingListsActions from './shopping-lists.actions';
+
+vi.doMock('axios');
 
 describe('<ShoppingLists />', () => {
   const Component = (): JSX.Element => (
@@ -25,11 +29,14 @@ describe('<ShoppingLists />', () => {
   );
 
   describe('<ShoppingLists /> renders shopping lists', () => {
+    let shoppingListCreateActionsSpy: SpyInstance<[shoppingList: ShoppingListData], Promise<void>>;
+
     beforeEach(() => {
       vi.resetAllMocks();
-      vi.spyOn(utils, 'sortedItems').mockReturnValue(expectedShoppingListsSortingResult);
+      vi.spyOn(utils, 'sortedItems').mockReturnValue(defaultSortedShoppingLists);
       vi.spyOn(utils, 'toBuyOrPurchasedLabel').mockReturnValue(10);
       vi.spyOn(utils, 'calculateTotalPrice').mockReturnValue(30);
+      shoppingListCreateActionsSpy = vi.spyOn(shoppingListsActions, 'createShoppingListAction');
     });
 
     it('should render component without crashing when shopping lists are loading', async () => {
@@ -47,17 +54,19 @@ describe('<ShoppingLists />', () => {
 
       expect(result.current.setShoppingListsLoadingStatus('idle'));
 
-      expect(screen.getByText(/Nuts/)).toBeInTheDocument();
-      expect(screen.getByText(/Milk/)).toBeInTheDocument();
+      expect(screen.getByText(/Varus/)).toBeInTheDocument();
+      expect(screen.getByText(/Terra/)).toBeInTheDocument();
+      expect(screen.getByText(/carrefour/)).toBeInTheDocument();
       expect(screen.getAllByLabelText('To Buy: 10 / Purchased: 10')[0]).toBeInTheDocument();
       expect(screen.getAllByLabelText('To Buy: 10 / Purchased: 10')[1]).toBeInTheDocument();
-      expect(screen.getAllByText('30 $')[0]).toBeInTheDocument();
-      expect(screen.getAllByText('30 $')[1]).toBeInTheDocument();
+      expect(screen.getByText('30 €')).toBeInTheDocument();
+      expect(screen.getByText('30 $')).toBeInTheDocument();
+      expect(screen.getByText('30 £')).toBeInTheDocument();
       expect(screen.getAllByRole('button', { name: /menu-btn/ })[0]).toBeInTheDocument();
       expect(screen.getAllByRole('button', { name: /menu-btn/ })[1]).toBeInTheDocument();
     });
 
-    it('should call onCreateShoppingListFormSubmit method and show loading spinner on shopping list creation', () => {
+    it('should call onCreateShoppingListFormSubmit method and create a new shopping list', async () => {
       render(<Component />);
 
       const { result } = renderHook(() =>
@@ -68,14 +77,14 @@ describe('<ShoppingLists />', () => {
         })
       );
 
-      expect(
+      act(() =>
         result.current.onCreateShoppingListFormSubmit({
           name: 'Test Shopping List',
           currency: Currencies.Dollar,
         })
       );
 
-      expect(screen.getByTestId('bars-loading')).toBeInTheDocument();
+      expect(shoppingListCreateActionsSpy).toHaveBeenCalled();
     });
   });
 
