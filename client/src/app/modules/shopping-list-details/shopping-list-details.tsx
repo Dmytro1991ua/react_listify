@@ -238,13 +238,18 @@ const ShoppingListDetails = (): ReactElement => {
         onPrimaryButtonClick={onOpenShoppingListDeleteModal}
         onSecondaryButtonClick={onOpenCreateShoppingListModal}
       />
-      <Form onSubmit={onCreateProductItemFormSubmit}>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onCreateProductItemFormSubmit();
+        }}
+      >
         <Input
           autoFocus
           endIcon={<AddIcon />}
           inputRef={inputRef}
           placeholder='Add Product'
-          onChange={onAddNewProduct}
+          onChange={(e) => onAddNewProduct(e.target.value)}
         />
       </Form>
       {renderCheckbox}
