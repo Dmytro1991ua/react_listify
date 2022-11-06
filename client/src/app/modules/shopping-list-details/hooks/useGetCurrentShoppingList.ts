@@ -42,9 +42,7 @@ export const useGetCurrentShoppingList = ({ shoppingListId, shoppingListItemId }
   useEffect(() => {
     const getCurrentShoppingList = _.find(availableShoppingLists, { _id: shoppingListId }) ?? null;
 
-    if (getCurrentShoppingList) {
-      setCurrentShoppingList(getCurrentShoppingList);
-    }
+    setCurrentShoppingList(getCurrentShoppingList);
   }, [availableShoppingLists, shoppingListId]);
 
   function onGoBack(): void {

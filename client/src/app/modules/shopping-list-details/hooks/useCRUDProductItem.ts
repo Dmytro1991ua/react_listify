@@ -25,8 +25,8 @@ type HookProps = {
 
 type ReturnedHookType = {
   inputRef: React.RefObject<HTMLInputElement>;
-  onAddNewProduct: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onCreateProductItemFormSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onAddNewProduct: (value: string) => void;
+  onCreateProductItemFormSubmit: () => Promise<void>;
   onEditProductItemFormSubmit: (values: EditProductItemFormInitialValues) => Promise<void>;
   onProductItemDeletion: () => Promise<void>;
 };
@@ -46,37 +46,33 @@ export const useCRUDProductItem = ({
 
   const debouncedInputValue = useMemo(() => _.debounce((value) => setNewProductItem(value), 300), []);
 
-  function onAddNewProduct(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
-    debouncedInputValue(e.target.value);
+  function onAddNewProduct(value: string): void {
+    debouncedInputValue(value);
   }
 
-  function handleClearInput(): void {
+  function onHandleClearInput(): void {
     if (inputRef.current) {
       inputRef.current.value = '';
       setNewProductItem('');
     }
   }
 
-  async function onCreateProductItemFormSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
+  async function onCreateProductItemFormSubmit(): Promise<void> {
     try {
-      e.preventDefault();
-
       const payload: ShoppingListItem = {
         ...shoppingListItem,
         name: newProductItem,
       };
 
-      if (newProductItem) {
-        await updateShoppingListItemAction({
-          shoppingListItem: payload,
-          url: `/api/shopping-lists/${shoppingListId}/product-item`,
-          serviceMethod: shoppingListDetailsService.updateShoppingListItem,
-          successMessage: SUCCESSFUL_CREATE_SHOPPING_LIST_ITEM,
-          failedMessage: FAILED_CREATE_SHOPPING_LIST_ITEM,
-        });
-      }
+      await updateShoppingListItemAction({
+        shoppingListItem: payload,
+        url: `/api/shopping-lists/${shoppingListId}/product-item`,
+        serviceMethod: shoppingListDetailsService.updateShoppingListItem,
+        successMessage: SUCCESSFUL_CREATE_SHOPPING_LIST_ITEM,
+        failedMessage: FAILED_CREATE_SHOPPING_LIST_ITEM,
+      });
 
-      handleClearInput();
+      onHandleClearInput();
     } catch (error) {
       throw new Error((error as Error).message);
     }
