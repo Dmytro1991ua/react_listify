@@ -66,7 +66,7 @@ export const useCRUDProductItem = ({
 
       await updateShoppingListItemAction({
         shoppingListItem: payload,
-        url: `/api/shopping-lists/${shoppingListId}/product-item`,
+        url: `/api/shopping-lists/${shoppingListId}/create-product-item`,
         serviceMethod: shoppingListDetailsService.updateShoppingListItem,
         successMessage: SUCCESSFUL_CREATE_SHOPPING_LIST_ITEM,
         failedMessage: FAILED_CREATE_SHOPPING_LIST_ITEM,

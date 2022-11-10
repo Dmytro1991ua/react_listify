@@ -78,7 +78,6 @@ class AuthService {
       history.push(AppRoutes.ShoppingLists);
       toastService.success(SUCCESSFUL_SIGN_IN_MESSAGE);
     } catch (error) {
-      console.log(error);
       toastService.error(`${FAILED_SIGN_IN_MESSAGE}: ${(error as Error).message}`);
     }
   }

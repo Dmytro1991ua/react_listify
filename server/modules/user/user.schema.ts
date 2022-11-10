@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
-import { Currencies } from "../enums";
 
-import { FirebaseUser } from "./../interfaces";
+import { Currencies } from "../../enums";
+import { FirebaseUser } from "../../interfaces";
 
 const userSchema = new Schema<FirebaseUser>(
   {

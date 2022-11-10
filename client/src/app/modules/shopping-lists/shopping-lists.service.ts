@@ -1,3 +1,4 @@
+import { ShoppingListData } from '../../app.interfaces';
 import { AXIOS_CONFIG } from '../../configs/axios';
 import { toastService } from '../../services/toast.service';
 import {
@@ -9,7 +10,7 @@ import {
 } from './shopping-lists.contants';
 
 class ShoppingListsService {
-  async getAvailableShoppingLists(): Promise<ShoppingList[]> {
+  async getAvailableShoppingLists(): Promise<ShoppingListData[]> {
     try {
       const response = await AXIOS_CONFIG.get('/api/shopping-lists');
 
@@ -24,7 +25,7 @@ class ShoppingListsService {
     }
   }
 
-  async createShoppingList(shoppingList: ShoppingList): Promise<ShoppingList | null> {
+  async createShoppingList(shoppingList: ShoppingListData): Promise<ShoppingListData | null> {
     try {
       const response = await AXIOS_CONFIG.post('/api/shopping-lists', shoppingList);
 
