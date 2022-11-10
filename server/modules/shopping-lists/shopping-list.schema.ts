@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
-import { ShoppingListItem } from "./../interfaces";
-import { ShoppingListDetailsSchema } from "./shoppingListDetailsSchema";
+import { ShoppingListItem } from "../../interfaces";
+import { ShoppingListDetailsSchema } from "../shopping-list-details/shopping-list-details.schema";
 
 const ShoppingListSchema = new Schema<ShoppingListItem>(
   {

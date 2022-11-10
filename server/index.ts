@@ -7,24 +7,43 @@ import colors from "colors";
 import path from "path";
 
 import connectDB from "./config/db";
-import { customExpressErrorHandler } from "./middleware/errorMiddleware";
 import { Port } from "./interfaces";
-import userRoutes from "./routes/userRoutes";
-import shoppingListRoutes from "./routes/shoppingListRoutes";
+import { customErrorHandler } from "./middleware/errorMiddleware";
+import routes from "./routes/routes";
 
-colors.enable();
-connectDB();
+class Server {
+  private port: Port;
+  private app: Application;
 
-const app: Application = express();
-const port: Port = process.env.PORT || 5000;
+  constructor(port: Port, app: Application) {
+    this.port = port;
+    this.app = app;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors({ origin: true }));
+    colors.enable();
+    connectDB();
+  }
 
-app.use("/api/users", userRoutes);
-app.use("/api/shopping-lists", shoppingListRoutes);
+  configs() {
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+    this.app.use(cors({ origin: true }));
+  }
 
-app.use(customExpressErrorHandler);
+  routes() {
+    routes(this.app);
+  }
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+  errorHandling() {
+    this.app.use(customErrorHandler.customExpressErrorHandler);
+  }
+
+  runPort() {
+    this.app.listen(this.port, () => console.log(`Server started on port ${this.port}`));
+  }
+}
+
+const server = new Server(process.env.PORT || 5000, express());
+server.configs();
+server.routes();
+server.errorHandling();
+server.runPort();
