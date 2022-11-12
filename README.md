@@ -1,5 +1,7 @@
 # Listify
 
+> Project Summary
+
 ##### Have you ever had a situation when you are going shopping or you just found an interesting food or drink recipy and definetely would like take a note, but you do not have any notepad or something like that at hand?. Oh boy, I believe you have encountered this kind of situation.
 
 ##### Well, there is good news for you. `Listify` is a smart application that helps you to keep track of your favorite food and drink recipes and ingredients in general. You will be able to create a grocery list, proceed to its details and there create a more detailed list of items you are finding interesting to keep an eye on
@@ -8,7 +10,35 @@
 
 The main goal of this project is to keep practicing and improving skills, to make hands dirty in some new development frameworks, libraries, and tools, and eventually create some awesome and useful application
 
+# Getting Started
+
+> Step-by-step instructions on how to locally run the application
+
+##### Clone down this repository via `HTTPS` ot `SSH`. You will need `node` and `npm` installed globally on your machine.
+
+##### In order to run the application you will need to follow the next steps:
+
+- ##### Run `npm ci` to install all project dependencies within `root` directory package.json as well as within `client` folder.
+  ```
+  npm ci
+  ----
+  cd client
+  ----
+  npm ci
+  ```
+- ##### In `root` directory run `npm run server` in order to run a server
+  ```
+  npm run server
+  ```
+- ##### In `client` folder run `npm run dev` in order to run the project itself
+  ```
+  npm run dev
+  ```
+- ##### The application will be available on `http://localhost:5500`
+
 # Tools/libraries/framework used
+
+> Client
 
 ##### This project was bootstrapped with a help of a new beast in the neighborhood - [Vite](https://github.com/vitejs/vite).
 
@@ -135,3 +165,20 @@ toastService.error("Error message");
 ### Loader Spinner
 
 ##### Aplication uses [React Loader Spinner](https://github.com/mhnpd/react-loader-spinner) package
+
+# Features
+
+> Detailed information about what features the application is rich of
+
+##### The main features of `Listify` application are following:
+
+- ##### User Authentication flow that consists of abilities to Sign-In via email/password and Google, Sign-Up via email/password and Google, Forgot password, Reset Password
+- ##### Ability to create a shopping list with specific name and currency.
+- ##### Ability to delete a specific shopping list.
+- ##### Ability to see the total price of all items within a specific shopping list and information on how many items were purchased and how many need to be bought via tooltip.
+- ##### Ability to create/update/delete a specific product item within a specific shopping list
+- ##### Ability to select individual product item (selected item appears at the bottom of the list and is sorted by their name) or select all product items at once.
+- ##### Ability to see all items that should be bought or have been already purchased based on selected product items within a widget.
+- ##### Ability to create a copy of particular shopping list with all product items.
+- ##### Ability to delete a particular shopping list with all product items.
+- ##### Ability to update user name, picture, change password and apply some specific user preferences such as default currency or ability to calculate products price by their quantity within user's Profile, etc.
