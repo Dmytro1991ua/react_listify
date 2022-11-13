@@ -36,7 +36,7 @@ The main goal of this project is to keep practicing and improving skills, to mak
   ```
 - ##### The application will be available on `http://localhost:5500`
 
-# Tools/libraries/framework used
+# Tools/libraries/frameworks used
 
 > Client
 
@@ -182,3 +182,44 @@ toastService.error("Error message");
 - ##### Ability to create a copy of particular shopping list with all product items.
 - ##### Ability to delete a particular shopping list with all product items.
 - ##### Ability to update user name, picture, change password and apply some specific user preferences such as default currency or ability to calculate products price by their quantity within user's Profile, etc.
+
+# Tests
+
+> General information about aplication testing flow, coverage, tests running instructions etc.
+
+##### The application uses the following testing libraries/frameworks:
+
+- ##### [React Testing Library](https://github.com/testing-library/react-testing-library) for testing React components
+- ##### [Vitest](https://github.com/vitest-dev/vitest) framework that allows closely work with [Vite](https://github.com/vitejs/vite) and acts as a substitute for [Jest](https://github.com/facebook/jest)
+
+##### In order to run tests, you need to procced with following command within client directory:
+
+```
+cd client
+----
+npm run test
+```
+
+##### In order to check apllication's tests coverage, you need to procced with following command within client directory:
+
+```
+cd client
+----
+npm run coverage
+```
+
+##### In order to open Vitest testing interface in browser and run tests there, you need to procced with following command within client directory:
+
+```
+cd client
+----
+npm run test:ui
+```
+
+##### Example of Vitest browser interface
+
+![screencapture-localhost-1666-vitest-2022-11-13-11_19_17](https://user-images.githubusercontent.com/61331410/201514746-09a5f937-8df1-4cee-aed0-2ffe6902e3a8.png)
+
+##### Current application's test coverage
+
+![screencapture-localhost-52791-client-coverage-index-html-2022-11-13-12_17_15 (1)](https://user-images.githubusercontent.com/61331410/201516846-6d34b17f-b7ae-44db-be2f-258ef7c703c4.png)
