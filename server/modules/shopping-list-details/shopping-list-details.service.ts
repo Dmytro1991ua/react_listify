@@ -74,7 +74,7 @@ export class ShoppingListDetailsService {
       if (user) {
         const updatedShoppingList = await ShoppingList.findOneAndUpdate(
           { _id, "shoppingListItems._id": productItemId },
-          { $set: { "shoppingListItems.$.isChecked": !isChecked } },
+          { $set: { "shoppingListItems.$.isChecked": isChecked } },
           { new: true }
         );
 
@@ -128,6 +128,8 @@ export class ShoppingListDetailsService {
   async selectAllShoppingListDetailsItems(req: UserRequest, res: Response): Promise<void> {
     const { id: _id } = req.params;
     const items = req.body;
+
+    console.log(items);
 
     const user = req.currentUser;
 

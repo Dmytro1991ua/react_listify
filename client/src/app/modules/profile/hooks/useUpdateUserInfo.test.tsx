@@ -48,15 +48,9 @@ describe('useUpdateUserInfo', () => {
     const { result } = hook;
 
     const payload = {
-      name: 'Mike',
-      picture:
-        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.planetware.com%2Fpictures%2Ffrance-f.htm&psig=AOvVaw16dgXLuOBEkmNotqTZeUPI&ust=1667814142817000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIC-5P2hmfsCFQAAAAAdAAAAABAE',
-      defaultCurrency: Currencies.Pound,
-      calculatedPrice: true,
       currentPassword: '1111',
       newPassword: '2222',
       confirmPassword: '2222',
-      email: 'test@example.com',
     };
 
     expect(result.current.onUpdateUserInfoAndPassword(payload));

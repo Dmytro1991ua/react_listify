@@ -120,7 +120,7 @@ const ShoppingLists = (): ReactElement => {
 
   return (
     <>
-      <SectionHeader primaryBtnLabel='Add List' title='Shopping List' onPrimaryButtonClick={onOpenCreateModal} />
+      <SectionHeader primaryBtnLabel='Add List' title='Shopping Lists' onPrimaryButtonClick={onOpenCreateModal} />
       {renderAvailableShoppingLists}
       <CreateShoppingListModal
         fullWidth
