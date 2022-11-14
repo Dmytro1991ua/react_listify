@@ -23,6 +23,6 @@ describe('<AuthLayout/>', () => {
     expect(screen.getByText(/Test Overlay text/)).toBeInTheDocument();
     expect(screen.getByText(/Listify/)).toBeInTheDocument();
     expect(screen.getByText(/Children Content/)).toBeInTheDocument();
-    expect(screen.getByText(/Your perfect choice for shopping/)).toBeInTheDocument();
+    expect(screen.getByText(/Your perfect choice for shopping and creating the best grocery list/)).toBeInTheDocument();
   });
 });

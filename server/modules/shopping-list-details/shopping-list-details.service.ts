@@ -74,7 +74,7 @@ export class ShoppingListDetailsService {
       if (user) {
         const updatedShoppingList = await ShoppingList.findOneAndUpdate(
           { _id, "shoppingListItems._id": productItemId },
-          { $set: { "shoppingListItems.$.isChecked": !isChecked } },
+          { $set: { "shoppingListItems.$.isChecked": isChecked } },
           { new: true }
         );
 

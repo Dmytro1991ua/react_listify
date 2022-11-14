@@ -24,7 +24,7 @@ describe('<AuthForgotPasswordPage />', () => {
     expect(screen.getByText(/Welcome to Listify application. Stay tuned and let's roll/)).toBeInTheDocument();
     expect(screen.getAllByText(/Listify/)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/Listify/)[1]).toBeInTheDocument();
-    expect(screen.getByText(/Your perfect choice for shopping/)).toBeInTheDocument();
+    expect(screen.getByText(/Your perfect choice for shopping and creating the best grocery list/)).toBeInTheDocument();
     expect(screen.getByText(/Reset Password/)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/enter new password/i)).toBeInTheDocument();
     expect(screen.getByText(/New Password/)).toBeInTheDocument();

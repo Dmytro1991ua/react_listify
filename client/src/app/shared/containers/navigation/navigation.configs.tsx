@@ -8,7 +8,7 @@ import { ProfileIcon, ShoppingCartIcon } from './navigation.styled';
 export const NAVIGATION_MENU_CONFIGS: DropdownMenuConfig[] = [
   {
     id: uuidv4(),
-    label: 'Shopping List',
+    label: 'Shopping Lists',
     url: AppRoutes.ShoppingLists,
     icon: <ShoppingCartIcon />,
     onClick: () => {

@@ -37,7 +37,7 @@ const AuthLayout = ({ children, image, overlayText, textPosition }: AuthLayoutPr
             <Typography variant='h2'>Listify</Typography>
             <FaLeaf />
           </Box>
-          <Typography paragraph>Your perfect choice for shopping</Typography>
+          <Typography paragraph>Your perfect choice for shopping and creating the best grocery list</Typography>
         </AuthFormHeader>
         {children}
       </AuthFormWrapper>

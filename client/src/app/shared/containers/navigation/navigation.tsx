@@ -35,7 +35,7 @@ const Navigation = (): ReactElement => {
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <NavigationLogoSubTitle isExpanded={isExpanded}>Your smart shopping list</NavigationLogoSubTitle>
+        <NavigationLogoSubTitle isExpanded={isExpanded}>Your smart grocery list</NavigationLogoSubTitle>
       </Box>
 
       <ExpandButton ariaLabel='expand-btn' variant='raised' onClick={handleDrawerExpandAndCollapse}>

@@ -20,7 +20,7 @@ describe('Navigation', () => {
     render(<Component />);
 
     await waitFor(() => expect(screen.getByText(/Listify/)).toBeInTheDocument());
-    await waitFor(() => expect(screen.getByText(/Your smart shopping list/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Your smart grocery list/)).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText(/Shopping List/)).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText(/Profile/)).toBeInTheDocument());
   });
@@ -34,6 +34,6 @@ describe('Navigation', () => {
 
     await act(async () => user.click(expandButton));
 
-    await waitFor(() => expect(screen.getByText(/Your smart shopping list/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Your smart grocery list/)).toBeInTheDocument());
   });
 });

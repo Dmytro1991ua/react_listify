@@ -26,7 +26,21 @@ describe('useUpdateUserPreferences', () => {
     ),
   });
 
-  it('should call onProfileFormSubmit method', async () => {
+  it('should call onUpdateUserPreferences method', async () => {
+    const { result } = hook;
+
+    const payload = {
+      currentPassword: '2222',
+      newPassword: '1234',
+      confirmPassword: '1234',
+    };
+
+    expect(result.current.onUpdateUserPreferences(payload)).rejects.toThrow();
+
+    expect(updateUserPreferencesSpy).toHaveBeenCalled();
+  });
+
+  it('should not call onUpdateUserPreferences method if currentPassword, newPassword, confirmPassword were not provided', async () => {
     const { result } = hook;
 
     const payload = {
@@ -35,14 +49,11 @@ describe('useUpdateUserPreferences', () => {
         'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.planetware.com%2Fpictures%2Ffrance-f.htm&psig=AOvVaw16dgXLuOBEkmNotqTZeUPI&ust=1667814142817000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIC-5P2hmfsCFQAAAAAdAAAAABAE',
       defaultCurrency: Currencies.Pound,
       calculatedPrice: true,
-      currentPassword: '2222',
-      newPassword: '1234',
-      confirmPassword: '1234',
       email: 'test@example.com',
     };
 
-    expect(result.current.onUpdateUserPreferences(payload)).rejects.toThrow();
+    expect(result.current.onUpdateUserPreferences(payload));
 
-    expect(updateUserPreferencesSpy).toHaveBeenCalled();
+    expect(updateUserPreferencesSpy).not.toHaveBeenCalled();
   });
 });

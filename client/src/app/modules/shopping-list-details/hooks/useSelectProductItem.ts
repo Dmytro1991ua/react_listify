@@ -16,7 +16,19 @@ type ReturnedHookType = {
 export const useSelectProductItem = ({ shoppingListId, shoppingListItems }: HookProps): ReturnedHookType => {
   async function onSelectProductItem(id: string): Promise<void> {
     try {
-      const selectedProductItem = _.find(shoppingListItems, { _id: id }) ?? null;
+      const changeSelectedItemIsCheckedProperty = shoppingListItems.map((item) => {
+        if (item._id === id) {
+          return {
+            ...item,
+            isChecked: !item.isChecked,
+          };
+        } else {
+          return item;
+        }
+      });
+
+      const selectedProductItem = _.find(changeSelectedItemIsCheckedProperty, { _id: id }) ?? null;
+
       await updateShoppingListItemAction({
         shoppingListItem: selectedProductItem,
         url: `/api/shopping-lists/${shoppingListId}/select-product-item`,
