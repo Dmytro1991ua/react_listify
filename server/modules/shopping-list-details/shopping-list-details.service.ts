@@ -129,8 +129,6 @@ export class ShoppingListDetailsService {
     const { id: _id } = req.params;
     const items = req.body;
 
-    console.log(items);
-
     const user = req.currentUser;
 
     try {
