@@ -33,7 +33,7 @@ describe('Layout with navigation and header', () => {
 
     await waitFor(() => expect(screen.getAllByText(/Listify/)[0]).toBeInTheDocument());
     await waitFor(() => expect(screen.getAllByText(/Listify/)[1]).toBeInTheDocument());
-    await waitFor(() => expect(screen.getByText(/Your smart shopping list/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Your smart grocery list/)).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText(/Shopping List/)).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText(/Profile/)).toBeInTheDocument());
   });
