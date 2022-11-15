@@ -42,7 +42,7 @@ The main goal of this project is to keep practicing and improving skills, to mak
 
 ##### Shopping lists/Shopping list details/Profile pages
 
- <div style="display: flex;">
+ <div align="center">
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201646906-824da2cf-3962-4ccc-a7c5-5dbfd7336457.png" />
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201616611-625c3b81-51ba-409d-be66-a235057adab1.png" />
  </div>
@@ -53,19 +53,19 @@ The main goal of this project is to keep practicing and improving skills, to mak
 
 ##### Sign-In/Sign-Up/Forgot-password/Reset-password pages
 
-<div style="display: flex;">
+<div align="center">
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201619522-150df6bd-20ed-4b22-a672-0547709929c9.png" />
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201641691-ab1815b3-aa32-4083-8ab8-9dd226bc0215.png" />
 </div>
 
-<div style="display: flex;">
+<div align="center">
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201645833-c1d14d11-ed08-46b4-802c-58f307e6bfc7.png" />
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201645256-c154ef0b-b54e-482a-96a5-53466cb79d4e.png" />
 </div>
 
 ##### Modals
 
-<div style="display: flex;">
+<div align="center">
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201662823-8d820a0f-e758-4291-96a7-7d45a00bd1df.png" />
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201663277-dc964d1c-6061-4be1-a591-d261ec4d7727.png" />
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201664108-57d6d1a0-bb17-4988-ad1a-79cfd36b9348.png" />
