@@ -29,6 +29,16 @@ class Server {
     this.app.use(cors({ origin: true }));
   }
 
+  prepareDeployment() {
+    if (process.env.NODE_ENV === "production") {
+      this.app.use(express.static(path.join(__dirname, "../client/dist")));
+
+      this.app.get("*", (req, res) => res.sendFile(path.resolve(__dirname, "../client/dist", "index.html")));
+    } else {
+      this.app.get("/", (req, res) => res.send("Please set to production"));
+    }
+  }
+
   routes() {
     routes(this.app);
   }
@@ -45,5 +55,6 @@ class Server {
 const server = new Server(process.env.PORT || 5000, express());
 server.configs();
 server.routes();
+server.prepareDeployment();
 server.errorHandling();
 server.runPort();
