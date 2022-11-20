@@ -8,13 +8,13 @@
     "node": "14.17.0"
   },
   "scripts": {
-    "start": "node server/dist/index.js",
-    "server": "ts-node-dev --files --respawn --pretty --transpile-only server/index.ts",
     "build": "npx tsc -p .",
+    "start": "npm run build && node server/dist/index.js",
+    "server": "ts-node-dev --files --respawn --pretty --transpile-only server/index.ts",
     "client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "postinstall": "npm run build",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "render-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
     "type": "git",
