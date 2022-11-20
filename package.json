@@ -9,11 +9,10 @@
   },
   "scripts": {
     "build": "npx tsc -p .",
-    "start": "node server/dist/index.js",
+    "start": "npm install && npm run build && node server/dist/index.js",
     "server": "ts-node-dev --files --respawn --pretty --transpile-only server/index.ts",
     "client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "postinstall": "npm install && npm run build",
     "render-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
