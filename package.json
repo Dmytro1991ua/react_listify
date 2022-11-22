@@ -8,7 +8,8 @@
     "node": "14.17.0"
   },
   "scripts": {
-    "build": "npx tsc -p .",
+    "tsc": "tsc",
+    "build": "npm run tsc",
     "start": "node server/dist/index.js",
     "server": "ts-node-dev --files --respawn --pretty --transpile-only server/index.ts",
     "client": "npm run dev --prefix client",
