@@ -18,21 +18,17 @@ The main goal of this project is to keep practicing and improving skills, to mak
 
 ##### In order to run the application you will need to follow the next steps:
 
-- ##### Run `npm ci` to install all project dependencies within `root` directory package.json as well as within `client` folder.
+- ##### Run `npm run packages-install` in order to install all project dependencies within `root` directory package.json as well as within `client` folder.
   ```
-  npm ci
-  ----
-  cd client
-  ----
-  npm ci
+  npm run packages-install
   ```
 - ##### In `root` directory run `npm run server` in order to run a server
   ```
   npm run server
   ```
-- ##### In `client` folder run `npm run dev` in order to run the project itself
+- ##### In `root` directory run `npm run client` in order to run the project itself
   ```
-  npm run dev
+  npm run client
   ```
 - ##### The application will be available on `http://localhost:5500`
 
