@@ -56,7 +56,7 @@ The main goal of this project is to keep practicing and improving skills, to mak
 
 <div align="center">
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201645833-c1d14d11-ed08-46b4-802c-58f307e6bfc7.png" />
-    <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201645256-c154ef0b-b54e-482a-96a5-53466cb79d4e.png" />
+    <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/204141999-be2116d4-6ed5-4bb9-9a86-8cabc26f887f.png" />
 </div>
 
 ##### Modals
