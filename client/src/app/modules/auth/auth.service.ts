@@ -50,7 +50,7 @@ class AuthService {
       await createUserWithEmailAndPassword(auth, email, password);
       await sendEmailVerification(auth.currentUser as User);
       await updateProfile(auth.currentUser as User, {
-        displayName: name ?? auth.currentUser?.photoURL,
+        displayName: name ?? auth.currentUser?.displayName,
         photoURL: null ?? auth.currentUser?.photoURL,
       });
 
@@ -59,7 +59,7 @@ class AuthService {
         photoURL: auth.currentUser?.photoURL ?? '',
       });
 
-      history.push(AppRoutes.SignIn);
+      history.push(AppRoutes.ShoppingLists);
       toastService.success(SUCCESSFUL_SIGN_UP_MESSAGE);
     } catch (error) {
       toastService.error(`${FAILED_SIGN_UP_MESSAGE}: ${(error as Error).message}`);

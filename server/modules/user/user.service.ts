@@ -43,6 +43,8 @@ export class UserService {
         {
           emailVerified: decodedIdToken.email_verified,
           authTime: decodedIdToken.auth_time,
+          name: decodedIdToken.name,
+          photoURL: decodedIdToken.picture,
         },
         filterOptions
       );

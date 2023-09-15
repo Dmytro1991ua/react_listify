@@ -26,7 +26,8 @@ const App = (): ReactElement => {
 
       setLoadingStatus('idle');
     });
-  }, [setLoadingStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setCurrentUser();
