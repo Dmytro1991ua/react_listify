@@ -24,15 +24,20 @@ export const ImagePreviewSection = styled('section', { shouldForwardProp: (prop)
   }
 
   p {
-    position: absolute;
-    top: ${({ textPosition }) => (textPosition ? `${textPosition}%` : '50%')};
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2.5rem;
-    color: ${({ theme }) => theme.palette.common.white};
-    text-align: center;
-    width: 100%;
-    margin: 0;
-    padding: 0 1rem;
+    display: none;
+
+    @media (width >= 62em) {
+      display: block;
+      position: absolute;
+      top: ${({ textPosition }) => (textPosition ? `${textPosition}%` : '50%')};
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.5rem;
+      color: ${({ theme }) => theme.palette.common.white};
+      text-align: center;
+      width: 100%;
+      margin: 0;
+      padding: 0 1rem;
+    }
   }
 `;

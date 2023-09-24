@@ -1,9 +1,9 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ReactElement, ReactNode } from 'react';
 import { FaLeaf } from 'react-icons/fa';
 
 import AuthImagePreview from '../../components/auth-image-preview/auth-image-preview';
-import { AuthFormHeader, AuthFormWrapper, AuthLayoutContainer } from './auth-layout.styled';
+import { AuthFormHeader, AuthFormWrapper, AuthImagePreviewWrapper, AuthLayoutContainer } from './auth-layout.styled';
 
 interface AuthLayoutProps {
   /**
@@ -28,10 +28,10 @@ interface AuthLayoutProps {
 const AuthLayout = ({ children, image, overlayText, textPosition }: AuthLayoutProps): ReactElement => {
   return (
     <AuthLayoutContainer container item xs={12}>
-      <Grid item xs={6}>
+      <AuthImagePreviewWrapper>
         <AuthImagePreview image={image} overlayText={overlayText} textPosition={textPosition} />
-      </Grid>
-      <AuthFormWrapper item xs={6}>
+      </AuthImagePreviewWrapper>
+      <AuthFormWrapper>
         <AuthFormHeader>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Typography variant='h2'>Listify</Typography>

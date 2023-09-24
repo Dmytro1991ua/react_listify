@@ -6,10 +6,15 @@ import Button from '../../shared/components/button/button';
 
 export const FormWrapper = styled(Form)`
   padding: ${({ theme }) => theme.spacing(20)};
+  background-color: ${({ theme }) => theme.palette.common.white};
   border: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
   border-radius: ${({ theme }) => theme.spacing(12)};
   ${({ theme }) => theme.mixins.formBoxShadowMixin}
   text-align: center;
+
+  @media (width >= 62em) {
+    background-color: transparent;
+  }
 `;
 
 export const FormInputContainer = styled(FormControl)`
