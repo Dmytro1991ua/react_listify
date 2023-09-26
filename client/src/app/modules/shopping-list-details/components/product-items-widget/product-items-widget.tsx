@@ -1,11 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { ReactElement } from 'react';
 
 import { Currencies } from '../../../../app.enums';
 import { ShoppingListItem } from '../../../../app.interfaces';
 import { calculateProductItemsByCheckedSate } from '../../../../utils';
 import { useAuthStore } from '../../../auth/auth.store';
-import { Widget, WidgetContentWrapper } from './product-items-widget.styled';
+import { Title, Widget, WidgetContentWrapper } from './product-items-widget.styled';
 
 interface ProductItemsWidgetProps {
   currency: Currencies;
@@ -29,12 +29,10 @@ const ProductItemsWidget = ({ currency, shoppingListItems }: ProductItemsWidgetP
   function commonLayout(label: string, price: number): JSX.Element {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography sx={{ margin: 0 }} variant='h4'>
-          {label}:&nbsp;
-        </Typography>
-        <Typography sx={{ margin: 0 }} variant='h4'>
+        <Title variant='h4'>{label}:&nbsp;</Title>
+        <Title variant='h4'>
           {price ?? 0} {currency}
-        </Typography>
+        </Title>
       </Box>
     );
   }

@@ -28,7 +28,7 @@ describe('Navigation', () => {
   it('should expand/collapse navigation on button click', async () => {
     render(<Component />);
 
-    const expandButton = screen.getByRole('button', { name: /expand-btn/ });
+    const expandButton = screen.getByLabelText('expand-btn');
 
     expect(expandButton).toBeInTheDocument();
 

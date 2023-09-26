@@ -8,7 +8,7 @@ export const DialogContainer = styled(Dialog)`
   & .MuiPaper-root {
     &.MuiDialog-paper {
       position: relative;
-      width: 100%;
+      width: 95%;
       max-width: 65rem;
       height: auto;
       align-items: center;
@@ -16,20 +16,25 @@ export const DialogContainer = styled(Dialog)`
       padding: 2.8rem 1.6rem;
       margin: 0;
       border: ${({ theme }) => `3px solid ${theme.palette.success.dark}`};
+
+      @media (width >= 48em) {
+        width: 100%;
+      }
     }
   }
 `;
 
 export const DialogTitle = styled('h3')`
   ${({ theme }) => theme.typography.h4};
+  font-size: clamp(1.6rem, -1.875rem + 8.5vw, 2rem);
   margin-bottom: ${({ theme }) => theme.spacing(16)};
   margin-top: 0;
 `;
 
 export const DialogCloseBtn = styled(Button)`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -5px;
+  right: -6px;
 `;
 
 export const DialogCloseIcon = styled(AiOutlineCloseCircle)`

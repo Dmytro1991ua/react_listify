@@ -43,7 +43,6 @@ export default defineConfig({
   ],
   server: {
     port: 5500,
-    host: '0.0.0.0',
   },
   test: vitestConfig.test,
 });

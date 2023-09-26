@@ -9,10 +9,15 @@ const commonElementsAlignment = {
   justifyContent: 'center',
 };
 
-const commonIconsStyles = {
-  width: '2rem',
-  height: '2rem',
-};
+const commonIconsStyles = `
+  width: 1.6rem;
+  height: 1.6rem;
+
+  @media (width >= 48em) {
+    width: 2rem;
+    height: 2rem;
+  }
+`;
 
 export const CustomCard = styled(Card, {
   shouldForwardProp: (prop) => prop !== 'isSelected' && prop !== 'isShoppingListDetails',
@@ -20,7 +25,7 @@ export const CustomCard = styled(Card, {
   isSelected?: boolean;
   isShoppingListDetails?: boolean;
 }>`
-  padding: ${({ theme }) => theme.spacing(20)};
+  padding: ${({ theme }) => theme.spacing(10)};
   background-color: ${({ theme }) => theme.palette.common.white};
   border: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
   opacity: ${({ isSelected }) => (isSelected ? 0.5 : 1)};
@@ -28,6 +33,10 @@ export const CustomCard = styled(Card, {
   ${({ theme }) => theme.mixins.formBoxShadowMixin};
   cursor: pointer;
   margin-bottom: ${({ theme }) => theme.spacing(20)};
+
+  @media (width >= 28em) {
+    padding: ${({ theme }) => theme.spacing(20)};
+  }
 
   &:last-of-type {
     margin-bottom: ${({ theme, isShoppingListDetails }) => (isShoppingListDetails ? theme.spacing(90) : 0)};
@@ -55,7 +64,7 @@ export const CardTitle = styled(Typography, {
   isProductItem?: boolean;
 }>`
   margin: 0;
-  font-size: ${({ theme }) => theme.spacing(24)};
+  font-size: clamp(1.5rem, -1.875rem + 8.5vw, 2.4rem);
   font-weight: bold;
   margin-left: ${({ isProductItem }) => (isProductItem ? '1.2rem' : 0)};
 `;
@@ -67,7 +76,7 @@ export const CardDescriptionWrapper = styled('div')`
 `;
 
 export const CardDescription = styled(Typography)`
-  font-size: ${({ theme }) => theme.spacing(18)};
+  font-size: clamp(1.3rem, -1.875rem + 8.5vw, 1.8rem);
   margin: 0;
 
   &:first-of-type {

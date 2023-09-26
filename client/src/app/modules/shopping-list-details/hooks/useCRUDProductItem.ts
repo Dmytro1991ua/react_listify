@@ -25,6 +25,7 @@ type HookProps = {
 
 type ReturnedHookType = {
   inputRef: React.RefObject<HTMLInputElement>;
+  newProductItem: string;
   onAddNewProduct: (value: string) => void;
   onCreateProductItemFormSubmit: () => Promise<void>;
   onEditProductItemFormSubmit: (values: EditProductItemFormInitialValues) => Promise<void>;
@@ -117,6 +118,7 @@ export const useCRUDProductItem = ({
 
   return {
     inputRef,
+    newProductItem,
     onAddNewProduct,
     onCreateProductItemFormSubmit,
     onEditProductItemFormSubmit,

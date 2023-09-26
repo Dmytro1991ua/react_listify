@@ -106,6 +106,7 @@ const ShoppingListDetails = (): ReactElement => {
 
   const {
     inputRef,
+    newProductItem,
     onAddNewProduct,
     onCreateProductItemFormSubmit,
     onEditProductItemFormSubmit,
@@ -241,12 +242,12 @@ const ShoppingListDetails = (): ReactElement => {
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-          onCreateProductItemFormSubmit();
+          newProductItem && onCreateProductItemFormSubmit();
         }}
       >
         <Input
           autoFocus
-          endIcon={<AddIcon />}
+          endIcon={<AddIcon onClick={newProductItem && onCreateProductItemFormSubmit} />}
           inputRef={inputRef}
           placeholder='Add Product'
           onChange={(e) => onAddNewProduct(e.target.value)}
