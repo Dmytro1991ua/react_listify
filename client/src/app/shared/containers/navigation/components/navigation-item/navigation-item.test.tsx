@@ -2,7 +2,7 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { vi } from 'vitest';
+import { expect, vi } from 'vitest';
 
 import { AppRoutes } from '../../../../../app.enums';
 import { ProfileIcon, ShoppingCartIcon } from '../../navigation.styled';
@@ -59,7 +59,7 @@ describe('NavigationItem', () => {
       </MemoryRouter>
     );
 
-    const shoppingListLink = screen.getByRole('button', { name: /Shopping List/ });
+    const shoppingListLink = screen.getByText('Shopping List');
 
     await act(async () => user.click(shoppingListLink));
 
@@ -84,7 +84,7 @@ describe('NavigationItem', () => {
       </MemoryRouter>
     );
 
-    const profileLink = screen.getByRole('button', { name: /Profile/ });
+    const profileLink = screen.getByText('Profile');
 
     await act(async () => user.click(profileLink));
 

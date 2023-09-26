@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
-import { SpyInstance, vi } from 'vitest';
+import { SpyInstance, afterEach, vi } from 'vitest';
 
 import { ProductUnits } from '../../../app.enums';
 import { UpdateShoppingListItemActionPayload } from '../../../app.interfaces';
@@ -28,6 +28,10 @@ describe('useCRUDProductItem', () => {
 
     shoppingListDetailsEditActionsSpy = vi.spyOn(shoppingListDetailsActions, 'updateShoppingListItemAction');
     shoppingListDetailsDeleteActionsSpy = vi.spyOn(shoppingListDetailsActions, 'deleteShoppingListItemAction');
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   const hook = renderHook(() => useCRUDProductItem(defaultProps), {

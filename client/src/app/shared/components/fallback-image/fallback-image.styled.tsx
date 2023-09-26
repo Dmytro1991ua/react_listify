@@ -20,7 +20,6 @@ export const UserImage = styled('img', {
     !isUserAuthenticated && size === UserImageSize.Small ? 'none' : 'block'};
   width: ${({ size }) => userImageSize(size).width};
   height: ${({ size }) => userImageSize(size).height};
-  margin-right: ${({ size }) => (size === UserImageSize.Small ? '2rem' : 0)};
   background-color: ${({ theme }) => theme.palette.grey[500]};
   border: ${({ theme, isActive }) => (isActive ? `2.5px solid ${theme.palette.common.white}` : 'none')};
   border-radius: 50%;

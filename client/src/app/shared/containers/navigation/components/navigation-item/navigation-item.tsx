@@ -18,7 +18,7 @@ const NavigationItem = ({ item, isExpanded }: NavigationItemProps): ReactElement
   const isActiveRoute = location.pathname === item.url || isShoppingListsRoute;
 
   return (
-    <ListItem key={item.id} isActive={isActiveRoute} isExpanded={isExpanded} onClick={item.onClick}>
+    <ListItem key={item.id} aria-label='button' isActive={isActiveRoute} isExpanded={isExpanded} onClick={item.onClick}>
       {item.icon}
       <ListItemLabel isExpanded={isExpanded}>{item.label}</ListItemLabel>
     </ListItem>

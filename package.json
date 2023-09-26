@@ -13,7 +13,7 @@
     "build": "npm install && npm run tsc && cd client && npm install --only=dev && npm install && npm run build",
     "start": "node server/dist/index.js",
     "server": "ts-node-dev --files --respawn --pretty --transpile-only server/index.ts",
-    "client": "npm run dev --prefix client -- --host 0.0.0.0",
+    "client": "npm run dev --prefix client -- --host",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
