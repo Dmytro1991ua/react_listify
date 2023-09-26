@@ -7,7 +7,11 @@ export const ProfileImageContainer = styled('div')`
   align-items: center;
   justify-content: center;
   flex-grow: inherit;
-  width: max-content;
+  width: auto;
+
+  @media (width >= 80em) {
+    width: max-content;
+  }
 `;
 
 export const ImageWrapper = styled('figure')`
