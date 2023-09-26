@@ -14,7 +14,7 @@ export const CommonDropdownMenuIconStyles = `
 }`;
 
 export const HeaderWrapper = styled(AppBar)`
-  padding: ${({ theme }) => `${theme.spacing(0)} ${theme.spacing(16)}`};
+  padding: ${({ theme }) => `${theme.spacing(3)} ${theme.spacing(16)}`};
   background-color: ${({ theme }) => theme.palette.success.dark};
   z-index: ${({ theme }) => theme.zIndex.drawer + 1};
   border: none;
