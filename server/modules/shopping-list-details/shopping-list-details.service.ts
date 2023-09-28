@@ -8,7 +8,10 @@ export class ShoppingListDetailsService {
   // @dec Create a new shopping list details item(product)
   // @route  PUT /api/shopping-lists/:id/create-product-item
   // @access Private
-  async createShoppingListDetailsItem(req: UserRequest, res: Response): Promise<void> {
+  async createShoppingListDetailsItem(
+    req: UserRequest,
+    res: Response
+  ): Promise<void> {
     const { id: _id } = req.params;
 
     const shoppingListDetailsItem = req.body;
@@ -16,7 +19,10 @@ export class ShoppingListDetailsService {
 
     try {
       if (user) {
-        const newShoppingListDetailsItem = new ShoppingListDetails({ ...shoppingListDetailsItem, user: user.uid });
+        const newShoppingListDetailsItem = new ShoppingListDetails({
+          ...shoppingListDetailsItem,
+          user: user.uid,
+        });
 
         const updatedShoppingList = await ShoppingList.findByIdAndUpdate(
           { _id },
@@ -37,7 +43,10 @@ export class ShoppingListDetailsService {
   // @dec Delete specific shopping list details item (product)
   // @route  DELETE /api/shopping-lists/:id/delete-product-item
   // @access Private
-  async deleteShoppingListDetailsItem(req: UserRequest, res: Response): Promise<void> {
+  async deleteShoppingListDetailsItem(
+    req: UserRequest,
+    res: Response
+  ): Promise<void> {
     const { id: _id } = req.params;
     const { id } = req.body;
 
@@ -64,7 +73,10 @@ export class ShoppingListDetailsService {
   // @dec Select (marked as checked) specific shopping list details item(product)
   // @route  PUT /api/shopping-lists/:id/select-product-item
   // @access Private
-  async selectShoppingListDetailsItem(req: UserRequest, res: Response): Promise<void> {
+  async selectShoppingListDetailsItem(
+    req: UserRequest,
+    res: Response
+  ): Promise<void> {
     const { id: _id } = req.params;
     const { _id: productItemId, isChecked } = req.body;
 
@@ -91,7 +103,10 @@ export class ShoppingListDetailsService {
   // @dec Edit specific shopping list details item (product)
   // @route  PUT /api/shopping-lists/:id/edit-product-item
   // @access Private
-  async editShoppingListDetailsItem(req: UserRequest, res: Response): Promise<void> {
+  async editShoppingListDetailsItem(
+    req: UserRequest,
+    res: Response
+  ): Promise<void> {
     const { id: _id } = req.params;
     const { _id: productItemId, name, quantity, units, price } = req.body;
 
@@ -125,7 +140,10 @@ export class ShoppingListDetailsService {
   // @dec Select (marked as checked) all shopping list details items (products)
   // @route  PUT /api/shopping-lists/:id/select-all-product-items
   // @access Private
-  async selectAllShoppingListDetailsItems(req: UserRequest, res: Response): Promise<void> {
+  async selectAllShoppingListDetailsItems(
+    req: UserRequest,
+    res: Response
+  ): Promise<void> {
     const { id: _id } = req.params;
     const items = req.body;
 

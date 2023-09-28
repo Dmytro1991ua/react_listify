@@ -22,4 +22,5 @@ export enum Routes {
   selectProductItem = "/:id/select-product-item",
   editProductItem = "/:id/edit-product-item",
   selectAllProductItems = "/:id/select-all-product-items",
+  editShoppingList = "/:id/edit-shopping-list",
 }

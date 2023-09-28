@@ -20,11 +20,22 @@ class ShoppingListsController {
   shoppingListsRoutes(): void {
     this.router
       .route(Routes.rootRoute)
-      .get(this.authMiddleware.checkAuth, (req, res) => this.shoppingListsService.getAvailableShoppingLists(req, res))
-      .post(this.authMiddleware.checkAuth, (req, res) => this.shoppingListsService.createShoppingList(req, res));
+      .get(this.authMiddleware.checkAuth, (req, res) =>
+        this.shoppingListsService.getAvailableShoppingLists(req, res)
+      )
+      .post(this.authMiddleware.checkAuth, (req, res) =>
+        this.shoppingListsService.createShoppingList(req, res)
+      );
     this.router
       .route(Routes.deleteShoppingList)
-      .delete(this.authMiddleware.checkAuth, (req, res) => this.shoppingListsService.deleteShoppingList(req, res));
+      .delete(this.authMiddleware.checkAuth, (req, res) =>
+        this.shoppingListsService.deleteShoppingList(req, res)
+      );
+    this.router
+      .route(Routes.editShoppingList)
+      .put(this.authMiddleware.checkAuth, (req, res) =>
+        this.shoppingListsService.editShoppingList(req, res)
+      );
   }
 }
 
