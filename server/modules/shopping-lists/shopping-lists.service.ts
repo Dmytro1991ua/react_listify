@@ -8,7 +8,10 @@ export class ShoppingListsService {
   // @dec  Get all shopping lists
   // @route  GET /api/shopping-lists
   // @access Private
-  async getAvailableShoppingLists(req: UserRequest, res: Response): Promise<void> {
+  async getAvailableShoppingLists(
+    req: UserRequest,
+    res: Response
+  ): Promise<void> {
     const user = req.currentUser;
 
     try {
@@ -33,10 +36,41 @@ export class ShoppingListsService {
 
     try {
       if (user) {
-        const newShoppingList = new ShoppingList({ ...shoppingList, user: user.uid });
+        const newShoppingList = new ShoppingList({
+          ...shoppingList,
+          user: user.uid,
+        });
 
         await newShoppingList.save();
         res.status(200).json(newShoppingList);
+      } else {
+        res.status(401).send("Not authorized");
+      }
+    } catch (err) {
+      res.status(409);
+      throw new Error((err as Error).message);
+    }
+  }
+
+  // @dec Edit specific shopping list (its name)
+  // @route  PUT /api/shopping-lists/:id/edit-shopping-list
+  // @access Private
+  async editShoppingList(req: UserRequest, res: Response): Promise<void> {
+    const { id: _id } = req.params;
+
+    const { name } = req.body;
+
+    const user = req.currentUser;
+
+    try {
+      if (user) {
+        const updatedShoppingList = await ShoppingList.findOneAndUpdate(
+          { _id },
+          { $set: { name: name } },
+          { new: true }
+        );
+
+        res.status(200).json(updatedShoppingList);
       } else {
         res.status(401).send("Not authorized");
       }
