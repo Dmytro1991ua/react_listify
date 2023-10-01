@@ -67,4 +67,16 @@ describe('<CreateShoppingListCopyModal />', () => {
 
     expect(mockOnModalClose).toHaveBeenCalled();
   });
+
+  it('should show a loader when isLoading is true', () => {
+    render(
+      <ThemeProvider theme={CUSTOM_THEME}>
+        <FormikProvider value={COMMON_DEFAULT_FORMIK_INSTANCE.formikInstance}>
+          <CreateShoppingListCopyModal {...defaultProps} isLoading={true} loader={<p>Loader</p>} />
+        </FormikProvider>
+      </ThemeProvider>
+    );
+
+    expect(screen.getByText('Loader')).toBeInTheDocument();
+  });
 });

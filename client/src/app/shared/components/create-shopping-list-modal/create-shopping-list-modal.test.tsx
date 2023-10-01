@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@mui/material';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { FormikProvider } from 'formik';
 import { vi } from 'vitest';
@@ -150,7 +150,7 @@ describe('<CreateShoppingListModal/>', () => {
 
     const submitButton = screen.getByText(/Test Primary Button/);
 
-    await act(async () => user.click(submitButton));
+    fireEvent.click(submitButton);
 
     expect(submitButton).toBeDisabled();
     expect(mockOnSubmit).not.toHaveBeenCalled();
@@ -170,5 +170,17 @@ describe('<CreateShoppingListModal/>', () => {
         name: /text-input/,
       })
     ).not.toBeInTheDocument();
+  });
+
+  it('should show a loader when isLoading is true', () => {
+    render(
+      <ThemeProvider theme={CUSTOM_THEME}>
+        <FormikProvider value={COMMON_DEFAULT_FORMIK_INSTANCE.formikInstance}>
+          <CreateShoppingListModal {...defaultProps} isLoading={true} loader={<p>Loader</p>} />
+        </FormikProvider>
+      </ThemeProvider>
+    );
+
+    expect(screen.getByText('Loader')).toBeInTheDocument();
   });
 });
