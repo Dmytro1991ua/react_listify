@@ -5,9 +5,12 @@ import {
   FAILED_CREATE_SHOPPING_LIST,
   FAILED_DELETE_SHOPPING_LIST,
   FAILED_LOAD_SHOPPING_LISTS_MESSAGE,
+  FAILED_UPDATE_SHOPPING_LIST,
   SUCCESSFUL_CREATE_SHOPPING_LIST,
   SUCCESSFUL_DELETE_SHOPPING_LIST,
+  SUCCESSFUL_UPDATED_SHOPPING_LIST,
 } from './shopping-lists.contants';
+import { UpdateShoppingListPayload } from './shopping-lists.interfaces';
 
 class ShoppingListsService {
   async getAvailableShoppingLists(): Promise<ShoppingListData[]> {
@@ -54,6 +57,27 @@ class ShoppingListsService {
     } catch (err) {
       toastService.success(FAILED_DELETE_SHOPPING_LIST);
       throw new Error((err as Error).message);
+    }
+  }
+
+  async updateShoppingList(payload: UpdateShoppingListPayload): Promise<ShoppingListData | null> {
+    const { shoppingListData, shoppingListId } = payload;
+
+    try {
+      const response = await AXIOS_CONFIG.put(`/api/shopping-lists/${shoppingListId}/edit-shopping-list`, {
+        ...shoppingListData,
+      });
+
+      if (!response.data) {
+        return null;
+      }
+
+      toastService.success(SUCCESSFUL_UPDATED_SHOPPING_LIST);
+
+      return response.data;
+    } catch (error) {
+      toastService.error(FAILED_UPDATE_SHOPPING_LIST);
+      throw new Error((error as Error).message);
     }
   }
 }

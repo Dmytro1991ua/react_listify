@@ -10,8 +10,8 @@ const commonElementsAlignment = {
 };
 
 const commonIconsStyles = `
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.5rem;
+  height: 1.5rem;
 
   @media (width >= 48em) {
     width: 2rem;
@@ -95,12 +95,22 @@ export const CardActionButton = styled('button')`
   cursor: pointer;
 
   &:not(:last-child) {
-    margin-right: ${({ theme }) => theme.spacing(16)};
+    margin-right: ${({ theme }) => theme.spacing(4)};
+
+    @media (width >= 48em) {
+      margin-right: ${({ theme }) => theme.spacing(13)};
+    }
   }
 `;
 
 export const OpenIcon = styled(FiMoreVertical)`
-  ${commonIconsStyles};
+  width: 2rem;
+  height: 2rem;
+
+  @media (width >= 48em) {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 `;
 
 export const EditIcon = styled(BsPencilFill)`

@@ -15,6 +15,8 @@ const EditProductItemModal = ({
   title,
   primaryBtnLabel,
   secondaryBtnLabel,
+  isLoading,
+  loader,
   fullWidth,
   options,
   onClose,
@@ -34,46 +36,52 @@ const EditProductItemModal = ({
     >
       <FormikProvider value={formikInstance}>
         <Form>
-          <InputDivider>
-            <FormikInput autoFocus fullWidth id='name' name='name' placeholder='Enter product name' />
-          </InputDivider>
-          <InputDivider>
-            <ModalInput
-              fullWidth
-              id='quantity'
-              maxValue={1000}
-              minValue={0}
-              name='quantity'
-              placeholder='Enter product quantity'
-              type='number'
-              value={formikInstance.values.quantity}
-              onChange={(e) => formikInstance.setFieldValue('quantity', e.target.value)}
-            />
-          </InputDivider>
-          <InputDivider>
-            <ModalSelect
-              fullWidth
-              icon={IoMdArrowDropdown}
-              label='Choose product unit'
-              name='unit'
-              options={options ?? []}
-              value={formikInstance.values.unit ?? ProductUnits.Default}
-              onChange={(e) => formikInstance.setFieldValue('unit', e.target.value)}
-            />
-          </InputDivider>
-          <InputDivider>
-            <ModalInput
-              fullWidth
-              id='price'
-              maxValue={1000}
-              minValue={0}
-              name='price'
-              placeholder='Enter product price'
-              type='number'
-              value={formikInstance.values.price}
-              onChange={(e) => formikInstance.setFieldValue('price', e.target.value)}
-            />
-          </InputDivider>
+          {isLoading ? (
+            loader
+          ) : (
+            <>
+              <InputDivider>
+                <FormikInput autoFocus fullWidth id='name' name='name' placeholder='Enter product name' />
+              </InputDivider>
+              <InputDivider>
+                <ModalInput
+                  fullWidth
+                  id='quantity'
+                  maxValue={1000}
+                  minValue={0}
+                  name='quantity'
+                  placeholder='Enter product quantity'
+                  type='number'
+                  value={formikInstance.values.quantity}
+                  onChange={(e) => formikInstance.setFieldValue('quantity', e.target.value)}
+                />
+              </InputDivider>
+              <InputDivider>
+                <ModalSelect
+                  fullWidth
+                  icon={IoMdArrowDropdown}
+                  label='Choose product unit'
+                  name='unit'
+                  options={options ?? []}
+                  value={formikInstance.values.unit ?? ProductUnits.Default}
+                  onChange={(e) => formikInstance.setFieldValue('unit', e.target.value)}
+                />
+              </InputDivider>
+              <InputDivider>
+                <ModalInput
+                  fullWidth
+                  id='price'
+                  maxValue={1000}
+                  minValue={0}
+                  name='price'
+                  placeholder='Enter product price'
+                  type='number'
+                  value={formikInstance.values.price}
+                  onChange={(e) => formikInstance.setFieldValue('price', e.target.value)}
+                />
+              </InputDivider>
+            </>
+          )}
         </Form>
       </FormikProvider>
     </Modal>

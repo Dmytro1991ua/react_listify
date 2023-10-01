@@ -11,7 +11,8 @@ const defaultProps = {
   isSelected: false,
   onMenuOpen: vi.fn(),
   onMenuClose: vi.fn(),
-  onEdit: vi.fn(),
+  onEditProductItem: vi.fn(),
+  onEditShoppingList: vi.fn(),
   onDelete: vi.fn(),
   onModalOpen: vi.fn(),
   onRedirectToDetails: vi.fn(),
@@ -34,12 +35,16 @@ describe('<CardActionsContent', () => {
     render(<CardActionsContent {...defaultProps} isShoppingList={isShoppingList} onMenuOpen={mockOnMenuOpen} />);
 
     const menuBtn = screen.getByRole('button', { name: /menu-btn/ });
+    const editBtn = screen.getByRole('button', { name: /edit-shopping-list-btn/ });
 
     await waitFor(() => expect(menuBtn).toBeInTheDocument());
+    await waitFor(() => expect(editBtn).toBeInTheDocument());
 
     await act(async () => user.click(menuBtn));
+    await act(async () => user.click(editBtn));
 
     await waitFor(() => expect(mockOnMenuOpen).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(defaultProps.onEditShoppingList).toHaveBeenCalled());
   });
 
   it('should open dropdown menu when isMenuOpened prop is true', async () => {
@@ -77,7 +82,7 @@ describe('<CardActionsContent', () => {
     await act(async () => user.click(editBtn));
     await act(async () => user.click(deleteBtn));
 
-    await waitFor(() => expect(defaultProps.onEdit).toHaveBeenCalled());
+    await waitFor(() => expect(defaultProps.onEditProductItem).toHaveBeenCalled());
     await waitFor(() => expect(defaultProps.onDelete).toHaveBeenCalled());
   });
 });

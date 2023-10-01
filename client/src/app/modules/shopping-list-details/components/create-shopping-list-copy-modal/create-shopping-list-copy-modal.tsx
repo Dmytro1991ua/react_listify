@@ -8,6 +8,8 @@ interface CreateShoppingListCopyModalProps {
   formikInstance: FormikProps<CreateShoppingListFromInitialValues>;
   isModalOpen: boolean;
   title: string;
+  isLoading: boolean;
+  loader: JSX.Element;
   onModalClose: () => void;
 }
 
@@ -15,12 +17,16 @@ const CreateShoppingListCopyModal = ({
   formikInstance,
   isModalOpen,
   title,
+  isLoading,
+  loader,
   onModalClose,
 }: CreateShoppingListCopyModalProps): ReactElement => {
   return (
     <CreateShoppingListModal
       fullWidth
       formikInstance={formikInstance}
+      isLoading={isLoading}
+      loader={loader}
       open={isModalOpen}
       primaryBtnLabel='Submit'
       secondaryBtnLabel='Close'

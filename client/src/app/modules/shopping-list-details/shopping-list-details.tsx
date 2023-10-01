@@ -1,3 +1,4 @@
+import { Box } from '@mui/system';
 import { FormikProps, useFormik } from 'formik';
 import { ReactElement, useState } from 'react';
 import { Audio } from 'react-loader-spinner';
@@ -203,6 +204,12 @@ const ShoppingListDetails = (): ReactElement => {
     </>
   );
 
+  const modalLoader = (
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Audio color='#1b5e20' height={40} width={40} />
+    </Box>
+  );
+
   return (
     <>
       <DeleteProductItemModal
@@ -212,6 +219,8 @@ const ShoppingListDetails = (): ReactElement => {
       />
       <EditProductItemModal
         formikInstance={formikEditFormInstance}
+        isLoading={isLoading}
+        loader={modalLoader}
         open={isProductItemEditModalOpen}
         options={sortedAvailableProductUnits}
         primaryBtnLabel='Change'
@@ -226,7 +235,9 @@ const ShoppingListDetails = (): ReactElement => {
       />
       <CreateShoppingListCopyModal
         formikInstance={formikCreateFormInstance}
+        isLoading={isLoading}
         isModalOpen={isCreateShoppingListModalOpen}
+        loader={modalLoader}
         title='Make a copy of the list'
         onModalClose={onCloseCreateShoppingListModal}
       />

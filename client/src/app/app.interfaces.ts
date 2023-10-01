@@ -53,6 +53,8 @@ export interface CommonModalProps<T> {
   isDirty?: boolean;
   isShoppingList?: boolean;
   options?: DropdownOption<string>[];
+  isLoading?: boolean;
+  loader?: JSX.Element;
   onClose: () => void;
   onSubmit: () => Promise<void> | void;
 }

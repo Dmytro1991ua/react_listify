@@ -4,7 +4,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { ShoppingListData, ShoppingListItem } from '../../../app.interfaces';
 import history from '../../../services/history.service';
 import { DropdownOption } from '../../../shared/components/select/select.interfaces';
-import { areAllProductItemsChecked, availableProductUnits, sortedDropdownItems, sortedItems } from '../../../utils';
+import {
+  areAllProductItemsChecked,
+  availableProductUnits,
+  getCurrentShoppingList,
+  sortedDropdownItems,
+  sortedItems,
+} from '../../../utils';
 import { useShoppingListsStore } from '../../shopping-lists/shopping-lists.store';
 
 type HookProps = {
@@ -40,9 +46,9 @@ export const useGetCurrentShoppingList = ({ shoppingListId, shoppingListItemId }
   const getCurrentProductItem = _.find(currentShoppingList?.shoppingListItems, { _id: shoppingListItemId }) ?? null;
 
   useEffect(() => {
-    const getCurrentShoppingList = _.find(availableShoppingLists, { _id: shoppingListId }) ?? null;
+    const currentShoppingList = getCurrentShoppingList(availableShoppingLists, shoppingListId);
 
-    setCurrentShoppingList(getCurrentShoppingList);
+    setCurrentShoppingList(currentShoppingList);
   }, [availableShoppingLists, shoppingListId]);
 
   function onGoBack(): void {

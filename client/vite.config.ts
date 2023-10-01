@@ -10,7 +10,7 @@ import type { UserConfig as VitestUserConfigInterface } from 'vitest/config';
 const vitestConfig: VitestUserConfigInterface = {
   test: {
     globals: true,
-    environment: 'jsdom',
+    environment: 'happy-dom',
     setupFiles: ['./src/setup-tests.ts'],
     coverage: {
       reporter: ['text', 'json', 'html'],

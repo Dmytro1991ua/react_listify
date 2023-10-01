@@ -17,6 +17,8 @@ const CreateShoppingListModal = ({
   secondaryBtnLabel,
   fullWidth,
   options,
+  isLoading,
+  loader,
   isShoppingList,
   onClose,
   onSubmit,
@@ -35,18 +37,24 @@ const CreateShoppingListModal = ({
     >
       <FormikProvider value={formikInstance}>
         <Form>
-          <FormikInput autoFocus id='name' name='name' placeholder='Enter the name of the list' />
-          {isShoppingList && options && (
-            <CurrenciesSelect
-              fullWidth
-              icon={IoMdArrowDropdown}
-              isShoppingList={isShoppingList}
-              label='Select Currency'
-              name='currency'
-              options={options}
-              value={formikInstance.values.currency ?? Currencies.Dollar}
-              onChange={(e) => formikInstance.setFieldValue('currency', e.target.value)}
-            />
+          {isLoading ? (
+            loader
+          ) : (
+            <>
+              <FormikInput autoFocus id='name' name='name' placeholder='Enter the name of the list' />
+              {isShoppingList && options && (
+                <CurrenciesSelect
+                  fullWidth
+                  icon={IoMdArrowDropdown}
+                  isShoppingList={isShoppingList}
+                  label='Select Currency'
+                  name='currency'
+                  options={options}
+                  value={formikInstance.values.currency ?? Currencies.Dollar}
+                  onChange={(e) => formikInstance.setFieldValue('currency', e.target.value)}
+                />
+              )}
+            </>
           )}
         </Form>
       </FormikProvider>

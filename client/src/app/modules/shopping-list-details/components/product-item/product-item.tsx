@@ -24,7 +24,7 @@ const ProductItem = ({
           isShoppingList={isShoppingList}
           shoppingListId={item?._id}
           onDelete={onDelete}
-          onEdit={onEdit}
+          onEditProductItem={onEdit}
         />
       }
       description={
