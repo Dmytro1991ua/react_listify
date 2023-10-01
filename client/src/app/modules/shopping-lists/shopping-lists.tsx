@@ -1,3 +1,4 @@
+import { Box } from '@mui/system';
 import { FormikProps, useFormik } from 'formik';
 import { ReactElement, useMemo, useState } from 'react';
 import { Bars } from 'react-loader-spinner';
@@ -13,8 +14,14 @@ import {
 import DeleteConfirmationModal from '../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
-import { availableCurrencies, sortedDropdownItems, sortedItems } from '../../utils';
+import { availableCurrencies, getCurrentShoppingList, sortedDropdownItems, sortedItems } from '../../utils';
 import { useAuthStore } from '../auth/auth.store';
+import EditShoppingListModal from './components/edit-shopping-list-modal/edit-shopping-list-modal';
+import {
+  EDIT_SHOPPING_LIST_FORM_INITIAL_VALUE,
+  EDIT_SHOPPING_LIST_FORM_VALIDATION,
+} from './components/edit-shopping-list-modal/edit-shopping-list-modal.schema';
+import { EditShoppingListFormInitialValues } from './components/edit-shopping-list-modal/edit-shopping-list.modal.interfaces';
 import ShoppingList from './components/shopping-list/shopping-list';
 import { useShoppingListsModal } from './hooks/useShoppingListsModal';
 import {
@@ -36,6 +43,11 @@ const ShoppingLists = (): ReactElement => {
   const sortedAvailableCurrencies = sortedDropdownItems(availableCurrencies);
   const sortedItemsByName = useMemo(() => sortedItems(availableShoppingLists), [availableShoppingLists]);
 
+  const currentShoppingList = useMemo(
+    () => getCurrentShoppingList(availableShoppingLists, shoppingListId),
+    [availableShoppingLists, shoppingListId]
+  );
+
   const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
     useFormik<CreateShoppingListFromInitialValues>({
       initialValues: CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE('', user?.currency),
@@ -51,9 +63,28 @@ const ShoppingLists = (): ReactElement => {
       },
     });
 
+  const formikEditFormInstance: FormikProps<EditShoppingListFormInitialValues> =
+    useFormik<EditShoppingListFormInitialValues>({
+      initialValues: EDIT_SHOPPING_LIST_FORM_INITIAL_VALUE(currentShoppingList?.name),
+      validationSchema: EDIT_SHOPPING_LIST_FORM_VALIDATION,
+      enableReinitialize: true,
+      validateOnBlur: validateAfterSubmit,
+      validateOnChange: validateAfterSubmit,
+      onSubmit: (values, { resetForm }) => {
+        handleEditFormSubmit(values);
+
+        resetForm();
+      },
+    });
+
   const {
     isCreateModalOpen,
     isDeleteModalOpen,
+    isEditModalOpen,
+    onCloseEditModal,
+    onEditShoppingList,
+    onOpenEditModal,
+    onEditShoppingListFormSubmit,
     onOpenCreateModal,
     onCloseCreateModal,
     onOpenDeleteModal,
@@ -61,7 +92,7 @@ const ShoppingLists = (): ReactElement => {
     onCreateShoppingList,
     onShoppingListDeletion,
     onCreateShoppingListFormSubmit,
-  } = useShoppingListsModal({ formikInstance, shoppingListId, setValidateAfterSubmit });
+  } = useShoppingListsModal({ formikInstance, formikEditFormInstance, shoppingListId, setValidateAfterSubmit });
   const { anchorElement, isDropdownMenuOpened, onDropdownMenuClose, onDropdownMenuOpen } = useDropdownMenu();
 
   function handleCardDoubleClick(id: string): void {
@@ -74,6 +105,10 @@ const ShoppingLists = (): ReactElement => {
 
   async function handleFormSubmit(values: CreateShoppingListFromInitialValues): Promise<void> {
     await onCreateShoppingListFormSubmit(values);
+  }
+
+  async function handleEditFormSubmit(values: EditShoppingListFormInitialValues): Promise<void> {
+    await onEditShoppingListFormSubmit(values);
   }
 
   const renderFallbackMessageOrShoppingLists = (
@@ -95,6 +130,7 @@ const ShoppingLists = (): ReactElement => {
             isShoppingList={true}
             list={list}
             onDoubleClick={handleCardDoubleClick}
+            onEditShoppingList={onOpenEditModal}
             onMenuClose={onDropdownMenuClose}
             onMenuOpen={onDropdownMenuOpen}
             onModalOpen={onOpenDeleteModal}
@@ -118,6 +154,12 @@ const ShoppingLists = (): ReactElement => {
     </>
   );
 
+  const modalLoader = (
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Bars color='#1b5e20' height={40} width={40} />
+    </Box>
+  );
+
   return (
     <>
       <SectionHeader primaryBtnLabel='Add List' title='Shopping Lists' onPrimaryButtonClick={onOpenCreateModal} />
@@ -127,6 +169,8 @@ const ShoppingLists = (): ReactElement => {
         isShoppingList
         formikInstance={formikInstance}
         isDirty={!formikInstance.dirty}
+        isLoading={isLoading}
+        loader={modalLoader}
         open={isCreateModalOpen}
         options={sortedAvailableCurrencies}
         primaryBtnLabel='Submit'
@@ -143,6 +187,19 @@ const ShoppingLists = (): ReactElement => {
         title='Are you sure you want to delete it?'
         onClose={onCloseDeleteModal}
         onSubmit={onShoppingListDeletion}
+      />
+      <EditShoppingListModal
+        fullWidth
+        formikInstance={formikEditFormInstance}
+        isDirty={!formikEditFormInstance.dirty}
+        isLoading={isLoading}
+        loader={modalLoader}
+        open={isEditModalOpen}
+        primaryBtnLabel='Ok'
+        secondaryBtnLabel='Cancel'
+        title='Edit a List'
+        onClose={onCloseEditModal}
+        onSubmit={onEditShoppingList}
       />
     </>
   );

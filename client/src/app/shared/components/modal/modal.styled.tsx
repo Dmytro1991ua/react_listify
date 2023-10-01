@@ -16,6 +16,7 @@ export const DialogContainer = styled(Dialog)`
       padding: 2.8rem 1.6rem;
       margin: 0;
       border: ${({ theme }) => `3px solid ${theme.palette.success.dark}`};
+      overflow-x: hidden;
 
       @media (width >= 48em) {
         width: 100%;

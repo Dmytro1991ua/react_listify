@@ -1,4 +1,5 @@
 import { ShoppingListData } from '../../app.interfaces';
+import { UpdateShoppingListPayload } from './shopping-lists.interfaces';
 import { shoppingListsService } from './shopping-lists.service';
 import { useShoppingListsStore } from './shopping-lists.store';
 
@@ -55,5 +56,25 @@ export const deleteShoppingListAction = async (id: string) => {
     setShoppingListsLoadingStatus('idle');
   } catch (err) {
     setShoppingListsLoadingStatus('failed');
+  }
+};
+
+export const updateShoppingListAction = async (payload: UpdateShoppingListPayload): Promise<void> => {
+  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
+  const updateShoppingList = useShoppingListsStore.getState().updateShoppingList;
+
+  try {
+    setShoppingListsLoadingStatus('loading');
+
+    const updatedShoppingList = await shoppingListsService.updateShoppingList(payload);
+
+    if (updatedShoppingList) {
+      updateShoppingList(updatedShoppingList);
+    }
+
+    setShoppingListsLoadingStatus('idle');
+  } catch (error) {
+    setShoppingListsLoadingStatus('failed');
+    throw new Error((error as Error).message);
   }
 };

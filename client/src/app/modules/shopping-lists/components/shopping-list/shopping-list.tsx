@@ -18,6 +18,7 @@ const ShoppingList = ({
   onModalOpen,
   onSetShoppingListId,
   onRedirectToDetails,
+  onEditShoppingList,
 }: ShoppingListProps) => {
   const toBuyLabel = useMemo(() => {
     return toBuyOrPurchasedLabel(list?.shoppingListItems ?? [], false);
@@ -36,6 +37,7 @@ const ShoppingList = ({
           isMenuOpened={isMenuOpened}
           isShoppingList={isShoppingList}
           shoppingListId={list?._id}
+          onEditShoppingList={onEditShoppingList}
           onMenuClose={onMenuClose}
           onMenuOpen={onMenuOpen}
           onModalOpen={onModalOpen}

@@ -14,7 +14,8 @@ const CardActionsContent = ({
   isSelected,
   onMenuOpen,
   onMenuClose,
-  onEdit,
+  onEditProductItem,
+  onEditShoppingList,
   onDelete,
   onModalOpen,
   onRedirectToDetails,
@@ -27,9 +28,16 @@ const CardActionsContent = ({
     onSetShoppingListId && onSetShoppingListId(shoppingListId as string);
   }
 
+  function handleShoppingListEdit(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+    e.stopPropagation();
+
+    onSetShoppingListId && onSetShoppingListId(shoppingListId as string);
+    onEditShoppingList && onEditShoppingList(shoppingListId as string);
+  }
+
   function handleProductItemEdit(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
     e.stopPropagation();
-    onEdit && onEdit(shoppingListId as string);
+    onEditProductItem && onEditProductItem(shoppingListId as string);
   }
 
   function handleProductItemDelete(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -39,6 +47,9 @@ const CardActionsContent = ({
 
   const shoppingListActions = (
     <>
+      <CardActionButton aria-label='edit-shopping-list-btn' onClick={handleShoppingListEdit}>
+        <EditIcon />
+      </CardActionButton>
       <CardActionButton aria-label='menu-btn' onClick={handleOpenListIconClick}>
         <OpenIcon />
       </CardActionButton>

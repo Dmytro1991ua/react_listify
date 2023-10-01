@@ -46,7 +46,7 @@ export interface CardActionsContentProps {
    * Takes an id of that card as an argument
    * @default undefined
    */
-  onEdit?: (id: string) => void;
+  onEditProductItem?: (id: string) => void;
   /**
    * @param {void} Defines a click event on Delete button within specific shopping list details card
    * Takes an id of that card as an argument
@@ -70,4 +70,10 @@ export interface CardActionsContentProps {
    * @default undefined
    */
   onSetShoppingListId?: (id: string) => void;
+  /**
+   * @param {void} Defines a click event on Edit button within specific shopping list
+   * Takes an id of that shopping list as an argument
+   * @default undefined
+   */
+  onEditShoppingList?: (id: string) => void;
 }

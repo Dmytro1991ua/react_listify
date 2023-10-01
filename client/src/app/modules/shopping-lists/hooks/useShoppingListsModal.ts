@@ -1,9 +1,14 @@
 import { FormikProps } from 'formik';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Currencies } from '../../../app.enums';
 import { ShoppingListData } from '../../../app.interfaces';
-import { createShoppingListAction, deleteShoppingListAction } from '../shopping-lists.actions';
+import { EditShoppingListFormInitialValues } from '../components/edit-shopping-list-modal/edit-shopping-list.modal.interfaces';
+import {
+  createShoppingListAction,
+  deleteShoppingListAction,
+  updateShoppingListAction,
+} from '../shopping-lists.actions';
 import { CreateShoppingListFromInitialValues } from '../shopping-lists.interfaces';
 import { useShoppingListsStore } from '../shopping-lists.store';
 
@@ -11,11 +16,16 @@ type HookProps = {
   setValidateAfterSubmit: (value: boolean) => void;
   shoppingListId: string;
   formikInstance: FormikProps<CreateShoppingListFromInitialValues>;
+  formikEditFormInstance: FormikProps<EditShoppingListFormInitialValues>;
 };
 
 type ReturnedHookType = {
   isCreateModalOpen: boolean;
   isDeleteModalOpen: boolean;
+  isEditModalOpen: boolean;
+  onEditShoppingList: () => void;
+  onCloseEditModal: () => void;
+  onOpenEditModal: () => void;
   onOpenCreateModal: () => void;
   onCloseCreateModal: () => void;
   onOpenDeleteModal: () => void;
@@ -23,41 +33,59 @@ type ReturnedHookType = {
   onCreateShoppingList: () => void;
   onShoppingListDeletion: () => Promise<void>;
   onCreateShoppingListFormSubmit: (values: CreateShoppingListFromInitialValues) => Promise<void>;
+  onEditShoppingListFormSubmit: (values: EditShoppingListFormInitialValues) => Promise<void>;
 };
 
 export const useShoppingListsModal = ({
   formikInstance,
+  formikEditFormInstance,
   shoppingListId,
   setValidateAfterSubmit,
 }: HookProps): ReturnedHookType => {
   const shoppingList = useShoppingListsStore((state) => state.shoppingList);
 
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 
-  function onOpenCreateModal(): void {
+  const onOpenCreateModal = useCallback((): void => {
     setIsCreateModalOpen(true);
-  }
+  }, []);
 
-  function onCloseCreateModal(): void {
+  const onCloseCreateModal = useCallback((): void => {
     setIsCreateModalOpen(false);
     setValidateAfterSubmit(false);
 
     formikInstance.resetForm();
-  }
+  }, [formikInstance, setValidateAfterSubmit]);
 
-  function onCreateShoppingList(): void {
+  const onCreateShoppingList = useCallback((): void => {
     setValidateAfterSubmit(true);
     formikInstance.submitForm();
-  }
+  }, [formikInstance, setValidateAfterSubmit]);
 
-  function onOpenDeleteModal(): void {
+  const onOpenDeleteModal = useCallback((): void => {
     setIsDeleteModalOpen(true);
-  }
+  }, []);
 
-  function onCloseDeleteModal(): void {
+  const onCloseDeleteModal = useCallback((): void => {
     setIsDeleteModalOpen(false);
-  }
+  }, []);
+
+  const onOpenEditModal = useCallback((): void => {
+    setIsEditModalOpen(true);
+  }, []);
+
+  const onCloseEditModal = useCallback((): void => {
+    setIsEditModalOpen(false);
+    setValidateAfterSubmit(false);
+  }, [setValidateAfterSubmit]);
+
+  const onEditShoppingList = useCallback((): void => {
+    setValidateAfterSubmit(true);
+
+    formikEditFormInstance.submitForm();
+  }, [formikEditFormInstance, setValidateAfterSubmit]);
 
   async function onShoppingListDeletion(): Promise<void> {
     try {
@@ -83,9 +111,28 @@ export const useShoppingListsModal = ({
     }
   }
 
+  async function onEditShoppingListFormSubmit(values: EditShoppingListFormInitialValues): Promise<void> {
+    try {
+      const { name } = values;
+
+      await updateShoppingListAction({
+        shoppingListData: { name },
+        shoppingListId,
+      });
+
+      onCloseEditModal();
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
   return {
     isCreateModalOpen,
     isDeleteModalOpen,
+    isEditModalOpen,
+    onEditShoppingList,
+    onOpenEditModal,
+    onCloseEditModal,
     onOpenCreateModal,
     onCloseCreateModal,
     onCreateShoppingList,
@@ -93,5 +140,6 @@ export const useShoppingListsModal = ({
     onOpenDeleteModal,
     onCloseDeleteModal,
     onCreateShoppingListFormSubmit,
+    onEditShoppingListFormSubmit,
   };
 };

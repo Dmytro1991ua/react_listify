@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Currencies, ProductUnits } from './app.enums';
-import { ShoppingListItem, SortingItem } from './app.interfaces';
+import { ShoppingListData, ShoppingListItem, SortingItem } from './app.interfaces';
 import { DropdownOption } from './shared/components/select/select.interfaces';
 
 /**
@@ -113,3 +113,12 @@ export const toggleAllProductItems = (shoppingListItems: ShoppingListItem[], isC
 export const toBuyOrPurchasedLabel = (shoppingListItems: ShoppingListItem[], value: boolean): number | undefined => {
   return shoppingListItems?.filter((item) => item.isChecked === value).length;
 };
+
+/**
+ * Function find current Shopping List by its id
+ * @param availableShoppingLists defines an array of available Shopping lists
+ * @param shoppingListId defines an ID of a specific Shopping list
+ * @returns ShoppingListData | null
+ */
+export const getCurrentShoppingList = (availableShoppingLists: ShoppingListData[], shoppingListId: string) =>
+  _.find(availableShoppingLists, { _id: shoppingListId }) ?? null;

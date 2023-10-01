@@ -27,3 +27,8 @@ export type ShoppingListsStoreActions = {
   setShoppingListsLoadingStatus: (loadingStatus: LoadingStatus) => void;
   reset: () => void;
 };
+
+export type UpdateShoppingListPayload = {
+  shoppingListData: { name: string };
+  shoppingListId: string;
+};
