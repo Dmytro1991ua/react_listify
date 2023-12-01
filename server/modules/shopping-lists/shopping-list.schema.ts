@@ -8,11 +8,19 @@ const ShoppingListSchema = new Schema<ShoppingListItem>(
     user: { type: String, ref: "User" },
     name: { type: String, require: true },
     currency: { type: String, require: true },
-    shoppingListItems: { type: [ShoppingListDetailsSchema], require: true, default: [] },
+    shoppingListItems: {
+      type: [ShoppingListDetailsSchema],
+      require: true,
+      default: [],
+    },
+    isFavorite: { type: Boolean, default: false },
   },
   {
     timestamps: true,
   }
 );
 
-export const ShoppingList = model<ShoppingListItem>("ShoppingList", ShoppingListSchema);
+export const ShoppingList = model<ShoppingListItem>(
+  "ShoppingList",
+  ShoppingListSchema
+);

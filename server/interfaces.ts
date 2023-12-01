@@ -49,4 +49,5 @@ export interface ShoppingListItem {
   name: string;
   currency: string;
   shoppingListItems: ShoppingListDetailsItem[];
+  isFavorite: boolean;
 }

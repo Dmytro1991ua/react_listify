@@ -35,7 +35,12 @@ class ShoppingListsController {
       .route(Routes.editShoppingList)
       .put(this.authMiddleware.checkAuth, (req, res) =>
         this.shoppingListsService.editShoppingList(req, res)
-      );
+    );
+     this.router
+       .route(Routes.addToFavorites)
+       .put(this.authMiddleware.checkAuth, (req, res) =>
+         this.shoppingListsService.addWorkoutToFavorites(req, res)
+       );
   }
 }
 
