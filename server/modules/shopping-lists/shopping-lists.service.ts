@@ -113,4 +113,42 @@ export class ShoppingListsService {
       throw new Error((err as Error).message);
     }
   }
+
+  // @dec  Add a specific shopping list to Favorites
+  // @route  PUT /api/shopping-lists/:id/add-to-favorites
+  // @access Private
+  async addWorkoutToFavorites(req: UserRequest, res: Response) {
+    try {
+      const { id } = req.params;
+      const user = req.currentUser;
+
+      const shoppingList = await ShoppingList.findById(id);
+
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(404);
+        throw new Error("No shopping list with that id");
+      }
+
+      if (!user) {
+        res.status(401);
+        throw new Error("User not found");
+      }
+
+      if (shoppingList?.user !== user.uid) {
+        res.status(401);
+        throw new Error("User not authorized");
+      }
+
+      const updatedShoppingList = await ShoppingList.findByIdAndUpdate(
+        id,
+        { isFavorite: !shoppingList.isFavorite },
+        { new: true }
+      );
+
+      res.status(200).json(updatedShoppingList);
+    } catch (err) {
+      res.status(409);
+      throw new Error((err as Error).message);
+    }
+  }
 }
