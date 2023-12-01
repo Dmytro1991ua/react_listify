@@ -124,8 +124,6 @@ export class ShoppingListsService {
 
       const shoppingList = await ShoppingList.findById(id);
 
-      console.log(shoppingList);
-
       if (!mongoose.Types.ObjectId.isValid(id)) {
         res.status(404);
         throw new Error("No shopping list with that id");
