@@ -1,7 +1,9 @@
 import {
   defaultCheckedShoppingListItems,
   defaultShoppingListItems,
+  defaultShoppingLists,
   defaultSortedDropdownItems,
+  defaultSortedShoppingLists,
   expectedDropdownItemsSortingResult,
   expectedShoppingListsSortingResult,
 } from './mocks/test-mocks';
@@ -19,7 +21,11 @@ import {
 
 describe('sortedItems', () => {
   it('should return correct list of shopping lists items, sorting by name and isChecked properties', () => {
-    expect(sortedItems(defaultShoppingListItems)).toEqual(expectedShoppingListsSortingResult);
+    expect(sortedItems(defaultShoppingListItems, 'isChecked')).toEqual(expectedShoppingListsSortingResult);
+  });
+
+  it('should return correct list of shopping lists, sorting by name and isFavorite properties', () => {
+    expect(sortedItems(defaultShoppingLists, 'isFavorite')).toEqual(defaultSortedShoppingLists);
   });
 });
 
