@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import { ProfileIcon, ShoppingCartIcon } from './navigation.styled';
 import { AppRoutes } from '../../../app.enums';
 import history from '../../../services/history.service';
 import { DropdownMenuConfig } from '../header/header.interfaces';
-import { ProfileIcon, ShoppingCartIcon } from './navigation.styled';
 
 export const NAVIGATION_MENU_CONFIGS: DropdownMenuConfig[] = [
   {

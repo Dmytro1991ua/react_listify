@@ -1,9 +1,9 @@
 import * as yup from 'yup';
 
-import { Currencies } from '../../app.enums';
-import { CurrentUser } from '../../app.interfaces';
 import { FILE_SIZE, SUPPORTED_IMAGE_EXTENSIONS } from './profile.constants';
 import { ProfileFormsInitialValues } from './profile.interfaces';
+import { Currencies } from '../../app.enums';
+import { CurrentUser } from '../../app.interfaces';
 
 export const PROFILE_FORM_INITIAL_VALUES = (currentUser: CurrentUser | null): ProfileFormsInitialValues => {
   return {

@@ -1,8 +1,8 @@
 import * as yup from 'yup';
 
+import { EditProductItemFormInitialValues } from './edit-product-item.modal.interfaces';
 import { ProductUnits } from '../../../../app.enums';
 import { ShoppingListItem } from '../../../../app.interfaces';
-import { EditProductItemFormInitialValues } from './edit-product-item.modal.interfaces';
 
 export const EDIT_SHOPPING_LIST_ITEM_FORM_INITIAL_VALUE = (
   shoppingListItem?: ShoppingListItem | null

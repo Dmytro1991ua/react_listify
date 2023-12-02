@@ -1,6 +1,6 @@
-import { UpdateUserInformation } from '../../app.interfaces';
 import { authService } from './auth.service';
 import { useAuthStore } from './auth.store';
+import { UpdateUserInformation } from '../../app.interfaces';
 
 export const validateUserAction = async (firebaseProviders: string[]): Promise<void> => {
   const setUser = useAuthStore.getState().setUser;

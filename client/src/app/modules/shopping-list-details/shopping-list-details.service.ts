@@ -1,10 +1,10 @@
-import { ShoppingListData, ShoppingListItem, UpdateShoppingListItemServicePayload } from '../../app.interfaces';
-import { AXIOS_CONFIG } from '../../configs/axios';
-import { toastService } from '../../services/toast.service';
 import {
   FAILED_DELETE_SHOPPING_LIST_ITEM,
   SUCCESSFUL_DELETE_SHOPPING_LIST_ITEM,
 } from './shopping-list-details.constants';
+import { ShoppingListData, ShoppingListItem, UpdateShoppingListItemServicePayload } from '../../app.interfaces';
+import { AXIOS_CONFIG } from '../../configs/axios';
+import { toastService } from '../../services/toast.service';
 
 class ShoppingListDetailsService {
   async updateShoppingListItem(payload: UpdateShoppingListItemServicePayload): Promise<ShoppingListData | null> {

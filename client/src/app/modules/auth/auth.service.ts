@@ -16,13 +16,6 @@ import {
 import firebase from 'firebase/compat';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
-import { AppRoutes } from '../../app.enums';
-import { CurrentUser, UpdateUserInformation } from '../../app.interfaces';
-import { AXIOS_CONFIG } from '../../configs/axios';
-import { auth, storage } from '../../configs/firebase';
-import { appLifeCycleService } from '../../services/app-lifecycle.service';
-import history from '../../services/history.service';
-import { toastService } from '../../services/toast.service';
 import {
   FAILED_PASSWORD_CHANGED_MESSAGE,
   FAILED_PROFILE_UPDATE_MESSAGE,
@@ -41,6 +34,13 @@ import {
   SUCCESSFUL_SIGN_UP_MESSAGE,
 } from './auth.constants';
 import { useAuthStore } from './auth.store';
+import { AppRoutes } from '../../app.enums';
+import { CurrentUser, UpdateUserInformation } from '../../app.interfaces';
+import { AXIOS_CONFIG } from '../../configs/axios';
+import { auth, storage } from '../../configs/firebase';
+import { appLifeCycleService } from '../../services/app-lifecycle.service';
+import history from '../../services/history.service';
+import { toastService } from '../../services/toast.service';
 
 class AuthService {
   async signUp(email: string, password: string, name: string): Promise<void> {

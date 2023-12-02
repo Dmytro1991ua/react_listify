@@ -1,9 +1,9 @@
 import { CardHeader } from '@mui/material';
 import { ReactElement } from 'react';
 
-import Checkbox from '../checkbox/checkbox';
 import { CardProps } from './card.interfaces';
 import { CardTitle, CustomCard } from './card.styled';
+import Checkbox from '../checkbox/checkbox';
 
 const Card = ({
   title,

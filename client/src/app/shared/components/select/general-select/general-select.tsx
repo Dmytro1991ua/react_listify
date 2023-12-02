@@ -1,8 +1,8 @@
 import { MenuItem } from '@mui/material';
 import { ReactElement } from 'react';
 
-import { SelectProps } from '../select.interfaces';
 import { CustomSelect } from './general-select.styled';
+import { SelectProps } from '../select.interfaces';
 
 const GeneralSelect = <T,>({
   value,

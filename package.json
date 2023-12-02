@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.ts",
   "engines": {
-    "npm": "6.14.13",
-    "node": "14.17.0"
+    "npm": "8.19.2",
+    "node": "18.10.0"
   },
   "scripts": {
     "packages-install": "npm ci && cd client && npm ci",

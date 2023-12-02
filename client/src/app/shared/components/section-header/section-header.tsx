@@ -2,8 +2,8 @@ import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { ReactElement } from 'react';
 
-import Button from '../button/button';
 import { BackIcon, SecondaryButton, SectionHeaderWrapper } from './section-header.styled';
+import Button from '../button/button';
 
 interface SectionHeaderProps {
   /**

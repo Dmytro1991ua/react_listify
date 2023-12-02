@@ -2,6 +2,10 @@
   "name": "react_listify",
   "private": true,
   "version": "0.0.0",
+  "engines": {
+    "npm": "8.19.2",
+    "node": "18.10.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -10,11 +14,11 @@
     "test:no-watch": "vitest run",
     "test:ui": "vitest --ui --api 1666",
     "coverage": "vitest --coverage",
-    "lint": "npm run _eslint & npm run _stylelint",
-    "lint:fix": "npm run _prettier && npm run _eslint -- --fix && npm run _stylelint -- --fix",
     "_prettier": "prettier --write ./src/",
     "_eslint": "eslint ./src/ --ext .ts,.tsx --max-warnings=0 --fix",
     "_stylelint": "stylelint \"./src/**/*.styled.tsx\"",
+    "lint": "npm run _eslint & npm run _stylelint",
+    "lint:fix": "npm run _prettier && npm run _eslint -- --fix && npm run _stylelint -- --fix",
     "prepare": "cd .. && husky install client/.husky",
     "pre-commit": "lint-staged",
     "pre-push": "npm run test:no-watch"
@@ -32,8 +36,8 @@
     "formik-mui": "^4.0.0-alpha.3",
     "immer": "^9.0.15",
     "lodash": "^4.17.21",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-icons": "^4.4.0",
     "react-loader-spinner": "^5.1.3",
     "react-router-dom": "^5.2.0",

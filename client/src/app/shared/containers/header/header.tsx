@@ -2,12 +2,12 @@ import { Box, MenuItem, Toolbar } from '@mui/material';
 import { ReactElement } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { DROPDOWN_MENU_CONFIGS } from './header.configs';
+import { DropdownMenu, HeaderWrapper, Logo, LogoIcon, LogoTitle } from './header.styled';
 import { AppRoutes, UserImageSize } from '../../../app.enums';
 import { useDropdownMenu } from '../../../cdk/hooks/useDropdownMenu';
 import { useAuthStore } from '../../../modules/auth/auth.store';
 import FallbackImage from '../../components/fallback-image/fallback-image';
-import { DROPDOWN_MENU_CONFIGS } from './header.configs';
-import { DropdownMenu, HeaderWrapper, Logo, LogoIcon, LogoTitle } from './header.styled';
 
 const Header = (): ReactElement => {
   const location = useLocation();

@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 
-import { AppRoutes } from '../../app.enums';
-import Button from '../../shared/components/button/button';
 import history from './../../services/history.service';
 import { NotFoundPageWrapper } from './not-found-page.styled';
+import { AppRoutes } from '../../app.enums';
+import Button from '../../shared/components/button/button';
 
 const NotFoundPage = (): ReactElement => {
   function handlePageRedirect(): void {

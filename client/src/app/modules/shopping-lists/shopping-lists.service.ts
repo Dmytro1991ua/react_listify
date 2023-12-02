@@ -1,6 +1,3 @@
-import { ShoppingListData } from '../../app.interfaces';
-import { AXIOS_CONFIG } from '../../configs/axios';
-import { toastService } from '../../services/toast.service';
 import {
   FAILED_CREATE_SHOPPING_LIST,
   FAILED_DELETE_SHOPPING_LIST,
@@ -13,6 +10,9 @@ import {
   SUCCESSFUL_UPDATED_SHOPPING_LIST,
 } from './shopping-lists.contants';
 import { UpdateShoppingListPayload } from './shopping-lists.interfaces';
+import { ShoppingListData } from '../../app.interfaces';
+import { AXIOS_CONFIG } from '../../configs/axios';
+import { toastService } from '../../services/toast.service';
 
 class ShoppingListsService {
   async getAvailableShoppingLists(): Promise<ShoppingListData[]> {

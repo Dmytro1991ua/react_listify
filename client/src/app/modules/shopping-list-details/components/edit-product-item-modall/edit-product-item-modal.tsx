@@ -2,12 +2,12 @@ import { Form, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
+import { InputDivider, ModalInput, ModalSelect } from './edit-product-item-modal.styled';
+import { EditProductItemFormInitialValues } from './edit-product-item.modal.interfaces';
 import { ProductUnits } from '../../../../app.enums';
 import { CommonModalProps } from '../../../../app.interfaces';
 import FormikInput from '../../../../shared/components/input/formik-input/formik-input';
 import Modal from '../../../../shared/components/modal/modal';
-import { InputDivider, ModalInput, ModalSelect } from './edit-product-item-modal.styled';
-import { EditProductItemFormInitialValues } from './edit-product-item.modal.interfaces';
 
 const EditProductItemModal = ({
   formikInstance,
@@ -32,8 +32,7 @@ const EditProductItemModal = ({
       secondaryBtnLabel={secondaryBtnLabel}
       title={title}
       onClose={onClose}
-      onSubmit={onSubmit}
-    >
+      onSubmit={onSubmit}>
       <FormikProvider value={formikInstance}>
         <Form>
           {isLoading ? (

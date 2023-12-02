@@ -1,10 +1,10 @@
 import { Form, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 
+import { EditShoppingListFormInitialValues } from './edit-shopping-list.modal.interfaces';
 import { CommonModalProps } from '../../../../app.interfaces';
 import FormikInput from '../../../../shared/components/input/formik-input/formik-input';
 import Modal from '../../../../shared/components/modal/modal';
-import { EditShoppingListFormInitialValues } from './edit-shopping-list.modal.interfaces';
 
 const EditShoppingListModal = ({
   formikInstance,

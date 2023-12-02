@@ -3,9 +3,9 @@ import { styled } from '@mui/material/styles';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { RiUserSettingsLine } from 'react-icons/ri';
 
+import { closedSidebarMixin, openedSidebarMixin } from './navigation.constants';
 import Button from '../../components/button/button';
 import { LogoIcon, LogoTitle } from '../header/header.styled';
-import { closedSidebarMixin, openedSidebarMixin } from './navigation.constants';
 
 const CommonNavigationMenuIconStyles = `
   fill: #fff;

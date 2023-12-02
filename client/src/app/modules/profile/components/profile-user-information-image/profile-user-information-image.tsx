@@ -2,12 +2,12 @@ import { Typography } from '@mui/material';
 import { FormikProps, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 
+import { ImageWrapper, ProfileAddButtonIcon, ProfileImageContainer } from './profile-user-information-image.styled';
 import { UserImageSize } from '../../../../app.enums';
 import FallbackImage from '../../../../shared/components/fallback-image/fallback-image';
 import { useAuthStore } from '../../../auth/auth.store';
 import { ProfileFormsInitialValues } from '../../profile.interfaces';
 import ProgressBar from '../progress-bar/progress-bar';
-import { ImageWrapper, ProfileAddButtonIcon, ProfileImageContainer } from './profile-user-information-image.styled';
 
 interface ProfileUserInformationImageProps {
   formikInstance: FormikProps<ProfileFormsInitialValues>;

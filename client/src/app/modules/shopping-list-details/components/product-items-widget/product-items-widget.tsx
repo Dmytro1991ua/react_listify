@@ -1,11 +1,11 @@
 import { Box } from '@mui/material';
 import { ReactElement } from 'react';
 
+import { Title, Widget, WidgetContentWrapper } from './product-items-widget.styled';
 import { Currencies } from '../../../../app.enums';
 import { ShoppingListItem } from '../../../../app.interfaces';
 import { calculateProductItemsByCheckedSate } from '../../../../utils';
 import { useAuthStore } from '../../../auth/auth.store';
-import { Title, Widget, WidgetContentWrapper } from './product-items-widget.styled';
 
 interface ProductItemsWidgetProps {
   currency: Currencies;

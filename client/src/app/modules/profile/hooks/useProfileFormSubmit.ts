@@ -1,6 +1,6 @@
-import { ProfileFormsInitialValues } from '../profile.interfaces';
 import { useUpdateUserInfo } from './useUpdateUserInfo';
 import { useUpdateUserPreferences } from './useUpdateUserPreferences';
+import { ProfileFormsInitialValues } from '../profile.interfaces';
 
 type ReturnedHookType = {
   onProfileFormSubmit: (values: ProfileFormsInitialValues) => Promise<void>;

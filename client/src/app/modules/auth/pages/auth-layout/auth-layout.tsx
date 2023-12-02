@@ -2,8 +2,8 @@ import { Box, Typography } from '@mui/material';
 import { ReactElement, ReactNode } from 'react';
 import { FaLeaf } from 'react-icons/fa';
 
-import AuthImagePreview from '../../components/auth-image-preview/auth-image-preview';
 import { AuthFormHeader, AuthFormWrapper, AuthImagePreviewWrapper, AuthLayoutContainer } from './auth-layout.styled';
+import AuthImagePreview from '../../components/auth-image-preview/auth-image-preview';
 
 interface AuthLayoutProps {
   /**

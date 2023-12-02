@@ -4,8 +4,8 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { vi } from 'vitest';
 
-import { AppRoutes } from '../../app.enums';
 import NotFoundPage from './not-found-page';
+import { AppRoutes } from '../../app.enums';
 
 describe('<NotFoundPage />', () => {
   beforeEach(() => {

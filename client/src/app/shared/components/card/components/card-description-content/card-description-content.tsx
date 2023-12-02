@@ -1,9 +1,9 @@
 import { Tooltip } from '@mui/material';
 import { ReactElement } from 'react';
 
+import { CardDescriptionContentProps } from './card-description-content.interfaces';
 import { Currencies } from '../../../../../app.enums';
 import { CardDescription, CardDescriptionWrapper } from '../../card.styled';
-import { CardDescriptionContentProps } from './card-description-content.interfaces';
 
 const CardDescriptionContent = ({
   quantity = 0,

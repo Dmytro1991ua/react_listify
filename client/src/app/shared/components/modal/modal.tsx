@@ -1,6 +1,5 @@
 import { ReactElement, ReactNode } from 'react';
 
-import Button from '../button/button';
 import {
   DialogActionsContainer,
   DialogCloseBtn,
@@ -9,6 +8,7 @@ import {
   DialogContent,
   DialogTitle,
 } from './modal.styled';
+import Button from '../button/button';
 
 interface ModalProps {
   /**
