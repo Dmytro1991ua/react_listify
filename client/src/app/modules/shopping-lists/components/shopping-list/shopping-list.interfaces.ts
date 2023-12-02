@@ -66,4 +66,10 @@ export interface ShoppingListProps {
    * @default undefined
    */
   onEditShoppingList?: (id: string) => void;
+  /**
+   * @param {void} Defines a click event on Favorites icon within specific shopping list
+   * Takes an id of that shopping list as an argument
+   * @default undefined
+   */
+  onAddToFavorites?: (id: string) => Promise<void>;
 }

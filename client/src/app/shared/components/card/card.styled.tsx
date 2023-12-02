@@ -1,6 +1,7 @@
 import { Card, Typography, styled } from '@mui/material';
+import { green } from '@mui/material/colors';
 import { BsPencilFill } from 'react-icons/bs';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaTrashAlt } from 'react-icons/fa';
 import { FiMoreVertical } from 'react-icons/fi';
 
 const commonElementsAlignment = {
@@ -20,19 +21,21 @@ const commonIconsStyles = `
 `;
 
 export const CustomCard = styled(Card, {
-  shouldForwardProp: (prop) => prop !== 'isSelected' && prop !== 'isShoppingListDetails',
+  shouldForwardProp: (prop) => prop !== 'isSelected' && prop !== 'isShoppingListDetails' && prop !== 'isFavorite',
 })<{
   isSelected?: boolean;
   isShoppingListDetails?: boolean;
+  isFavorite?: boolean;
 }>`
   padding: ${({ theme }) => theme.spacing(10)};
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme, isFavorite }) => (isFavorite ? `${green[100]}` : `${theme.palette.common.white}`)};
   border: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
   opacity: ${({ isSelected }) => (isSelected ? 0.5 : 1)};
   text-decoration: ${({ isSelected }) => (isSelected ? 'line-through' : 'none')};
   ${({ theme }) => theme.mixins.formBoxShadowMixin};
   cursor: pointer;
   margin-bottom: ${({ theme }) => theme.spacing(20)};
+  transition: all 0.4s ease-in-out;
 
   @media (width >= 28em) {
     padding: ${({ theme }) => theme.spacing(20)};
@@ -119,4 +122,14 @@ export const EditIcon = styled(BsPencilFill)`
 
 export const DeleteIcon = styled(FaTrashAlt)`
   ${commonIconsStyles};
+`;
+
+export const AddToFavorite = styled(FaRegHeart)`
+  ${commonIconsStyles}
+  fill: ${({ theme }) => theme.palette.success.dark};
+`;
+
+export const RemoveFromFavorite = styled(FaHeart)`
+  ${commonIconsStyles}
+  fill: ${({ theme }) => theme.palette.success.dark};
 `;

@@ -46,6 +46,12 @@ export interface CardProps {
    */
   isSelected?: boolean;
   /**
+   * @param {boolean} Defines if a specific shopping list was added or removed from favorites
+   * @default undefined
+   * @example true/false
+   */
+  isFavorite?: boolean;
+  /**
    * @param {void} Defines a click event on specific shopping list detail card
    * @default undefined
    */

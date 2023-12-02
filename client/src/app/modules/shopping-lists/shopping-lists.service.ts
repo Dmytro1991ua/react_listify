@@ -5,7 +5,9 @@ import {
   FAILED_CREATE_SHOPPING_LIST,
   FAILED_DELETE_SHOPPING_LIST,
   FAILED_LOAD_SHOPPING_LISTS_MESSAGE,
+  FAILED_TO_ADD_SHOPPING_LIST_TO_FAVORITES,
   FAILED_UPDATE_SHOPPING_LIST,
+  SHOPPING_LIST_SUCCESS_ADD_TO_FAVORITE_MESSAGE,
   SUCCESSFUL_CREATE_SHOPPING_LIST,
   SUCCESSFUL_DELETE_SHOPPING_LIST,
   SUCCESSFUL_UPDATED_SHOPPING_LIST,
@@ -77,6 +79,23 @@ class ShoppingListsService {
       return response.data;
     } catch (error) {
       toastService.error(FAILED_UPDATE_SHOPPING_LIST);
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async addShoppingListToFavorites(id: string): Promise<ShoppingListData | null> {
+    try {
+      const response = await AXIOS_CONFIG.put(`/api/shopping-lists/${id}/add-to-favorites`, {});
+
+      if (!response.data) {
+        return null;
+      }
+
+      toastService.success(SHOPPING_LIST_SUCCESS_ADD_TO_FAVORITE_MESSAGE);
+
+      return response.data;
+    } catch (error) {
+      toastService.error(FAILED_TO_ADD_SHOPPING_LIST_TO_FAVORITES);
       throw new Error((error as Error).message);
     }
   }

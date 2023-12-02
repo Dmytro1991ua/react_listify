@@ -3,7 +3,15 @@ import React, { ReactElement } from 'react';
 
 import { dropdownConfigs } from '../../../../../modules/shopping-lists/shopping-lists.configs';
 import { DropdownMenu } from '../../../../containers/header/header.styled';
-import { CardActionButton, CardActions, DeleteIcon, EditIcon, OpenIcon } from '../../card.styled';
+import {
+  AddToFavorite,
+  CardActionButton,
+  CardActions,
+  DeleteIcon,
+  EditIcon,
+  OpenIcon,
+  RemoveFromFavorite,
+} from '../../card.styled';
 import { CardActionsContentProps } from './card-actions-content.interfaces';
 
 const CardActionsContent = ({
@@ -12,6 +20,7 @@ const CardActionsContent = ({
   isShoppingList,
   shoppingListId,
   isSelected,
+  isFavorite,
   onMenuOpen,
   onMenuClose,
   onEditProductItem,
@@ -20,6 +29,7 @@ const CardActionsContent = ({
   onModalOpen,
   onRedirectToDetails,
   onSetShoppingListId,
+  onAddToFavorites,
 }: CardActionsContentProps): ReactElement => {
   const SHOPPING_LIST_DROPDOWN_MENU_CONFIGS = dropdownConfigs(onRedirectToDetails, onModalOpen);
 
@@ -45,13 +55,23 @@ const CardActionsContent = ({
     onDelete && onDelete(shoppingListId as string);
   }
 
+  async function handleAddShoppingListToFavorites(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.stopPropagation();
+    onAddToFavorites && (await onAddToFavorites(shoppingListId as string));
+  }
+
   const shoppingListActions = (
     <>
       <CardActionButton aria-label='edit-shopping-list-btn' onClick={handleShoppingListEdit}>
         <EditIcon />
       </CardActionButton>
+
       <CardActionButton aria-label='menu-btn' onClick={handleOpenListIconClick}>
         <OpenIcon />
+      </CardActionButton>
+
+      <CardActionButton aria-label='favorites-icon' onClick={handleAddShoppingListToFavorites}>
+        {isFavorite ? <RemoveFromFavorite /> : <AddToFavorite />}
       </CardActionButton>
 
       <DropdownMenu

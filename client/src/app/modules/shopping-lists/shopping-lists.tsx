@@ -24,6 +24,7 @@ import {
 import { EditShoppingListFormInitialValues } from './components/edit-shopping-list-modal/edit-shopping-list.modal.interfaces';
 import ShoppingList from './components/shopping-list/shopping-list';
 import { useShoppingListsModal } from './hooks/useShoppingListsModal';
+import { addShoppingListToFavoritesAction } from './shopping-lists.actions';
 import {
   SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_FALLBACK_MESSAGE_TITLE,
@@ -41,7 +42,7 @@ const ShoppingLists = (): ReactElement => {
   const [shoppingListId, setShoppingListId] = useState('');
 
   const sortedAvailableCurrencies = sortedDropdownItems(availableCurrencies);
-  const sortedItemsByName = useMemo(() => sortedItems(availableShoppingLists), [availableShoppingLists]);
+  const sortedItemsByName = useMemo(() => sortedItems(availableShoppingLists, 'isFavorite'), [availableShoppingLists]);
 
   const currentShoppingList = useMemo(
     () => getCurrentShoppingList(availableShoppingLists, shoppingListId),
@@ -111,6 +112,14 @@ const ShoppingLists = (): ReactElement => {
     await onEditShoppingListFormSubmit(values);
   }
 
+  async function onAddShoppingListToFavorites(shoppingListId: string): Promise<void> {
+    try {
+      await addShoppingListToFavoritesAction(shoppingListId);
+    } catch (e) {
+      throw new Error((e as Error).message);
+    }
+  }
+
   const renderFallbackMessageOrShoppingLists = (
     <>
       {!sortedItemsByName.length ? (
@@ -129,6 +138,7 @@ const ShoppingLists = (): ReactElement => {
             isMenuOpened={isDropdownMenuOpened}
             isShoppingList={true}
             list={list}
+            onAddToFavorites={onAddShoppingListToFavorites}
             onDoubleClick={handleCardDoubleClick}
             onEditShoppingList={onOpenEditModal}
             onMenuClose={onDropdownMenuClose}

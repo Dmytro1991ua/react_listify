@@ -19,6 +19,7 @@ const ShoppingList = ({
   onSetShoppingListId,
   onRedirectToDetails,
   onEditShoppingList,
+  onAddToFavorites,
 }: ShoppingListProps) => {
   const toBuyLabel = useMemo(() => {
     return toBuyOrPurchasedLabel(list?.shoppingListItems ?? [], false);
@@ -34,9 +35,11 @@ const ShoppingList = ({
       actions={
         <CardActionsContent
           anchorElement={anchorElement}
+          isFavorite={list?.isFavorite}
           isMenuOpened={isMenuOpened}
           isShoppingList={isShoppingList}
           shoppingListId={list?._id}
+          onAddToFavorites={onAddToFavorites}
           onEditShoppingList={onEditShoppingList}
           onMenuClose={onMenuClose}
           onMenuOpen={onMenuOpen}
@@ -55,6 +58,7 @@ const ShoppingList = ({
           totalPrice={calculateTotalPrice(list?.shoppingListItems ?? [], calculateTotalPriceByQuantity as boolean)}
         />
       }
+      isFavorite={list?.isFavorite}
       shoppingListId={list?._id}
       title={list?.name}
       onDoubleClick={onDoubleClick}

@@ -33,7 +33,7 @@ export const useGetCurrentShoppingList = ({ shoppingListId, shoppingListItemId }
   const availableShoppingLists = useShoppingListsStore((state) => state.shoppingLists);
 
   const sortedItemsByNameOrSelectedState = useMemo(
-    () => sortedItems(currentShoppingList?.shoppingListItems ?? []),
+    () => sortedItems(currentShoppingList?.shoppingListItems ?? [], 'isChecked'),
     [currentShoppingList?.shoppingListItems]
   );
 
