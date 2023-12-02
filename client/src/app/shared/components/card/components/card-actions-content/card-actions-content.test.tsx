@@ -17,6 +17,7 @@ const defaultProps = {
   onModalOpen: vi.fn(),
   onRedirectToDetails: vi.fn(),
   onSetShoppingListId: vi.fn(),
+  onAddToFavorites: vi.fn(),
 };
 
 describe('<CardActionsContent', () => {
@@ -36,15 +37,19 @@ describe('<CardActionsContent', () => {
 
     const menuBtn = screen.getByRole('button', { name: /menu-btn/ });
     const editBtn = screen.getByRole('button', { name: /edit-shopping-list-btn/ });
+    const favoriteIcon = screen.getByRole('button', { name: /favorites-icon/ });
 
     await waitFor(() => expect(menuBtn).toBeInTheDocument());
     await waitFor(() => expect(editBtn).toBeInTheDocument());
+    await waitFor(() => expect(favoriteIcon).toBeInTheDocument());
 
     await act(async () => user.click(menuBtn));
     await act(async () => user.click(editBtn));
+    await act(async () => user.click(favoriteIcon));
 
     await waitFor(() => expect(mockOnMenuOpen).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(defaultProps.onEditShoppingList).toHaveBeenCalled());
+    await waitFor(() => expect(defaultProps.onAddToFavorites).toHaveBeenCalled());
   });
 
   it('should open dropdown menu when isMenuOpened prop is true', async () => {

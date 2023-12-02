@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { vi } from 'vitest';
+import { afterEach, vi } from 'vitest';
 
 import { AppRoutes } from '../../../app.enums';
 import Header from './header';
@@ -15,6 +15,10 @@ vi.doMock('react-router-dom', () => ({
 }));
 
 describe('Header', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   const Component = (): JSX.Element => (
     <MemoryRouter>
       <Header />
@@ -57,6 +61,11 @@ describe('Header', () => {
   });
 
   it('should redirect to Profile page on button click', async () => {
+    Object.defineProperty(window, 'location', {
+      value: { pathname: AppRoutes.Profile },
+      writable: true,
+    });
+
     render(<Component />);
 
     const menuButton = screen.getByTestId('menu-btn');
@@ -75,6 +84,11 @@ describe('Header', () => {
   });
 
   it('should redirect to Login page on button click', async () => {
+    Object.defineProperty(window, 'location', {
+      value: { pathname: AppRoutes.SignIn },
+      writable: true,
+    });
+
     render(<Component />);
 
     const menuButton = screen.getByTestId('menu-btn');
