@@ -1,6 +1,6 @@
+import { shoppingListDetailsService } from './shopping-list-details.service';
 import { ShoppingListItem, UpdateShoppingListItemActionPayload } from '../../app.interfaces';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
-import { shoppingListDetailsService } from './shopping-list-details.service';
 
 export const updateShoppingListItemAction = async (payload: UpdateShoppingListItemActionPayload): Promise<void> => {
   const { shoppingListItem, url, successMessage, failedMessage, serviceMethod } = payload;

@@ -1,6 +1,7 @@
 import { MenuItem } from '@mui/material';
 import React, { ReactElement } from 'react';
 
+import { CardActionsContentProps } from './card-actions-content.interfaces';
 import { dropdownConfigs } from '../../../../../modules/shopping-lists/shopping-lists.configs';
 import { DropdownMenu } from '../../../../containers/header/header.styled';
 import {
@@ -12,7 +13,6 @@ import {
   OpenIcon,
   RemoveFromFavorite,
 } from '../../card.styled';
-import { CardActionsContentProps } from './card-actions-content.interfaces';
 
 const CardActionsContent = ({
   anchorElement,

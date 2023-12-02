@@ -1,9 +1,6 @@
 import { FormikProps, useFormik } from 'formik';
 import { ReactElement } from 'react';
 
-import SectionHeader from '../../shared/components/section-header/section-header';
-import { availableCurrencies, sortedDropdownItems } from '../../utils';
-import { useAuthStore } from '../auth/auth.store';
 import ProfileChangePasswordForm from './components/profile-change-password-form/profile-change-password-form';
 import ProfileUserInformationForm from './components/profile-user-information-form/profile-user-information-form';
 import ProfileUserPreferencesForm from './components/profile-user-preferences-form/profile-user-preferences-form';
@@ -18,6 +15,9 @@ import {
   ProfileAccountSettingsWrapper,
   SectionContentWrapper,
 } from './profile.styled';
+import SectionHeader from '../../shared/components/section-header/section-header';
+import { availableCurrencies, sortedDropdownItems } from '../../utils';
+import { useAuthStore } from '../auth/auth.store';
 
 const Profile = (): ReactElement => {
   const user = useAuthStore((state) => state.user);

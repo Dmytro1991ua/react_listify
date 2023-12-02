@@ -3,19 +3,6 @@ import { FormikProps, useFormik } from 'formik';
 import { ReactElement, useMemo, useState } from 'react';
 import { Bars } from 'react-loader-spinner';
 
-import { AppRoutes } from '../../app.enums';
-import { useDropdownMenu } from '../../cdk/hooks/useDropdownMenu';
-import history from '../../services/history.service';
-import CreateShoppingListModal from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal';
-import {
-  CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
-  CREATE_SHOPPING_LIST_FORM_VALIDATION,
-} from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal.schema';
-import DeleteConfirmationModal from '../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
-import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
-import SectionHeader from '../../shared/components/section-header/section-header';
-import { availableCurrencies, getCurrentShoppingList, sortedDropdownItems, sortedItems } from '../../utils';
-import { useAuthStore } from '../auth/auth.store';
 import EditShoppingListModal from './components/edit-shopping-list-modal/edit-shopping-list-modal';
 import {
   EDIT_SHOPPING_LIST_FORM_INITIAL_VALUE,
@@ -32,6 +19,19 @@ import {
 import { CreateShoppingListFromInitialValues } from './shopping-lists.interfaces';
 import { useShoppingListsStore } from './shopping-lists.store';
 import { ItemWrapper } from './shopping-lists.styled';
+import { AppRoutes } from '../../app.enums';
+import { useDropdownMenu } from '../../cdk/hooks/useDropdownMenu';
+import history from '../../services/history.service';
+import CreateShoppingListModal from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal';
+import {
+  CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
+  CREATE_SHOPPING_LIST_FORM_VALIDATION,
+} from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal.schema';
+import DeleteConfirmationModal from '../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
+import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
+import SectionHeader from '../../shared/components/section-header/section-header';
+import { availableCurrencies, getCurrentShoppingList, sortedDropdownItems, sortedItems } from '../../utils';
+import { useAuthStore } from '../auth/auth.store';
 
 const ShoppingLists = (): ReactElement => {
   const isLoading = useShoppingListsStore((state) => state.shoppingListsLoadingStatus) === 'loading';

@@ -2,11 +2,11 @@ import { Form, FormikProps, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
+import { FieldLabel, InputFieldDivider, ProfileCurrenciesSelect } from './profile-user-preferences-fields.styled';
 import { Currencies } from '../../../../app.enums';
 import { DropdownOption } from '../../../../shared/components/select/select.interfaces';
 import Switch from '../../../../shared/components/switch/switch';
 import { ProfileFormsInitialValues } from '../../profile.interfaces';
-import { FieldLabel, InputFieldDivider, ProfileCurrenciesSelect } from './profile-user-preferences-fields.styled';
 
 interface ProfileUserPreferencesFieldsProps {
   formikInstance: FormikProps<ProfileFormsInitialValues>;

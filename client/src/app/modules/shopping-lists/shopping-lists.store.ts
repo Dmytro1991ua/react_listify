@@ -1,8 +1,8 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { Currencies, ProductUnits } from '../../app.enums';
 import { ShoppingListsStoreActions, ShoppingListsStoreState } from './shopping-lists.interfaces';
+import { Currencies, ProductUnits } from '../../app.enums';
 
 const initialState: ShoppingListsStoreState = {
   shoppingLists: [],

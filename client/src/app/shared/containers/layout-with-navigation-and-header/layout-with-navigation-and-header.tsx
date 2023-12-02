@@ -1,8 +1,8 @@
 import { ReactElement, ReactNode } from 'react';
 
+import { HeaderSpacer, LayoutContainer, MainContent } from './layout-with-navigation-and-header.styled';
 import Header from '../header/header';
 import Navigation from '../navigation/navigation';
-import { HeaderSpacer, LayoutContainer, MainContent } from './layout-with-navigation-and-header.styled';
 
 interface LayoutWithNavigationAndHeaderProps {
   children?: ReactNode;

@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 
+import AuthLayout from './auth-layout/auth-layout';
 import ForgotPasswordPreviewImage from '../../../../assets/images/auth/forgot-password.jpg';
 import AuthForgotPasswordForm from '../components/auth-forgot-password-form/auth-forgot-password-form';
 import {
@@ -7,7 +8,6 @@ import {
   FORGOT_PASSWORD_FORM_VALIDATION,
 } from '../components/auth-forgot-password-form/auth-forgot-password-form.schema';
 import { useAuth } from '../hooks/useAuth';
-import AuthLayout from './auth-layout/auth-layout';
 
 const AuthForgotPasswordPage = (): ReactElement => {
   const { onForgotPasswordFormSubmit } = useAuth();

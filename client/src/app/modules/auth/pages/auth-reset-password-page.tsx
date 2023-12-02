@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 
+import AuthLayout from './auth-layout/auth-layout';
 import ResetPasswordPreviewImage from '../../../../assets/images/auth/reset-password.jpg';
 import AuthResetPasswordForm from '../components/auth-reset-password-form/auth-reset-password-form';
 import {
@@ -7,7 +8,6 @@ import {
   RESET_PASSWORD_FORM_VALIDATION,
 } from '../components/auth-reset-password-form/auth-reset-password-form.schema';
 import { useAuth } from '../hooks/useAuth';
-import AuthLayout from './auth-layout/auth-layout';
 
 const AuthResetPasswordPage = (): ReactElement => {
   const { onResetPasswordFormSubmit } = useAuth();

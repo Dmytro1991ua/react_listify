@@ -4,18 +4,6 @@ import { ReactElement, useState } from 'react';
 import { Audio } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 
-import { Currencies } from '../../app.enums';
-import Checkbox from '../../shared/components/checkbox/checkbox';
-import {
-  CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
-  CREATE_SHOPPING_LIST_FORM_VALIDATION,
-} from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal.schema';
-import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
-import SectionHeader from '../../shared/components/section-header/section-header';
-import { useAuthStore } from '../auth/auth.store';
-import { CreateShoppingListFromInitialValues } from '../shopping-lists/shopping-lists.interfaces';
-import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
-import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
 import CreateShoppingListCopyModal from './components/create-shopping-list-copy-modal/create-shopping-list-copy-modal';
 import DeleteProductItemModal from './components/delete-product-item-modal/delete-product-item-modal';
 import DeleteShoppingListModal from './components/delete-shopping-list-modal/delete-shopping-list-modal';
@@ -35,6 +23,18 @@ import {
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE,
 } from './shopping-list-details.constants';
 import { AddIcon, CheckboxLabel, Form, Input } from './shopping-list-details.styled';
+import { Currencies } from '../../app.enums';
+import Checkbox from '../../shared/components/checkbox/checkbox';
+import {
+  CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
+  CREATE_SHOPPING_LIST_FORM_VALIDATION,
+} from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal.schema';
+import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
+import SectionHeader from '../../shared/components/section-header/section-header';
+import { useAuthStore } from '../auth/auth.store';
+import { CreateShoppingListFromInitialValues } from '../shopping-lists/shopping-lists.interfaces';
+import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
+import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
 
 const ShoppingListDetails = (): ReactElement => {
   const { shoppingListId } = useParams<{ shoppingListId: string }>();
@@ -254,8 +254,7 @@ const ShoppingListDetails = (): ReactElement => {
         onSubmit={(e) => {
           e.preventDefault();
           newProductItem && onCreateProductItemFormSubmit();
-        }}
-      >
+        }}>
         <Input
           autoFocus
           endIcon={<AddIcon onClick={newProductItem && onCreateProductItemFormSubmit} />}

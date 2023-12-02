@@ -1,10 +1,10 @@
 import { FormikProps, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 
+import { FormWrapper, UserInformationForm } from './profile-user-information-fields.styled';
 import FormikInput from '../../../../shared/components/input/formik-input/formik-input';
 import { InputDivider } from '../../../shopping-list-details/components/edit-product-item-modall/edit-product-item-modal.styled';
 import { ProfileFormsInitialValues } from '../../profile.interfaces';
-import { FormWrapper, UserInformationForm } from './profile-user-information-fields.styled';
 
 interface ProfileUserInformationFieldsProps {
   formikInstance: FormikProps<ProfileFormsInitialValues>;

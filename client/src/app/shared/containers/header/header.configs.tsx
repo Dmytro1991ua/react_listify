@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import { DropdownMenuConfig } from './header.interfaces';
+import { LogoutIcon, ProfileIcon } from './header.styled';
 import { AppRoutes } from '../../../app.enums';
 import { authService } from '../../../modules/auth/auth.service';
 import history from '../../../services/history.service';
-import { DropdownMenuConfig } from './header.interfaces';
-import { LogoutIcon, ProfileIcon } from './header.styled';
 
 export const DROPDOWN_MENU_CONFIGS: DropdownMenuConfig[] = [
   {

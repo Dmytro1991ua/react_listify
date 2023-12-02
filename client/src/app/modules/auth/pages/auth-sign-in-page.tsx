@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 
+import AuthLayout from './auth-layout/auth-layout';
 import SignInPreviewImage from '../../../../assets/images/auth/sign-in-img.jpg';
 import AuthSignInForm from '../components/auth-sign-in-form/auth-sign-in-form';
 import {
@@ -7,7 +8,6 @@ import {
   SIGN_IN_FORM_VALIDATION,
 } from '../components/auth-sign-in-form/auth-sign-in-form.schema';
 import { useAuth } from '../hooks/useAuth';
-import AuthLayout from './auth-layout/auth-layout';
 
 const AuthSignInPage = (): ReactElement => {
   const { isSignInViaGoogleLoading, onSignInFormSubmit, onFormSubmitViaGoogle } = useAuth();

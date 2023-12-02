@@ -2,12 +2,12 @@ import { Form, FormikProvider } from 'formik';
 import { ReactElement } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
+import { CurrenciesSelect } from './create-shopping-list-modal.styled';
 import { Currencies } from '../../../app.enums';
 import { CommonModalProps } from '../../../app.interfaces';
 import { CreateShoppingListFromInitialValues } from '../../../modules/shopping-lists/shopping-lists.interfaces';
 import FormikInput from '../input/formik-input/formik-input';
 import Modal from '../modal/modal';
-import { CurrenciesSelect } from './create-shopping-list-modal.styled';
 
 const CreateShoppingListModal = ({
   formikInstance,
