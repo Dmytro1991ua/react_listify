@@ -10,6 +10,7 @@ const initialState: ShoppingListsStoreState = {
     name: '',
     currency: Currencies.Dollar,
     shoppingListItems: [],
+    isFavorite: false,
   },
   shoppingListItem: {
     name: '',

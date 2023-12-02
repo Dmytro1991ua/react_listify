@@ -78,3 +78,17 @@ export const updateShoppingListAction = async (payload: UpdateShoppingListPayloa
     throw new Error((error as Error).message);
   }
 };
+
+export const addShoppingListToFavoritesAction = async (id: string): Promise<void> => {
+  const updateShoppingList = useShoppingListsStore.getState().updateShoppingList;
+
+  try {
+    const updatedShoppingList = await shoppingListsService.addShoppingListToFavorites(id);
+
+    if (updatedShoppingList) {
+      updateShoppingList(updatedShoppingList);
+    }
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};

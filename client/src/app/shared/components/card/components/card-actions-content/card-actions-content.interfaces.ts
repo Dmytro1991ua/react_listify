@@ -31,6 +31,13 @@ export interface CardActionsContentProps {
    */
   isSelected?: boolean;
   /**
+   *  /**
+   * @param {boolean} Defines if a specific shopping list was added or removed from favorites
+   * @default undefined
+   * @example true/false
+   */
+  isFavorite?: boolean;
+  /**
    * @param {void} Defines a click event on menu in order to show a dropdown with options
    * Takes and event as an argument to determine current clicked option
    * @default undefined
@@ -76,4 +83,10 @@ export interface CardActionsContentProps {
    * @default undefined
    */
   onEditShoppingList?: (id: string) => void;
+  /**
+   * @param {void} Defines a click event on Favorites icon within specific shopping list
+   * Takes an id of that shopping list as an argument
+   * @default undefined
+   */
+  onAddToFavorites?: (id: string) => Promise<void>;
 }

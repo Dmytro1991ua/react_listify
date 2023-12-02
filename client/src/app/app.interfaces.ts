@@ -36,6 +36,7 @@ export interface ShoppingListData {
   _id?: string;
   name: string;
   currency: Currencies;
+  isFavorite: boolean;
   shoppingListItems: ShoppingListItem[];
 }
 

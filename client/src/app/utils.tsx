@@ -10,8 +10,15 @@ import { DropdownOption } from './shared/components/select/select.interfaces';
  * @param sortingItems defines either array of Shopping lists or Product item
  * @returns Partial<ShoppingListData & ShoppingListItem>[]
  */
-export const sortedItems = (sortingItems: SortingItem[]): SortingItem[] =>
-  _.chain(sortingItems).flatten().sortBy('name').sortBy('isChecked').value();
+export const sortedItems = (sortingItems: SortingItem[], sortByProperty: 'isChecked' | 'isFavorite'): SortingItem[] =>
+  _.chain(sortingItems)
+    .flatten()
+    .sortBy([
+      (item) => (sortByProperty === 'isChecked' ? Number(item.isChecked) : 0),
+      (item) => (sortByProperty === 'isFavorite' ? -Number(item.isFavorite) : 0),
+      (item) => item.name,
+    ])
+    .value();
 
 /**
  * Returns transformed list of available currencies for a dropdown menu

@@ -61,15 +61,45 @@ export const expectedShoppingListsSortingResult = [
 ];
 
 export const defaultShoppingLists = [
-  { _id: '1', name: 'Terra', currency: Currencies.Dollar, shoppingListItems: defaultShoppingListItems },
-  { _id: '2', name: 'Varus', currency: Currencies.Euro, shoppingListItems: defaultShoppingListItems },
-  { _id: '3', name: 'carrefour', currency: Currencies.Pound, shoppingListItems: [] },
+  {
+    _id: '1',
+    name: 'Terra',
+    currency: Currencies.Dollar,
+    shoppingListItems: defaultShoppingListItems,
+    isFavorite: false,
+  },
+  {
+    _id: '2',
+    name: 'Varus',
+    currency: Currencies.Euro,
+    shoppingListItems: defaultShoppingListItems,
+    isFavorite: true,
+  },
+  { _id: '3', name: 'Carrefour', currency: Currencies.Pound, shoppingListItems: [], isFavorite: false },
 ];
 
 export const defaultSortedShoppingLists = [
-  { _id: '3', name: 'carrefour', currency: Currencies.Pound, shoppingListItems: [] },
-  { _id: '1', name: 'Terra', currency: Currencies.Dollar, shoppingListItems: defaultShoppingListItems },
-  { _id: '2', name: 'Varus', currency: Currencies.Euro, shoppingListItems: defaultShoppingListItems },
+  {
+    _id: '2',
+    name: 'Varus',
+    currency: Currencies.Euro,
+    shoppingListItems: defaultShoppingListItems,
+    isFavorite: true,
+  },
+  {
+    _id: '3',
+    name: 'Carrefour',
+    currency: Currencies.Pound,
+    shoppingListItems: [],
+    isFavorite: false,
+  },
+  {
+    _id: '1',
+    name: 'Terra',
+    currency: Currencies.Dollar,
+    shoppingListItems: defaultShoppingListItems,
+    isFavorite: false,
+  },
 ];
 export const defaultSortedDropdownItems = [
   { id: '1', value: 'Apple', label: 'Apple' },
