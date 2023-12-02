@@ -10,7 +10,7 @@
   "scripts": {
     "packages-install": "npm ci && cd client && npm ci",
     "tsc": "tsc",
-    "build": "npm install && npm run tsc && cd client && npm install --only=dev && npm install && npm run build",
+    "build": "CI=false npm install && npm run tsc && cd client && npm install --only=dev && npm install && npm run build",
     "start": "node server/dist/index.js",
     "server": "ts-node-dev --files --respawn --pretty --transpile-only server/index.ts",
     "client": "npm run dev --prefix client -- --host",
