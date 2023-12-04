@@ -5,6 +5,11 @@ export const ImagePreviewSection = styled('section', { shouldForwardProp: (prop)
 }>`
   position: relative;
   height: 100vh;
+  width: 100vw;
+
+  @media (width >= 62em) {
+    height: auto;
+  }
 
   img {
     height: 100%;

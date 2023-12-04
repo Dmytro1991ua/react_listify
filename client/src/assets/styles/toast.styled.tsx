@@ -4,8 +4,12 @@ import { ToastContainer } from 'react-toastify';
 export const CustomToastContainer = styled(ToastContainer)`
   &.Toastify__toast-container {
     width: fit-content;
-    min-width: 350px;
-    padding: 0;
+    min-width: 35rem;
+    padding: 0 1.6rem;
+
+    @media (width >= 29.3em) {
+      padding: 0;
+    }
   }
 
   & .Toastify__toast {
