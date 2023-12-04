@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import Button from '../../shared/components/button/button';
 
 export const FormWrapper = styled(Form)`
-  padding: ${({ theme }) => theme.spacing(20)};
+  padding: ${({ theme }) => `${theme.spacing(10)} ${theme.spacing(15)}`};
   background-color: ${({ theme }) => theme.palette.common.white};
   border: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
   border-radius: ${({ theme }) => theme.spacing(12)};
@@ -14,6 +14,7 @@ export const FormWrapper = styled(Form)`
 
   @media (width >= 62em) {
     background-color: transparent;
+    padding: ${({ theme }) => theme.spacing(20)};
   }
 `;
 

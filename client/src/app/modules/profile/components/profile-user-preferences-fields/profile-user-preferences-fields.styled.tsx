@@ -6,6 +6,7 @@ import { InputDivider } from '../../../shopping-list-details/components/edit-pro
 export const InputFieldDivider = styled(InputDivider)`
   display: grid;
   grid-template-columns: 0.5fr 2fr;
+  gap: 1.5rem;
   align-items: center;
   width: 100%;
 `;

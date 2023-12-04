@@ -1,8 +1,13 @@
 import { Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import { ReactElement } from 'react';
 
-import { BackIcon, SecondaryButton, SectionHeaderWrapper } from './section-header.styled';
+import {
+  ActionButtonsWrapper,
+  BackIcon,
+  HeaderContentWrapper,
+  SecondaryButton,
+  SectionHeaderWrapper,
+} from './section-header.styled';
 import Button from '../button/button';
 
 interface SectionHeaderProps {
@@ -59,8 +64,7 @@ const SectionHeader = ({
         <SecondaryButton
           isShoppingListDetails={isShoppingListDetails}
           variant='secondaryContained'
-          onClick={() => onSecondaryButtonClick && onSecondaryButtonClick()}
-        >
+          onClick={() => onSecondaryButtonClick && onSecondaryButtonClick()}>
           {secondaryBtnLabel}
         </SecondaryButton>
       )}
@@ -72,11 +76,13 @@ const SectionHeader = ({
 
   return (
     <SectionHeaderWrapper container alignItems='center'>
-      {renderGoBackButton}
-      <Typography sx={{ fontWeight: 'bold', marginLeft: isShoppingListDetails ? '1.5rem' : 0 }} variant='h3'>
-        {title}
-      </Typography>
-      <Box sx={{ marginLeft: 'auto' }}>{renderHeaderActions}</Box>
+      <HeaderContentWrapper>
+        {renderGoBackButton}
+        <Typography sx={{ fontWeight: 'bold', marginLeft: isShoppingListDetails ? '1.5rem' : 0 }} variant='h3'>
+          {title}
+        </Typography>
+      </HeaderContentWrapper>
+      <ActionButtonsWrapper>{renderHeaderActions}</ActionButtonsWrapper>
     </SectionHeaderWrapper>
   );
 };

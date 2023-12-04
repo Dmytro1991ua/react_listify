@@ -46,16 +46,23 @@ export const CustomCard = styled(Card, {
   }
 
   header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     padding: 0;
+
+    @media (width >= 35em) {
+      flex-direction: row;
+    }
 
     & .MuiCardHeader-content {
       display: flex;
       align-items: center;
+      gap: 1.5rem;
     }
 
     & .MuiCardHeader-action {
       align-self: center;
-      margin: 0;
     }
   }
 `;
@@ -67,7 +74,7 @@ export const CardTitle = styled(Typography, {
   isProductItem?: boolean;
 }>`
   margin: 0;
-  font-size: clamp(1.5rem, -1.875rem + 8.5vw, 2.4rem);
+  font-size: clamp(1.5rem, -1.875rem + 7.5vw, 2.4rem);
   font-weight: bold;
   margin-left: ${({ isProductItem }) => (isProductItem ? '1.2rem' : 0)};
 `;
@@ -98,11 +105,7 @@ export const CardActionButton = styled('button')`
   cursor: pointer;
 
   &:not(:last-child) {
-    margin-right: ${({ theme }) => theme.spacing(4)};
-
-    @media (width >= 48em) {
-      margin-right: ${({ theme }) => theme.spacing(13)};
-    }
+    margin-right: ${({ theme }) => theme.spacing(13)};
   }
 `;
 
