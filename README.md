@@ -14,9 +14,38 @@ The main goal of this project is to keep practicing and improving skills, to mak
 
 > Step-by-step instructions on how to locally run the application
 
-##### Clone down this repository via `HTTPS` or `SSH`. You will need `node` and `npm` installed globally on your machine.
+##### 1) Clone down this repository via `HTTPS` or `SSH`. You will need `node` and `npm` installed globally on your machine.
 
-##### In order to run the application you will need to follow the next steps:
+##### 2) Create a `.env` file separately for `root` and `client` directories and set the following environment variables:
+   > `env` file for `root` directory
+
+    NODE_ENV=development
+    PORT=8080
+    MONGODB_URI="mongodb+srv://your_connection_with_mongoDB"
+    FIREBASE_PROJECT_ID="your_firebase_project_id"
+    FIREBASE_KEY_ID="your_firebase_key_id"
+    FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY---your_key_id-----END PRIVATE KEY-----\n"
+    FIREBASE_CLIENT_EMAIL="your_firebase_client_email"
+    FIREBASE_CLIENT_ID="your_firebase_client_id"
+    FIREBASE_AUTH_URI="your_firebase_auth_uri"
+    FIREBASE_TOKEN_URI="your_firebase_token_uri"
+    FIREBASE_AUTH_PROVIDER_X509_CERT_URL="your_firebase_auth_provider_cert_url"
+    FIREBASE_CLIENT_X509_CERT_URL="your_firebase_client_cert_url"
+    
+   > `env` file for `client` directory
+
+   ```
+    VITE_FIREBASE_API_KEY=your_firebase_api_key
+    VITE_AUTH_DOMAIN=yor_firebase_auth_domain
+    VITE_PROJECT_ID=your_firebase_project_id
+    VITE_STORAGE_BUCKET=your_firebase_storage_bucket
+    VITE_MESSAGING_SENDER_ID=your_firebase_sender_id
+    VITE_MESSAGING_APP_ID=1:your_firebase_messaging_app_id
+    VITE_API_BASE_URL=your_base_url
+    VITE_NODE_ENV=development
+   ```
+
+##### 3) In order to run the application you will need to follow the next steps:
 
 - ##### Run `npm run packages-install` in order to install all project dependencies within `root` directory package.json as well as within `client` folder.
   ```
@@ -30,7 +59,7 @@ The main goal of this project is to keep practicing and improving skills, to mak
   ```
   npm run client
   ```
-- ##### The application will be available on `http://localhost:5500`
+- ##### 4) The application will be available on `http://localhost:5500`
 
 # Features
 
@@ -40,6 +69,7 @@ The main goal of this project is to keep practicing and improving skills, to mak
 
 - ##### User Authentication flow that consists of abilities to Sign-In via email/password and Google, Sign-Up via email/password and Google, Forgot password, Reset Password
 - ##### Ability to create a shopping list with a specific name and currency.
+- ##### Ability to edit a particular shopping list's name
 - ##### Ability to delete a specific shopping list.
 - ##### Ability to see the total price of all items within a specific shopping list and information on how many items were purchased and how many need to be bought via tooltip.
 - ##### Ability to create/update/delete a specific product item within a specific shopping list
@@ -47,7 +77,8 @@ The main goal of this project is to keep practicing and improving skills, to mak
 - ##### Ability to see all items that should be bought or have been already purchased based on selected product items within a widget.
 - ##### Ability to create a copy of a particular shopping list with all product items.
 - ##### Ability to delete a particular shopping list with all product items.
-- ##### Ability to update user name, picture, change password and apply some specific user preferences such as default currency or ability to calculate products price by their quantity within user's Profile, etc.
+- ##### Ability to update user name, picture, change password and apply some specific user preferences such as default currency or ability to calculate products price by their quantity within user's Profile
+- ##### Ability to add to and remove a specific shopping list from favorites, etc.
 
 # API
 
@@ -202,6 +233,50 @@ Example of returned data:
 ]
 ```
 
+
+```
+PUT: /api/shopping-lists/:id/add-to-favorites - Adds to or remove a specific shopping-list from favorites
+```
+
+Example of returned data:
+
+![example_1](https://github.com/Dmytro1991ua/react_listify/assets/61331410/0343eeb1-ef25-4848-a396-b1d935767bea)
+```
+{
+    "_id": "656b2103c7ed1d8b57e15168",
+    "user": "Xhp3G87YBhaq29QWOWi0WYExxJp1",
+    "name": "Cosmopolitan Cocktail",
+    "currency": "$",
+    "shoppingListItems": [],
+    "isFavorite": true,
+    "createdAt": "2023-12-02T12:20:19.458Z",
+    "updatedAt": "2023-12-02T12:41:48.016Z",
+    "__v": 0
+}
+```
+
+```
+PUT: /api/shopping-lists/:id/edit-shopping-list - Edits a particular shopping list's name
+```
+
+Example of returned data:
+
+![example_2](https://github.com/Dmytro1991ua/react_listify/assets/61331410/bade6569-89d2-4e61-91ba-882fec42f0e8)
+
+```
+{
+    "_id": "656b20b9c7ed1d8b57e15166",
+    "user": "Xhp3G87YBhaq29QWOWi0WYExxJp1",
+    "name": "Shepherd's pie",
+    "currency": "$",
+    "shoppingListItems": [],
+    "isFavorite": true,
+    "createdAt": "2023-12-02T12:19:05.416Z",
+    "updatedAt": "2023-12-02T12:47:52.872Z",
+    "__v": 0
+}
+```
+
 # Products views
 
 > Visual presentation of Listify application
@@ -215,6 +290,7 @@ Example of returned data:
  
   <div align="center">
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201618608-ef976ba6-25ab-465b-9378-5e7e56f4e155.png" />
+    <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/7874af6e-ba48-4727-aa1f-cafa2659e96c" />
  </div>
 
 ##### Sign-In/Sign-Up/Forgot-password/Reset-password pages
@@ -236,6 +312,9 @@ Example of returned data:
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201663277-dc964d1c-6061-4be1-a591-d261ec4d7727.png" />
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201664108-57d6d1a0-bb17-4988-ad1a-79cfd36b9348.png" />
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201664358-11f715b2-613d-4e58-8f79-7e96a7149c44.png" />
+    <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201664358-11f715b2-613d-4e58-8f79-7e96a7149c44.png" />
+    <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201664358-11f715b2-613d-4e58-8f79-7e96a7149c44.png" />
+    <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/738ffa7a-8ced-4c95-86c5-2b06da51c3f7" />
 </div>
 
 # Tools/libraries/frameworks used
