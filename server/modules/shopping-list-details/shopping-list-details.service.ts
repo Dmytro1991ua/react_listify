@@ -166,4 +166,40 @@ export class ShoppingListDetailsService {
       throw new Error((err as Error).message);
     }
   }
+
+  // @dec  Delete all products for a specific shopping list
+  // @route  PUT /api/shopping-lists/:id/delete-all-product-items
+  // @access Private
+  async deleteAllProducts(req: UserRequest, res: Response) {
+    const { id: _id } = req.params;
+    const user = req.currentUser;
+
+    try {
+      if (!user) {
+        return res
+          .status(401)
+          .send({ success: false, message: "User not found" });
+      }
+
+      const updatedShoppingList = await ShoppingList.findByIdAndUpdate(
+        _id,
+        { $set: { shoppingListItems: [] } },
+        { new: true }
+      );
+
+      if (!updatedShoppingList) {
+        return res
+          .status(404)
+          .send({ success: false, message: "Shopping list not found" });
+      }
+
+      res.status(200).send({
+        success: true,
+        message: "All product items have been deleted successfully",
+      });
+    } catch (err) {
+      res.status(409);
+      throw new Error((err as Error).message);
+    }
+  }
 }
