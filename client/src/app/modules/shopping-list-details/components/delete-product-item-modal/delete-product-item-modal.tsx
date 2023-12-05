@@ -4,18 +4,24 @@ import DeleteConfirmationModal from '../../../../shared/components/delete-confir
 
 interface DeleteProductItemModalPros {
   isModalOpen: boolean;
+  title?: string;
   onModalClose: () => void;
-  onDelete: () => Promise<void>;
+  onDelete: () => Promise<void> | void;
 }
 
-const DeleteProductItemModal = ({ isModalOpen, onModalClose, onDelete }: DeleteProductItemModalPros): ReactElement => {
+const DeleteProductItemModal = ({
+  isModalOpen,
+  title = 'Are you sure you want to delete it?',
+  onModalClose,
+  onDelete,
+}: DeleteProductItemModalPros): ReactElement => {
   return (
     <DeleteConfirmationModal
       fullWidth
       open={isModalOpen}
       primaryBtnLabel='Yes'
       secondaryBtnLabel='No'
-      title='Are you sure you want to delete it?'
+      title={title}
       onClose={onModalClose}
       onSubmit={onDelete}
     />

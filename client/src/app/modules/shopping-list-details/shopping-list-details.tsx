@@ -22,9 +22,9 @@ import {
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE,
 } from './shopping-list-details.constants';
-import { AddIcon, CheckboxLabel, Form, Input } from './shopping-list-details.styled';
+import { AddIcon, Form, Input } from './shopping-list-details.styled';
 import { Currencies } from '../../app.enums';
-import Checkbox from '../../shared/components/checkbox/checkbox';
+import CardsHeaderActions from '../../shared/components/cards-header-actions/cards-header-actions';
 import {
   CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
   CREATE_SHOPPING_LIST_FORM_VALIDATION,
@@ -187,18 +187,14 @@ const ShoppingListDetails = (): ReactElement => {
     </>
   );
 
-  const renderCheckbox = (
+  const renderCardsHeaderActions = (
     <>
       {currentShoppingList?.shoppingListItems && currentShoppingList.shoppingListItems.length > 0 && (
-        <CheckboxLabel
-          control={
-            <Checkbox
-              checked={allProductItemsChecked}
-              customSize='3rem'
-              onChange={(e) => onToggleAllProductItems(e.target.checked)}
-            />
-          }
-          label='Select All Items'
+        <CardsHeaderActions
+          isChecked={allProductItemsChecked}
+          isDisabled={!allProductItemsChecked}
+          modalTitle='Are you sure you want to delete all selected product items'
+          onToggle={onToggleAllProductItems}
         />
       )}
     </>
@@ -263,7 +259,7 @@ const ShoppingListDetails = (): ReactElement => {
           onChange={(e) => onAddNewProduct(e.target.value)}
         />
       </Form>
-      {renderCheckbox}
+      {renderCardsHeaderActions}
       {renderAvailableShoppingListItems}
       <ProductItemsWidget
         currency={currentShoppingList?.currency ?? Currencies.Dollar}
