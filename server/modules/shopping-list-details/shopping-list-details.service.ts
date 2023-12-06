@@ -196,6 +196,7 @@ export class ShoppingListDetailsService {
       res.status(200).send({
         success: true,
         message: "All product items have been deleted successfully",
+        data: updatedShoppingList,
       });
     } catch (err) {
       res.status(409);

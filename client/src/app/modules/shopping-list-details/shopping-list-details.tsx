@@ -112,6 +112,7 @@ const ShoppingListDetails = (): ReactElement => {
     onCreateProductItemFormSubmit,
     onEditProductItemFormSubmit,
     onProductItemDeletion,
+    onDeleteAllSelectedProductItems,
   } = useCRUDProductItem({
     shoppingListId: currentShoppingList?._id as string,
     shoppingListItemId,
@@ -194,6 +195,7 @@ const ShoppingListDetails = (): ReactElement => {
           isChecked={allProductItemsChecked}
           isDisabled={!allProductItemsChecked}
           modalTitle='Are you sure you want to delete all selected product items'
+          onClick={onDeleteAllSelectedProductItems}
           onToggle={onToggleAllProductItems}
         />
       )}
@@ -250,7 +252,8 @@ const ShoppingListDetails = (): ReactElement => {
         onSubmit={(e) => {
           e.preventDefault();
           newProductItem && onCreateProductItemFormSubmit();
-        }}>
+        }}
+      >
         <Input
           autoFocus
           endIcon={<AddIcon onClick={newProductItem && onCreateProductItemFormSubmit} />}

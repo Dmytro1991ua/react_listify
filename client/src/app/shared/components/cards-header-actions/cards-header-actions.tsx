@@ -12,6 +12,7 @@ type CardsHeaderActionsProps = {
   customSize?: string;
   checkboxLabel?: string;
   modalTitle?: string;
+  indeterminate?: boolean;
   onClick?: () => void;
   onToggle?: (value: boolean) => void;
 };
@@ -19,6 +20,7 @@ type CardsHeaderActionsProps = {
 const CardsHeaderActions = ({
   isChecked,
   isDisabled,
+  indeterminate,
   buttonLabel = DEFAULT_BUTTON_LABEL,
   customSize = '3rem',
   checkboxLabel = DEFAULT_CHECKBOX_LABEL,
@@ -34,7 +36,14 @@ const CardsHeaderActions = ({
   return (
     <SectionWrapper>
       <CheckboxLabel
-        control={<Checkbox checked={isChecked} customSize={customSize} onChange={onToggleAllItems} />}
+        control={
+          <Checkbox
+            checked={isChecked}
+            customSize={customSize}
+            indeterminate={indeterminate}
+            onChange={onToggleAllItems}
+          />
+        }
         label={checkboxLabel}
       />
       <Button disabled={isDisabled} variant={'primaryContained'} onClick={onModalOpen}>

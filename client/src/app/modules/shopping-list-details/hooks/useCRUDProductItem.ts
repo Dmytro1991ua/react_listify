@@ -5,7 +5,11 @@ import { ProductUnits } from '../../../app.enums';
 import { ShoppingListItem } from '../../../app.interfaces';
 import { useShoppingListsStore } from '../../shopping-lists/shopping-lists.store';
 import { EditProductItemFormInitialValues } from '../components/edit-product-item-modall/edit-product-item.modal.interfaces';
-import { deleteShoppingListItemAction, updateShoppingListItemAction } from '../shopping-list-details.actions';
+import {
+  deleteAllSelectedShoppingListItemsAction,
+  deleteShoppingListItemAction,
+  updateShoppingListItemAction,
+} from '../shopping-list-details.actions';
 import {
   FAILED_CREATE_SHOPPING_LIST_ITEM,
   FAILED_EDIT_SHOPPING_LIST_ITEM,
@@ -30,6 +34,7 @@ type ReturnedHookType = {
   onCreateProductItemFormSubmit: () => Promise<void>;
   onEditProductItemFormSubmit: (values: EditProductItemFormInitialValues) => Promise<void>;
   onProductItemDeletion: () => Promise<void>;
+  onDeleteAllSelectedProductItems: () => Promise<void>;
 };
 
 export const useCRUDProductItem = ({
@@ -116,6 +121,14 @@ export const useCRUDProductItem = ({
     }
   }
 
+  async function onDeleteAllSelectedProductItems(): Promise<void> {
+    try {
+      await deleteAllSelectedShoppingListItemsAction(shoppingListId);
+    } catch (e) {
+      throw new Error((e as Error).message);
+    }
+  }
+
   return {
     inputRef,
     newProductItem,
@@ -123,5 +136,6 @@ export const useCRUDProductItem = ({
     onCreateProductItemFormSubmit,
     onEditProductItemFormSubmit,
     onProductItemDeletion,
+    onDeleteAllSelectedProductItems,
   };
 };
