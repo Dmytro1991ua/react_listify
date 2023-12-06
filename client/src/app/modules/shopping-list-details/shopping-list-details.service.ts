@@ -60,6 +60,22 @@ class ShoppingListDetailsService {
       throw new Error((error as Error).message);
     }
   }
+
+  async deleteAllSelectedShoppingListItems(id: string): Promise<ShoppingListData | null> {
+    try {
+      const response = await AXIOS_CONFIG.put(`/api/shopping-lists/${id}/delete-all-product-items`, {});
+
+      if (!response.data) {
+        return null;
+      }
+
+      toastService.success(response.data.message);
+
+      return response.data.data;
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
 }
 
 export const shoppingListDetailsService = new ShoppingListDetailsService();

@@ -28,7 +28,8 @@ export const useDeleteAllItemsModal = ({ onClick, onToggle }: HookProps): Return
 
   const onDeleteAllItems = useCallback(async () => {
     onClick && onClick();
-  }, [onClick]);
+    onModalClose();
+  }, [onClick, onModalClose]);
 
   return {
     isModalVisible,

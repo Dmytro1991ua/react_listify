@@ -58,3 +58,23 @@ export const selectAllShoppingListItemsAction = async (
     throw new Error((error as Error).message);
   }
 };
+
+export const deleteAllSelectedShoppingListItemsAction = async (id: string): Promise<void> => {
+  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
+  const updateShoppingList = useShoppingListsStore.getState().updateShoppingList;
+
+  setShoppingListsLoadingStatus('loading');
+
+  try {
+    const updatedShoppingList = await shoppingListDetailsService.deleteAllSelectedShoppingListItems(id);
+
+    if (updatedShoppingList) {
+      updateShoppingList(updatedShoppingList);
+    }
+
+    setShoppingListsLoadingStatus('idle');
+  } catch (error) {
+    setShoppingListsLoadingStatus('failed');
+    throw new Error((error as Error).message);
+  }
+};
