@@ -2,8 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 
-import { AppRoutes } from '../../../app.enums';
 import LayoutWithNavigationAndHeader from './layout-with-navigation-and-header';
+import { AppRoutes } from '../../../app.enums';
 
 vi.doMock('react-router-dom', () => ({
   ...vi.importActual('react-router-dom'),

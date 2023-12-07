@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 
-import { CUSTOM_THEME } from '../../../cdk/theme/theme';
 import AuthForgotPasswordPage from './auth-forgot-password-page';
+import { CUSTOM_THEME } from '../../../cdk/theme/theme';
 
 describe('<AuthForgotPasswordPage />', () => {
   beforeEach(() => {

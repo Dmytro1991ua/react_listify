@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import SignInPreviewImage from '../../../../../assets/images/auth/sign-in-img.jpg';
 import AuthLayout from './auth-layout';
+import SignInPreviewImage from '../../../../../assets/images/auth/sign-in-img.jpg';
 
 const defaultProps = {
   children: <p>Children Content</p>,

@@ -1,8 +1,8 @@
 import { Field, FieldProps } from 'formik';
 import { ReactElement } from 'react';
 
-import { SelectProps } from '../select.interfaces';
 import GeneralSelect from './../general-select/general-select';
+import { SelectProps } from '../select.interfaces';
 
 const FormikSelect = <T,>({ name, ...props }: Partial<SelectProps<T>>): ReactElement => {
   return (

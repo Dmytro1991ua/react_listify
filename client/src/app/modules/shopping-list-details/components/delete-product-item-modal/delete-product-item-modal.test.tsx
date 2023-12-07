@@ -4,9 +4,9 @@ import user from '@testing-library/user-event';
 import { FormikProvider } from 'formik';
 import { vi } from 'vitest';
 
+import DeleteProductItemModal from './delete-product-item-modal';
 import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../../mocks/test-mocks';
-import DeleteProductItemModal from './delete-product-item-modal';
 
 const mockOnModalClose = vi.fn();
 const mockOnDelete = vi.fn();

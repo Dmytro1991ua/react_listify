@@ -3,14 +3,14 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 
+import { useProfileFormSubmit } from './useProfileFormSubmit';
+import { useUpdateUserInfo } from './useUpdateUserInfo';
+import { useUpdateUserPreferences } from './useUpdateUserPreferences';
 import { Currencies } from '../../../app.enums';
 import firebase from '../../../configs/firebase';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../mocks/test-mocks';
 import * as authActions from '../../auth/auth.actions';
 import { authService } from '../../auth/auth.service';
-import { useProfileFormSubmit } from './useProfileFormSubmit';
-import { useUpdateUserInfo } from './useUpdateUserInfo';
-import { useUpdateUserPreferences } from './useUpdateUserPreferences';
 
 describe('useProfileFormSubmit', () => {
   beforeEach(() => {

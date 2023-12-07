@@ -2,8 +2,8 @@ import { ThemeProvider } from '@mui/material';
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { CUSTOM_THEME } from '../../../cdk/theme/theme';
 import DeleteConfirmationModal from './delete-confirmation-modal';
+import { CUSTOM_THEME } from '../../../cdk/theme/theme';
 
 const mockOnClose = vi.fn();
 const mockOnSubmit = vi.fn();

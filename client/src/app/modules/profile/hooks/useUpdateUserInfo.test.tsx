@@ -3,12 +3,12 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { SpyInstance, vi } from 'vitest';
 
+import { useUpdateUserInfo } from './useUpdateUserInfo';
 import { Currencies } from '../../../app.enums';
 import { UpdateUserInformation } from '../../../app.interfaces';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../mocks/test-mocks';
 import * as authActions from '../../auth/auth.actions';
 import { authService } from '../../auth/auth.service';
-import { useUpdateUserInfo } from './useUpdateUserInfo';
 
 describe('useUpdateUserInfo', () => {
   let updateUserDataActionSpy: SpyInstance<[userData: UpdateUserInformation], Promise<void>>;

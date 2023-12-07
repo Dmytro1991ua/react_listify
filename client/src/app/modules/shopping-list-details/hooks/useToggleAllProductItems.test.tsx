@@ -3,10 +3,10 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { SpyInstance, vi } from 'vitest';
 
+import { useToggleAllProductItems } from './useToggleAllProductItems';
 import { ShoppingListItem } from '../../../app.interfaces';
 import { COMMON_DEFAULT_FORMIK_INSTANCE, expectedShoppingListsSortingResult } from '../../../mocks/test-mocks';
 import * as shoppingListDetailsActions from '../shopping-list-details.actions';
-import { useToggleAllProductItems } from './useToggleAllProductItems';
 
 const defaultProps = {
   id: '1',

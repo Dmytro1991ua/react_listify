@@ -5,9 +5,9 @@ import { Formik } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 
+import AuthForgotPasswordForm from './auth-forgot-password-form';
 import { AppRoutes } from '../../../../app.enums';
 import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
-import AuthForgotPasswordForm from './auth-forgot-password-form';
 
 const mockOnSubmit = vi.fn();
 

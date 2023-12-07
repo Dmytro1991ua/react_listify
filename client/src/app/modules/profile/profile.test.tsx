@@ -2,8 +2,8 @@ import { ThemeProvider } from '@mui/material';
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { CUSTOM_THEME } from '../../cdk/theme/theme';
 import Profile from './profile';
+import { CUSTOM_THEME } from '../../cdk/theme/theme';
 
 vi.doMock('axios');
 

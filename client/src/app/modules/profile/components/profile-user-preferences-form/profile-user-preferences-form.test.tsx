@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { FormikProvider } from 'formik';
 import { vi } from 'vitest';
 
+import ProfileUserPreferencesForm from './profile-user-preferences-form';
 import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../../mocks/test-mocks';
-import ProfileUserPreferencesForm from './profile-user-preferences-form';
 
 const defaultProps = {
   options: [{ id: '1', value: 'Test option value', label: 'Test option label' }],
@@ -33,7 +33,7 @@ describe('<ProfileUserPreferencesForm />', () => {
     expect(screen.getByText(/Calculate prices by quantity:/)).toBeInTheDocument();
     expect(screen.getByText(/Default currency:/)).toBeInTheDocument();
     expect(
-      screen.getByRole('button', {
+      screen.getByRole('combobox', {
         name: /text-input/,
       })
     ).toBeInTheDocument();

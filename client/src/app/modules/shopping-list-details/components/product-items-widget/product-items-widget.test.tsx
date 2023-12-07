@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import ProductItemsWidget from './product-items-widget';
 import { Currencies } from '../../../../app.enums';
 import { defaultShoppingListItems } from '../../../../mocks/test-mocks';
-import ProductItemsWidget from './product-items-widget';
 
 const defaultProps = {
   currency: Currencies.Dollar,

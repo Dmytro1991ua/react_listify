@@ -4,9 +4,9 @@ import { MemoryRouter } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { expect, vi } from 'vitest';
 
+import NavigationItem from './navigation-item';
 import { AppRoutes } from '../../../../../app.enums';
 import { ProfileIcon, ShoppingCartIcon } from '../../navigation.styled';
-import NavigationItem from './navigation-item';
 
 vi.doMock('react-router-dom', () => ({
   ...vi.importActual('react-router-dom'),

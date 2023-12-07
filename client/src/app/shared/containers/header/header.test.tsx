@@ -3,8 +3,8 @@ import user from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, vi } from 'vitest';
 
-import { AppRoutes } from '../../../app.enums';
 import Header from './header';
+import { AppRoutes } from '../../../app.enums';
 
 vi.doMock('react-router-dom', () => ({
   ...vi.importActual('react-router-dom'),

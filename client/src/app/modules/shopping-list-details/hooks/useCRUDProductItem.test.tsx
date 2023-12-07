@@ -4,11 +4,11 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { SpyInstance, afterEach, vi } from 'vitest';
 
+import { useCRUDProductItem } from './useCRUDProductItem';
 import { ProductUnits } from '../../../app.enums';
 import { UpdateShoppingListItemActionPayload } from '../../../app.interfaces';
 import { COMMON_DEFAULT_FORMIK_INSTANCE, defaultShoppingListItems } from '../../../mocks/test-mocks';
 import * as shoppingListDetailsActions from '../shopping-list-details.actions';
-import { useCRUDProductItem } from './useCRUDProductItem';
 
 const defaultProps = {
   shoppingListId: '1',
