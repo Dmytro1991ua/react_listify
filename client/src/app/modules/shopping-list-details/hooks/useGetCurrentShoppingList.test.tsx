@@ -3,9 +3,9 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 
+import { useGetCurrentShoppingList } from './useGetCurrentShoppingList';
 import { COMMON_DEFAULT_FORMIK_INSTANCE, defaultSortedShoppingLists } from '../../../mocks/test-mocks';
 import * as utils from '../../../utils';
-import { useGetCurrentShoppingList } from './useGetCurrentShoppingList';
 
 const defaultProps = {
   shoppingListId: '1',

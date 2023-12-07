@@ -6,16 +6,16 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { SpyInstance, expect, vi } from 'vitest';
 
+import { useShoppingListsModal } from './hooks/useShoppingListsModal';
+import ShoppingLists from './shopping-lists';
+import * as shoppingListsActions from './shopping-lists.actions';
+import { UpdateShoppingListPayload } from './shopping-lists.interfaces';
 import { Currencies } from '../../app.enums';
 import { ShoppingListData } from '../../app.interfaces';
 import { CUSTOM_THEME } from '../../cdk/theme/theme';
 import { COMMON_DEFAULT_FORMIK_INSTANCE, defaultSortedShoppingLists } from '../../mocks/test-mocks';
 import * as utils from '../../utils';
 import { useShoppingListsStore } from '../shopping-lists/shopping-lists.store';
-import { useShoppingListsModal } from './hooks/useShoppingListsModal';
-import ShoppingLists from './shopping-lists';
-import * as shoppingListsActions from './shopping-lists.actions';
-import { UpdateShoppingListPayload } from './shopping-lists.interfaces';
 
 vi.doMock('axios');
 

@@ -3,8 +3,8 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 
-import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../mocks/test-mocks';
 import { useShoppingListDetailsModal } from './useShoppingListDetailsModal';
+import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../mocks/test-mocks';
 
 vi.doMock('axios');
 

@@ -3,10 +3,10 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { SpyInstance, vi } from 'vitest';
 
+import { useSelectProductItem } from './useSelectProductItem';
 import { UpdateShoppingListItemActionPayload } from '../../../app.interfaces';
 import { COMMON_DEFAULT_FORMIK_INSTANCE, defaultShoppingListItems } from '../../../mocks/test-mocks';
 import * as shoppingListDetailsActions from '../shopping-list-details.actions';
-import { useSelectProductItem } from './useSelectProductItem';
 
 const defaultProps = {
   shoppingListId: '1',

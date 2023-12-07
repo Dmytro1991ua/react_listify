@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import ShoppingList from './shopping-list';
 import { Currencies } from '../../../../app.enums';
 import { defaultShoppingListItems } from '../../../../mocks/test-mocks';
 import * as utils from '../../../../utils';
-import ShoppingList from './shopping-list';
 
 const defaultProps = {
   item: {

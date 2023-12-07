@@ -4,11 +4,11 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { SpyInstance, vi } from 'vitest';
 
+import { useShoppingListsModal } from './useShoppingListsModal';
 import { Currencies } from '../../../app.enums';
 import { ShoppingListData } from '../../../app.interfaces';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../mocks/test-mocks';
 import * as shoppingListsActions from '../shopping-lists.actions';
-import { useShoppingListsModal } from './useShoppingListsModal';
 
 vi.doMock('axios');
 

@@ -4,8 +4,8 @@ import user from '@testing-library/user-event';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { vi } from 'vitest';
 
-import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 import GeneralSelect from './general-select';
+import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 
 const defaultProps = {
   disabled: false,
@@ -32,7 +32,7 @@ describe('<FormikSelect>', () => {
   it('should render component with props without crashing', () => {
     render(<Component />);
 
-    const select = screen.getByRole('button', { name: /text-input/ });
+    const select = screen.getByRole('combobox', { name: /text-input/ });
 
     expect(select).toBeInTheDocument();
     expect(screen.getAllByText(/Test Label/)[0]).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe('<FormikSelect>', () => {
   it('should get value from select and close backdrop', async () => {
     render(<Component />);
 
-    const select = screen.getByRole('button', {
+    const select = screen.getByRole('combobox', {
       name: /text-input/,
     });
 

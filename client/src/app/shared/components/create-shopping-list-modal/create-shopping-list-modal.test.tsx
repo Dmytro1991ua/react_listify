@@ -4,9 +4,9 @@ import user from '@testing-library/user-event';
 import { FormikProvider } from 'formik';
 import { vi } from 'vitest';
 
+import CreateShoppingListModal from './create-shopping-list-modal';
 import { CUSTOM_THEME } from '../../../cdk/theme/theme';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../mocks/test-mocks';
-import CreateShoppingListModal from './create-shopping-list-modal';
 
 const mockOnClose = vi.fn();
 const mockOnSubmit = vi.fn();
@@ -50,7 +50,7 @@ describe('<CreateShoppingListModal/>', () => {
 
     expect(screen.getByPlaceholderText(/enter the name of the list/i)).toBeInTheDocument();
     expect(
-      screen.getByRole('button', {
+      screen.getByRole('combobox', {
         name: /text-input/,
       })
     ).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe('<CreateShoppingListModal/>', () => {
   it('should get value from select and close backdrop', async () => {
     render(<Component />);
 
-    const select = screen.getByRole('button', {
+    const select = screen.getByRole('combobox', {
       name: /text-input/,
     });
 

@@ -3,11 +3,11 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { SpyInstance, vi } from 'vitest';
 
+import { useUpdateUserPreferences } from './useUpdateUserPreferences';
 import { Currencies } from '../../../app.enums';
 import firebase from '../../../configs/firebase';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../mocks/test-mocks';
 import { authService } from '../../auth/auth.service';
-import { useUpdateUserPreferences } from './useUpdateUserPreferences';
 
 describe('useUpdateUserPreferences', () => {
   let updateUserPreferencesSpy: SpyInstance<[currentPassword: string, newPassword: string], Promise<void>>;

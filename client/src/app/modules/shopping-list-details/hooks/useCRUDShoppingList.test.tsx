@@ -4,11 +4,11 @@ import { FormikProvider } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { SpyInstance, vi } from 'vitest';
 
+import { useCRUDShoppingList } from './useCRUDShoppingList';
 import { Currencies } from '../../../app.enums';
 import { ShoppingListData } from '../../../app.interfaces';
 import { COMMON_DEFAULT_FORMIK_INSTANCE, defaultShoppingListItems } from '../../../mocks/test-mocks';
 import * as shoppingListsActions from '../../shopping-lists/shopping-lists.actions';
-import { useCRUDShoppingList } from './useCRUDShoppingList';
 
 const defaultProps = {
   currency: Currencies.Dollar,

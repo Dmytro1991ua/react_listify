@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { Currencies, ProductUnits } from '../../../../app.enums';
 import ProductItem from './product-item';
+import { Currencies, ProductUnits } from '../../../../app.enums';
 
 const mockOnDelete = vi.fn();
 const mockOnEdit = vi.fn();

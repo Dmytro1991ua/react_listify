@@ -5,8 +5,8 @@ import { Formik } from 'formik';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 
-import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 import AuthResetPasswordForm from './auth-reset-password-form';
+import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 
 const mockOnSubmit = vi.fn();
 

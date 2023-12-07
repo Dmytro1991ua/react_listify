@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { FormikProvider } from 'formik';
 import { vi } from 'vitest';
 
+import ProfileChangePasswordForm from './profile-change-password-form';
 import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../../mocks/test-mocks';
-import ProfileChangePasswordForm from './profile-change-password-form';
 
 describe('<ProfileChangePasswordForm />', () => {
   beforeEach(() => {

@@ -4,9 +4,9 @@ import user from '@testing-library/user-event';
 import { FormikProvider } from 'formik';
 import { vi } from 'vitest';
 
+import ProfileUserInformationFields from './profile-user-information-fields';
 import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../../mocks/test-mocks';
-import ProfileUserInformationFields from './profile-user-information-fields';
 
 describe('<ProfileUserInformationFields/>', () => {
   beforeEach(() => {

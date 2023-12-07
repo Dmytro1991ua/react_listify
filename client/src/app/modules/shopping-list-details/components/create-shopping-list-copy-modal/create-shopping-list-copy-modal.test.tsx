@@ -4,9 +4,9 @@ import user from '@testing-library/user-event';
 import { FormikProvider } from 'formik';
 import { vi } from 'vitest';
 
+import CreateShoppingListCopyModal from './create-shopping-list-copy-modal';
 import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../../mocks/test-mocks';
-import CreateShoppingListCopyModal from './create-shopping-list-copy-modal';
 
 const mockOnModalClose = vi.fn();
 

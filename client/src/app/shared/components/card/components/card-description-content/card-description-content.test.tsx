@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { vi } from 'vitest';
 
-import { Currencies } from '../../../../../app.enums';
 import CardDescriptionContent from './card-description-content';
+import { Currencies } from '../../../../../app.enums';
 
 const defaultProps = {
   quantity: 0,

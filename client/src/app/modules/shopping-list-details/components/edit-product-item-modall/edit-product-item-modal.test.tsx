@@ -4,9 +4,9 @@ import user from '@testing-library/user-event';
 import { FormikProvider } from 'formik';
 import { vi } from 'vitest';
 
+import EditProductItemModal from './edit-product-item-modal';
 import { CUSTOM_THEME } from '../../../../cdk/theme/theme';
 import { COMMON_DEFAULT_FORMIK_INSTANCE } from '../../../../mocks/test-mocks';
-import EditProductItemModal from './edit-product-item-modal';
 
 const mockOnClose = vi.fn();
 const mockOnSubmit = vi.fn();
@@ -69,7 +69,7 @@ describe('<EditProductItemModal/>', () => {
       </ThemeProvider>
     );
 
-    const select = screen.getByRole('button', {
+    const select = screen.getByRole('combobox', {
       name: /text-input/,
     });
 
@@ -119,7 +119,7 @@ describe('<EditProductItemModal/>', () => {
   it('should get value from select and close backdrop', async () => {
     render(<Component />);
 
-    const select = screen.getByRole('button', {
+    const select = screen.getByRole('combobox', {
       name: /text-input/,
     });
 
