@@ -81,3 +81,7 @@ export interface UpdateShoppingListItemActionPayload {
   successMessage?: string;
   failedMessage?: string;
 }
+
+export interface CheckableItem {
+  isChecked?: boolean;
+}

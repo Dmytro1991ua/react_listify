@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Currencies, ProductUnits } from './app.enums';
-import { ShoppingListData, ShoppingListItem, SortingItem } from './app.interfaces';
+import { CheckableItem, ShoppingListData, ShoppingListItem, SortingItem } from './app.interfaces';
 import { DropdownOption } from './shared/components/select/select.interfaces';
 
 /**
@@ -100,8 +100,15 @@ export const calculateProductItemsByCheckedSate = (
  * Function checks if all product item were selected (checked)
  * @returns boolean
  */
-export const areAllProductItemsChecked = (shoppingListItems: ShoppingListItem[]): boolean =>
+export const areAllItemsChecked = <T extends CheckableItem>(shoppingListItems: T[]): boolean =>
   shoppingListItems.every((item) => item.isChecked);
+
+/**
+ * Function checks if some shopping list items are checked
+ * @returns boolean
+ */
+export const areSomeItemsChecked = <T extends CheckableItem>(shoppingListItems: T[]): boolean =>
+  shoppingListItems.some((item) => item.isChecked);
 
 /**
  * Function returns all shopping list items with isChecked property equal to true (select all items)

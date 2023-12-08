@@ -8,7 +8,8 @@ import {
   expectedShoppingListsSortingResult,
 } from './mocks/test-mocks';
 import {
-  areAllProductItemsChecked,
+  areAllItemsChecked,
+  areSomeItemsChecked,
   calculateByQuantity,
   calculateProductItemPrice,
   calculateProductItemsByCheckedSate,
@@ -73,11 +74,29 @@ describe('calculateProductItemsByCheckedSate', () => {
 
 describe('areAllProductItemsChecked', () => {
   it('should return true if all shopping list items are checked within the list', () => {
-    expect(areAllProductItemsChecked(defaultCheckedShoppingListItems)).toEqual(true);
+    expect(areAllItemsChecked(defaultCheckedShoppingListItems)).toEqual(true);
   });
 
   it('should return false if not all shopping list items are checked within the list', () => {
-    expect(areAllProductItemsChecked(defaultShoppingListItems)).toEqual(false);
+    expect(areAllItemsChecked(defaultShoppingListItems)).toEqual(false);
+  });
+});
+
+describe('areSomeItemsChecked', () => {
+  it('returns true if at least one item is checked', () => {
+    const items = [{ isChecked: false }, { isChecked: true }, { isChecked: false }];
+
+    const result = areSomeItemsChecked(items);
+
+    expect(result).toBe(true);
+  });
+
+  it('returns false if no items are checked', () => {
+    const items = [{ isChecked: false }, { isChecked: false }, { isChecked: false }];
+
+    const result = areSomeItemsChecked(items);
+
+    expect(result).toBe(false);
   });
 });
 
