@@ -5,7 +5,8 @@ import { ShoppingListData, ShoppingListItem } from '../../../app.interfaces';
 import history from '../../../services/history.service';
 import { DropdownOption } from '../../../shared/components/select/select.interfaces';
 import {
-  areAllProductItemsChecked,
+  areAllItemsChecked,
+  areSomeItemsChecked,
   availableProductUnits,
   getCurrentShoppingList,
   sortedDropdownItems,
@@ -21,6 +22,7 @@ type HookProps = {
 type ReturnedHookType = {
   currentShoppingList: ShoppingListData | null;
   allProductItemsChecked: boolean;
+  someProductItemsChecked: boolean;
   sortedAvailableProductUnits: DropdownOption<string>[];
   sortedItemsByNameOrSelectedState: Partial<ShoppingListData & ShoppingListItem>[];
   getCurrentProductItem: ShoppingListItem | null;
@@ -37,7 +39,11 @@ export const useGetCurrentShoppingList = ({ shoppingListId, shoppingListItemId }
     [currentShoppingList?.shoppingListItems]
   );
 
-  const allProductItemsChecked = areAllProductItemsChecked(
+  const allProductItemsChecked = areAllItemsChecked<ShoppingListItem>(
+    (sortedItemsByNameOrSelectedState as ShoppingListItem[]) ?? []
+  );
+
+  const someProductItemsChecked = areSomeItemsChecked<ShoppingListItem>(
     (sortedItemsByNameOrSelectedState as ShoppingListItem[]) ?? []
   );
 
@@ -59,6 +65,7 @@ export const useGetCurrentShoppingList = ({ shoppingListId, shoppingListItemId }
     currentShoppingList,
     onGoBack,
     allProductItemsChecked,
+    someProductItemsChecked,
     sortedAvailableProductUnits,
     getCurrentProductItem,
     sortedItemsByNameOrSelectedState,

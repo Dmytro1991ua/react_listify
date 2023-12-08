@@ -8,6 +8,7 @@ import Checkbox from '../checkbox/checkbox';
 type CardsHeaderActionsProps = {
   isChecked?: boolean;
   isDisabled?: boolean;
+  indeterminate?: boolean;
   buttonLabel?: string;
   customSize?: string;
   checkboxLabel?: string;

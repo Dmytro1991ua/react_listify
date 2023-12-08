@@ -48,6 +48,7 @@ const ShoppingListDetails = (): ReactElement => {
   const {
     currentShoppingList,
     allProductItemsChecked,
+    someProductItemsChecked,
     getCurrentProductItem,
     sortedAvailableProductUnits,
     sortedItemsByNameOrSelectedState,
@@ -192,6 +193,7 @@ const ShoppingListDetails = (): ReactElement => {
     <>
       {currentShoppingList?.shoppingListItems && currentShoppingList.shoppingListItems.length > 0 && (
         <CardsHeaderActions
+          indeterminate={!allProductItemsChecked && someProductItemsChecked}
           isChecked={allProductItemsChecked}
           isDisabled={!allProductItemsChecked}
           modalTitle='Are you sure you want to delete all selected product items'
