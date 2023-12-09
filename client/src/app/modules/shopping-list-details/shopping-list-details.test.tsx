@@ -140,6 +140,7 @@ describe('<ShoppingListDetails />', () => {
         currentShoppingList: defaultShoppingLists[2],
         onGoBack: vi.fn(),
         allProductItemsChecked: false,
+        someProductItemsChecked: false,
         sortedAvailableProductUnits: [],
         getCurrentProductItem: null,
         sortedItemsByNameOrSelectedState: defaultShoppingLists[2].shoppingListItems,
