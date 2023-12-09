@@ -13,7 +13,6 @@ type CardsHeaderActionsProps = {
   customSize?: string;
   checkboxLabel?: string;
   modalTitle?: string;
-  indeterminate?: boolean;
   onClick?: () => void;
   onToggle?: (value: boolean) => void;
 };
