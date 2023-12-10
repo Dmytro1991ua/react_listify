@@ -14,6 +14,7 @@ const ShoppingListSchema = new Schema<ShoppingListItem>(
       default: [],
     },
     isFavorite: { type: Boolean, default: false },
+    isChecked: { type: Boolean, default: false },
   },
   {
     timestamps: true,

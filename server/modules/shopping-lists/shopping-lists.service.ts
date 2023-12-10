@@ -117,7 +117,7 @@ export class ShoppingListsService {
   // @dec  Add a specific shopping list to Favorites
   // @route  PUT /api/shopping-lists/:id/add-to-favorites
   // @access Private
-  async addWorkoutToFavorites(req: UserRequest, res: Response) {
+  async addShoppingListToFavorites(req: UserRequest, res: Response) {
     try {
       const { id } = req.params;
       const user = req.currentUser;
@@ -146,6 +146,46 @@ export class ShoppingListsService {
       );
 
       res.status(200).json(updatedShoppingList);
+    } catch (err) {
+      res.status(409);
+      throw new Error((err as Error).message);
+    }
+  }
+
+  // @dec Select (marked as checked) all shopping list
+  // @route  PUT /api/shopping-lists/select-all-shopping-lists
+  // @access Private
+  async selectAllShoppingLists(req: UserRequest, res: Response): Promise<void> {
+    const user = req.currentUser;
+
+    try {
+      if (user) {
+        await ShoppingList.updateMany(
+          { "user.uuid": user.uuid },
+          [
+            {
+              $set: {
+                isChecked: {
+                  $cond: {
+                    if: { $eq: ["$isChecked", true] },
+                    then: false,
+                    else: true,
+                  },
+                },
+              },
+            },
+          ],
+          { new: true }
+        );
+
+        const updatedShoppingLists = await ShoppingList.find({
+          "user.uuid": user.uuid,
+        });
+
+        res.status(200).json(updatedShoppingLists);
+      } else {
+        res.status(401).send("Not authorized");
+      }
     } catch (err) {
       res.status(409);
       throw new Error((err as Error).message);
