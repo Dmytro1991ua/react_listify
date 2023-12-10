@@ -25,4 +25,6 @@ export enum Routes {
   editShoppingList = "/:id/edit-shopping-list",
   addToFavorites = "/:id/add-to-favorites",
   deleteAllProductItems = "/:id/delete-all-product-items",
+  deleteAllShoppingLists = "/delete-all-shopping-lists",
+  selectAllShoppingLists = "/select-all-shopping-lists",
 }

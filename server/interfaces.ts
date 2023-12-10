@@ -50,4 +50,5 @@ export interface ShoppingListItem {
   currency: string;
   shoppingListItems: ShoppingListDetailsItem[];
   isFavorite: boolean;
+  isChecked: boolean;
 }
