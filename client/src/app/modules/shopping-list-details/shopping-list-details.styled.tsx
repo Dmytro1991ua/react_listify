@@ -2,6 +2,7 @@ import { FormControlLabel, styled } from '@mui/material';
 import { AiOutlineFileAdd } from 'react-icons/ai';
 
 import TextInput from '../../shared/components/input/text-input/text-input';
+import { ItemWrapper } from '../shopping-lists/shopping-lists.styled';
 
 export const Form = styled('form')`
   width: 100%;
@@ -49,4 +50,8 @@ export const CheckboxLabel = styled(FormControlLabel)`
     font-weight: bold;
     margin-left: ${({ theme }) => theme.spacing(5)};
   }
+`;
+
+export const FallbackImageWrapper = styled(ItemWrapper)`
+  height: auto;
 `;

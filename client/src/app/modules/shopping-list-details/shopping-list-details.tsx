@@ -22,7 +22,7 @@ import {
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE,
 } from './shopping-list-details.constants';
-import { AddIcon, Form, Input } from './shopping-list-details.styled';
+import { AddIcon, FallbackImageWrapper, Form, Input } from './shopping-list-details.styled';
 import { Currencies } from '../../app.enums';
 import CardsHeaderActions from '../../shared/components/cards-header-actions/cards-header-actions';
 import {
@@ -151,12 +151,12 @@ const ShoppingListDetails = (): ReactElement => {
   const renderFallbackMessageOrShoppingListDetails = (
     <>
       {!sortedItemsByNameOrSelectedState.length ? (
-        <ItemWrapper>
+        <FallbackImageWrapper>
           <FallbackMessage
             subtitle={SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE}
             title={SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_TITLE}
           />
-        </ItemWrapper>
+        </FallbackImageWrapper>
       ) : (
         <>
           {currentShoppingList &&
@@ -254,8 +254,7 @@ const ShoppingListDetails = (): ReactElement => {
         onSubmit={(e) => {
           e.preventDefault();
           newProductItem && onCreateProductItemFormSubmit();
-        }}
-      >
+        }}>
         <Input
           autoFocus
           endIcon={<AddIcon onClick={newProductItem && onCreateProductItemFormSubmit} />}
