@@ -46,6 +46,11 @@ class ShoppingListsController {
       .put(this.authMiddleware.checkAuth, (req, res) =>
         this.shoppingListsService.selectAllShoppingLists(req, res)
       );
+    this.router
+      .route(Routes.deleteAllShoppingLists)
+      .put(this.authMiddleware.checkAuth, (req, res) =>
+        this.shoppingListsService.deleteAllShoppingLists(req, res)
+      );
   }
 }
 
