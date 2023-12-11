@@ -191,4 +191,33 @@ export class ShoppingListsService {
       throw new Error((err as Error).message);
     }
   }
+
+  // @dec  Delete a all selected shopping lists
+  // @route  DELETE /api/shopping-lists/delete-all-shopping-lists
+  // @access Private
+  async deleteAllShoppingLists(req: UserRequest, res: Response): Promise<void> {
+    const user = req.currentUser;
+
+    try {
+      if (!user) {
+        res.status(401);
+        throw new Error("User not found");
+      }
+
+      await ShoppingList.deleteMany({ user: user.uid }).exec();
+
+      const updatedShoppingLists = await ShoppingList.find({
+        user: user.uid,
+      });
+
+      res.status(200).send({
+        success: true,
+        message: "All shopping lists have been deleted successfully",
+        updatedShoppingLists,
+      });
+    } catch (err) {
+      res.status(409);
+      throw new Error((err as Error).message);
+    }
+  }
 }
