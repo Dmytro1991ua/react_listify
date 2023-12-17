@@ -100,28 +100,28 @@ export const calculateProductItemsByCheckedSate = (
  * Function checks if all product item were selected (checked)
  * @returns boolean
  */
-export const areAllItemsChecked = <T extends CheckableItem>(shoppingListItems: T[]): boolean =>
-  shoppingListItems.every((item) => item.isChecked);
+export const areAllItemsChecked = <T extends CheckableItem>(items: T[]): boolean =>
+  items.every((item) => item.isChecked);
 
 /**
  * Function checks if some shopping list items are checked
  * @returns boolean
  */
-export const areSomeItemsChecked = <T extends CheckableItem>(shoppingListItems: T[]): boolean =>
-  shoppingListItems.some((item) => item.isChecked);
+export const areSomeItemsChecked = <T extends CheckableItem>(items: T[]): boolean =>
+  items.some((item) => item.isChecked);
 
 /**
  * Function returns all shopping list items with isChecked property equal to true (select all items)
  * @returns ShoppingListItem[]
  */
-export const toggleAllProductItems = (shoppingListItems: ShoppingListItem[], isChecked: boolean): ShoppingListItem[] =>
-  _.map(shoppingListItems, (item) => ({
+export const toggleAllProductItems = <T,>(items: T[], isChecked: boolean): T[] =>
+  _.map(items, (item) => ({
     ...item,
     isChecked,
   }));
 
 /**
- * Function determine and return value for To Buy and Purchased shopping list item based on isChecked property
+ * Function determines and return value for To Buy and Purchased shopping list item based on isChecked property
  * @returns number | undefined
  */
 export const toBuyOrPurchasedLabel = (shoppingListItems: ShoppingListItem[], value: boolean): number | undefined => {
@@ -129,10 +129,22 @@ export const toBuyOrPurchasedLabel = (shoppingListItems: ShoppingListItem[], val
 };
 
 /**
- * Function find current Shopping List by its id
+ * Function finds current Shopping List by its id
  * @param availableShoppingLists defines an array of available Shopping lists
  * @param shoppingListId defines an ID of a specific Shopping list
  * @returns ShoppingListData | null
  */
 export const getCurrentShoppingList = (availableShoppingLists: ShoppingListData[], shoppingListId: string) =>
   _.find(availableShoppingLists, { _id: shoppingListId }) ?? null;
+
+/**
+ * Function toggles the 'isChecked' property of a selected item in an array based on its '_id'.
+ * @param items The array of items.
+ * @param id The '_id' of the item to be modified.
+ * @returns An object containing the updated array and the selected item.
+ */
+export const toggleIsCheckedPropertyById = <T extends CheckableItem>(items: T[], id?: string): T | null => {
+  const updatedItems = _.map(items, (item) => (item._id === id ? { ...item, isChecked: !item.isChecked } : item));
+
+  return (_.find(updatedItems, { _id: id }) as T | undefined) ?? null;
+};

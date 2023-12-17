@@ -8,14 +8,14 @@ type HookProps = {
 };
 
 type ReturnedHookType = {
-  onToggleAllProductItems: (isChecked: boolean) => Promise<void>;
+  onToggleAllProductItems: (isChecked?: boolean) => Promise<void>;
 };
 
 export const useToggleAllProductItems = ({ id, sortedItemsByNameOrSelectedState }: HookProps): ReturnedHookType => {
-  async function onToggleAllProductItems(isChecked: boolean): Promise<void> {
-    const updatedShoppingListItems = toggleAllProductItems(
+  async function onToggleAllProductItems(isChecked?: boolean): Promise<void> {
+    const updatedShoppingListItems = toggleAllProductItems<ShoppingListItem>(
       sortedItemsByNameOrSelectedState as ShoppingListItem[],
-      isChecked
+      isChecked!
     );
     await selectAllShoppingListItemsAction(id ?? '', updatedShoppingListItems);
   }

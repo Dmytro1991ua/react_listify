@@ -84,4 +84,5 @@ export interface UpdateShoppingListItemActionPayload {
 
 export interface CheckableItem {
   isChecked?: boolean;
+  _id?: string;
 }

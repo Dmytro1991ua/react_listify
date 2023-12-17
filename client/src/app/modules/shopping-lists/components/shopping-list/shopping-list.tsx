@@ -37,6 +37,7 @@ const ShoppingList = ({
           anchorElement={anchorElement}
           isFavorite={list?.isFavorite}
           isMenuOpened={isMenuOpened}
+          isSelected={list?.isChecked}
           isShoppingList={isShoppingList}
           shoppingListId={list?._id}
           onAddToFavorites={onAddToFavorites}
@@ -59,6 +60,7 @@ const ShoppingList = ({
         />
       }
       isFavorite={list?.isFavorite}
+      isSelected={list?.isChecked}
       shoppingListId={list?._id}
       title={list?.name}
       onDoubleClick={onDoubleClick}

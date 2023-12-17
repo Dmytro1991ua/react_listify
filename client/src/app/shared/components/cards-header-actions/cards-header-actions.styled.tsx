@@ -13,7 +13,7 @@ export const SectionWrapper = styled('section')`
   padding-left: ${({ theme }) => theme.spacing(20)};
   margin-bottom: ${({ theme }) => theme.spacing(20)};
 
-  @media (width >= 25.9em) {
+  @media (width >= 32.5em) {
     flex-direction: row;
   }
 

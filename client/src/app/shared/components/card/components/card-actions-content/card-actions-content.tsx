@@ -34,6 +34,8 @@ const CardActionsContent = ({
   const SHOPPING_LIST_DROPDOWN_MENU_CONFIGS = dropdownConfigs(onRedirectToDetails, onModalOpen);
 
   function handleOpenListIconClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+    e.stopPropagation();
+
     onMenuOpen && onMenuOpen(e);
     onSetShoppingListId && onSetShoppingListId(shoppingListId as string);
   }
@@ -60,37 +62,51 @@ const CardActionsContent = ({
     onAddToFavorites && (await onAddToFavorites(shoppingListId as string));
   }
 
+  const renderActionButton = (
+    label: string,
+    onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+    icon: JSX.Element
+  ) =>
+    !isSelected && (
+      <CardActionButton aria-label={label} onClick={onClick}>
+        {icon}
+      </CardActionButton>
+    );
+
+  const renderDropdownMenuItems = () =>
+    SHOPPING_LIST_DROPDOWN_MENU_CONFIGS.map((item) => (
+      <MenuItem
+        key={item.id}
+        onClick={(e) => {
+          e.stopPropagation();
+
+          item.onClick();
+          onMenuClose && onMenuClose();
+        }}>
+        {item.icon} {item.label}
+      </MenuItem>
+    ));
+
   const shoppingListActions = (
     <>
-      <CardActionButton aria-label='edit-shopping-list-btn' onClick={handleShoppingListEdit}>
-        <EditIcon />
-      </CardActionButton>
-
-      <CardActionButton aria-label='menu-btn' onClick={handleOpenListIconClick}>
-        <OpenIcon />
-      </CardActionButton>
-
-      <CardActionButton aria-label='favorites-icon' onClick={handleAddShoppingListToFavorites}>
-        {isFavorite ? <RemoveFromFavorite /> : <AddToFavorite />}
-      </CardActionButton>
+      {renderActionButton('edit-shopping-list-btn', handleShoppingListEdit, <EditIcon />)}
+      {renderActionButton('menu-btn', handleOpenListIconClick, <OpenIcon />)}
+      {renderActionButton(
+        'favorites-icon',
+        handleAddShoppingListToFavorites,
+        isFavorite ? <RemoveFromFavorite /> : <AddToFavorite />
+      )}
 
       <DropdownMenu
         anchorEl={anchorElement}
         open={isMenuOpened as boolean}
         sx={{ marginTop: '1rem' }}
-        onClose={onMenuClose}
-      >
-        {SHOPPING_LIST_DROPDOWN_MENU_CONFIGS.map((item) => (
-          <MenuItem
-            key={item.id}
-            onClick={() => {
-              item.onClick();
-              onMenuClose && onMenuClose();
-            }}
-          >
-            {item.icon} {item.label}
-          </MenuItem>
-        ))}
+        onClose={(e: MouseEvent) => {
+          e.stopPropagation();
+
+          onMenuClose && onMenuClose();
+        }}>
+        {renderDropdownMenuItems()}
       </DropdownMenu>
     </>
   );
@@ -102,6 +118,7 @@ const CardActionsContent = ({
           <EditIcon />
         </CardActionButton>
       )}
+
       <CardActionButton aria-label='delete-btn' onClick={handleProductItemDelete}>
         <DeleteIcon />
       </CardActionButton>

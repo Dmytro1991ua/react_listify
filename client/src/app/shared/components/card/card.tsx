@@ -21,7 +21,7 @@ const Card = ({
   }
 
   function handleShoppingListDoubleClick(): void {
-    onDoubleClick && onDoubleClick(shoppingListId as string);
+    !isSelected && onDoubleClick && onDoubleClick(shoppingListId as string);
   }
 
   const cardTitle = (
@@ -38,10 +38,8 @@ const Card = ({
       data-testid='card'
       isFavorite={isFavorite}
       isSelected={isSelected}
-      isShoppingListDetails={Boolean(onClick)}
       onClick={handleProductItemClick}
-      onDoubleClick={handleShoppingListDoubleClick}
-    >
+      onDoubleClick={handleShoppingListDoubleClick}>
       <CardHeader disableTypography action={actions} component='header' subheader={description} title={cardTitle} />
     </CustomCard>
   );

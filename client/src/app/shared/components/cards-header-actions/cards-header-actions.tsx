@@ -1,6 +1,6 @@
 import { CheckboxLabel, SectionWrapper } from './cards-header-actions.styled';
 import { DEFAULT_BUTTON_LABEL, DEFAULT_CHECKBOX_LABEL } from './constants';
-import { useDeleteAllItemsModal } from './hooks/useDeleteAllItemsModal';
+import { useCardHeaderActions } from './hooks/useCardHeaderActions';
 import DeleteProductItemModal from '../../../modules/shopping-list-details/components/delete-product-item-modal/delete-product-item-modal';
 import Button from '../button/button';
 import Checkbox from '../checkbox/checkbox';
@@ -14,7 +14,7 @@ type CardsHeaderActionsProps = {
   checkboxLabel?: string;
   modalTitle?: string;
   onClick?: () => void;
-  onToggle?: (value: boolean) => void;
+  onToggle?: (value?: boolean) => void;
 };
 
 const CardsHeaderActions = ({
@@ -28,7 +28,7 @@ const CardsHeaderActions = ({
   onClick,
   onToggle,
 }: CardsHeaderActionsProps) => {
-  const { isModalVisible, onModalClose, onModalOpen, onToggleAllItems, onDeleteAllItems } = useDeleteAllItemsModal({
+  const { isModalVisible, onModalClose, onModalOpen, onToggleAllItems, onDeleteAllItems } = useCardHeaderActions({
     onClick,
     onToggle,
   });
