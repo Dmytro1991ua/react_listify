@@ -18,3 +18,6 @@ export const SHOPPING_LISTS_DETAILS_FALLBACK_MESSAGE_SUBTITLE =
 export const SHOPPING_LIST_SUCCESS_ADD_TO_FAVORITE_MESSAGE =
   'Successfully added to or removed shopping list from favorites';
 export const FAILED_TO_ADD_SHOPPING_LIST_TO_FAVORITES = 'Failed to add shopping list to favorites';
+
+export const DESELECT_ITEMS_CHECKBOX_LABEl = 'Deselect Items';
+export const SELECT_ALL_CHECKBOX_LABEL = 'Select all items for deletion';

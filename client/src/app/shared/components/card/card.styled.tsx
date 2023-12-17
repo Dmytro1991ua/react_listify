@@ -21,17 +21,14 @@ const commonIconsStyles = `
 `;
 
 export const CustomCard = styled(Card, {
-  shouldForwardProp: (prop) => prop !== 'isSelected' && prop !== 'isShoppingListDetails' && prop !== 'isFavorite',
+  shouldForwardProp: (prop) => prop !== 'isSelected' && prop !== 'isFavorite',
 })<{
   isSelected?: boolean;
-  isShoppingListDetails?: boolean;
   isFavorite?: boolean;
 }>`
   padding: ${({ theme }) => theme.spacing(10)};
   background-color: ${({ theme, isFavorite }) => (isFavorite ? `${green[100]}` : `${theme.palette.common.white}`)};
   border: ${({ theme }) => `2px solid ${theme.palette.success.dark}`};
-  opacity: ${({ isSelected }) => (isSelected ? 0.5 : 1)};
-  text-decoration: ${({ isSelected }) => (isSelected ? 'line-through' : 'none')};
   ${({ theme }) => theme.mixins.formBoxShadowMixin};
   cursor: pointer;
   margin-bottom: ${({ theme }) => theme.spacing(20)};
@@ -39,10 +36,6 @@ export const CustomCard = styled(Card, {
 
   @media (width >= 28em) {
     padding: ${({ theme }) => theme.spacing(20)};
-  }
-
-  &:last-of-type {
-    margin-bottom: ${({ theme, isShoppingListDetails }) => (isShoppingListDetails ? theme.spacing(90) : 0)};
   }
 
   header {
@@ -59,6 +52,8 @@ export const CustomCard = styled(Card, {
       display: flex;
       align-items: center;
       gap: 1.5rem;
+      opacity: ${({ isSelected }) => (isSelected ? 0.5 : 1)};
+      text-decoration: ${({ isSelected }) => (isSelected ? 'line-through' : 'none')};
     }
 
     & .MuiCardHeader-action {
@@ -68,7 +63,7 @@ export const CustomCard = styled(Card, {
 `;
 
 export const CardTitle = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== 'isSelected' && prop !== 'isProductItem',
+  shouldForwardProp: (prop) => prop !== 'isSelected',
 })<{
   isSelected?: boolean;
   isProductItem?: boolean;
@@ -76,7 +71,6 @@ export const CardTitle = styled(Typography, {
   margin: 0;
   font-size: clamp(1.5rem, -1.875rem + 7.5vw, 2.4rem);
   font-weight: bold;
-  margin-left: ${({ isProductItem }) => (isProductItem ? '1.2rem' : 0)};
 `;
 
 export const CardDescriptionWrapper = styled('div')`

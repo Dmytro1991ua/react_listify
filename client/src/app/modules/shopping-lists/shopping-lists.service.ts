@@ -99,6 +99,25 @@ class ShoppingListsService {
       throw new Error((error as Error).message);
     }
   }
+
+  async selectAllShoppingList(): Promise<ShoppingListData[] | null> {
+    try {
+      const response = await AXIOS_CONFIG.put('/api/shopping-lists/select-all-shopping-lists', {});
+
+      if (!response.data) {
+        return null;
+      }
+
+      toastService.success(response.data.message);
+
+      const { data } = response.data;
+
+      return data;
+    } catch (error) {
+      toastService.error(FAILED_UPDATE_SHOPPING_LIST);
+      throw new Error((error as Error).message);
+    }
+  }
 }
 
 export const shoppingListsService = new ShoppingListsService();

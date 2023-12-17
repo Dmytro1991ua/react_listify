@@ -23,6 +23,7 @@ export type ShoppingListsStoreActions = {
   createShoppingList: (shoppingList: ShoppingListData) => void;
   deleteShoppingList: (id: string) => void;
   updateShoppingList: (shoppingList: ShoppingListData) => void;
+  updateShoppingLists: (shoppingLists: ShoppingListData[]) => void;
   selectAllShoppingListItems: (payload: updateShoppingListItemsPayload) => void;
   setShoppingListsLoadingStatus: (loadingStatus: LoadingStatus) => void;
   reset: () => void;

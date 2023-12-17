@@ -67,6 +67,7 @@ export const defaultShoppingLists = [
     currency: Currencies.Dollar,
     shoppingListItems: defaultShoppingListItems,
     isFavorite: false,
+    isChecked: false,
   },
   {
     _id: '2',
@@ -74,8 +75,16 @@ export const defaultShoppingLists = [
     currency: Currencies.Euro,
     shoppingListItems: defaultShoppingListItems,
     isFavorite: true,
+    isChecked: false,
   },
-  { _id: '3', name: 'Carrefour', currency: Currencies.Pound, shoppingListItems: [], isFavorite: false },
+  {
+    _id: '3',
+    name: 'Carrefour',
+    currency: Currencies.Pound,
+    shoppingListItems: [],
+    isFavorite: false,
+    isChecked: false,
+  },
 ];
 
 export const defaultSortedShoppingLists = [
@@ -85,6 +94,7 @@ export const defaultSortedShoppingLists = [
     currency: Currencies.Euro,
     shoppingListItems: defaultShoppingListItems,
     isFavorite: true,
+    isChecked: false,
   },
   {
     _id: '3',
@@ -92,6 +102,7 @@ export const defaultSortedShoppingLists = [
     currency: Currencies.Pound,
     shoppingListItems: [],
     isFavorite: false,
+    isChecked: false,
   },
   {
     _id: '1',
@@ -99,6 +110,7 @@ export const defaultSortedShoppingLists = [
     currency: Currencies.Dollar,
     shoppingListItems: defaultShoppingListItems,
     isFavorite: false,
+    isChecked: false,
   },
 ];
 export const defaultSortedDropdownItems = [

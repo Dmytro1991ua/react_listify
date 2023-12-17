@@ -55,6 +55,19 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
           'updateShoppingList'
         );
       },
+      updateShoppingLists: (payload) => {
+        return set(
+          (state) => ({
+            shoppingLists: state.shoppingLists.map((list) => {
+              const updatedList = payload.find((updatedList) => updatedList._id === list._id);
+
+              return updatedList ? updatedList : list;
+            }),
+          }),
+          false,
+          'updateShoppingLists'
+        );
+      },
       selectAllShoppingListItems: ({ id, items }) => {
         return set(
           (state) => ({

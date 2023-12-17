@@ -182,7 +182,13 @@ export class ShoppingListsService {
           "user.uuid": user.uuid,
         });
 
-        res.status(200).json(updatedShoppingLists);
+        res
+          .status(200)
+          .json({
+            success: true,
+            message: "Successfully toggle all shopping lists",
+            data: updatedShoppingLists,
+          });
       } else {
         res.status(401).send("Not authorized");
       }
@@ -221,29 +227,4 @@ export class ShoppingListsService {
     }
   }
 
-  // @dec Select (marked as checked) specific shopping list
-  // @route  PUT /api/shopping-lists/select-shopping-list
-  // @access Private
-  async selectShoppingList(req: UserRequest, res: Response): Promise<void> {
-    const { _id: shoppingListId, isChecked } = req.body;
-
-    const user = req.currentUser;
-
-    try {
-      if (user) {
-        const updatedShoppingList = await ShoppingList.findOneAndUpdate(
-          { shoppingListId },
-          { $set: { isChecked: isChecked } },
-          { new: true }
-        );
-
-        res.status(200).json(updatedShoppingList);
-      } else {
-        res.status(401).send("Not authorized");
-      }
-    } catch (err) {
-      res.status(409);
-      throw new Error((err as Error).message);
-    }
-  }
 }

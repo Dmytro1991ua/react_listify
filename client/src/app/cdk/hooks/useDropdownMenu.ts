@@ -14,6 +14,8 @@ export const useDropdownMenu = (): ReturnedHookType => {
 
   function onDropdownMenuOpen(event: React.MouseEvent<HTMLButtonElement>): void {
     event.preventDefault();
+    event.stopPropagation();
+
     setAnchorElement(event.currentTarget);
   }
 

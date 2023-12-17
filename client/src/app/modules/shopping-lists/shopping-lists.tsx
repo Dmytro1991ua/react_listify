@@ -11,8 +11,10 @@ import {
 import { EditShoppingListFormInitialValues } from './components/edit-shopping-list-modal/edit-shopping-list.modal.interfaces';
 import ShoppingList from './components/shopping-list/shopping-list';
 import { useShoppingListsModal } from './hooks/useShoppingListsModal';
-import { addShoppingListToFavoritesAction } from './shopping-lists.actions';
+import { addShoppingListToFavoritesAction, selectAllShoppingListAction } from './shopping-lists.actions';
 import {
+  DESELECT_ITEMS_CHECKBOX_LABEl,
+  SELECT_ALL_CHECKBOX_LABEL,
   SHOPPING_LISTS_FALLBACK_MESSAGE_SUBTITLE,
   SHOPPING_LISTS_FALLBACK_MESSAGE_TITLE,
 } from './shopping-lists.contants';
@@ -20,8 +22,10 @@ import { CreateShoppingListFromInitialValues } from './shopping-lists.interfaces
 import { useShoppingListsStore } from './shopping-lists.store';
 import { ItemWrapper } from './shopping-lists.styled';
 import { AppRoutes } from '../../app.enums';
+import { ShoppingListData } from '../../app.interfaces';
 import { useDropdownMenu } from '../../cdk/hooks/useDropdownMenu';
 import history from '../../services/history.service';
+import CardsHeaderActions from '../../shared/components/cards-header-actions/cards-header-actions';
 import CreateShoppingListModal from '../../shared/components/create-shopping-list-modal/create-shopping-list-modal';
 import {
   CREATE_SHOPPING_LIST_FORM_INITIAL_VALUE,
@@ -30,7 +34,13 @@ import {
 import DeleteConfirmationModal from '../../shared/components/delete-confirmation-modal/delete-confirmation-modal';
 import FallbackMessage from '../../shared/components/fallback-message/fallback-message';
 import SectionHeader from '../../shared/components/section-header/section-header';
-import { availableCurrencies, getCurrentShoppingList, sortedDropdownItems, sortedItems } from '../../utils';
+import {
+  areAllItemsChecked,
+  availableCurrencies,
+  getCurrentShoppingList,
+  sortedDropdownItems,
+  sortedItems,
+} from '../../utils';
 import { useAuthStore } from '../auth/auth.store';
 
 const ShoppingLists = (): ReactElement => {
@@ -47,6 +57,11 @@ const ShoppingLists = (): ReactElement => {
   const currentShoppingList = useMemo(
     () => getCurrentShoppingList(availableShoppingLists, shoppingListId),
     [availableShoppingLists, shoppingListId]
+  );
+
+  const allShoppingListsChecked = useMemo(
+    () => areAllItemsChecked<ShoppingListData>(sortedItemsByName as ShoppingListData[]),
+    [sortedItemsByName]
   );
 
   const formikInstance: FormikProps<CreateShoppingListFromInitialValues> =
@@ -120,6 +135,14 @@ const ShoppingLists = (): ReactElement => {
     }
   }
 
+  async function onSelectAllShoppingLists() {
+    try {
+      await selectAllShoppingListAction();
+    } catch (e) {
+      throw new Error((e as Error).message);
+    }
+  }
+
   const renderFallbackMessageOrShoppingLists = (
     <>
       {!sortedItemsByName.length ? (
@@ -164,6 +187,21 @@ const ShoppingLists = (): ReactElement => {
     </>
   );
 
+  const renderCardsHeaderActions = (
+    <>
+      {sortedItemsByName && !!sortedItemsByName.length && (
+        <CardsHeaderActions
+          checkboxLabel={allShoppingListsChecked ? DESELECT_ITEMS_CHECKBOX_LABEl : SELECT_ALL_CHECKBOX_LABEL}
+          isChecked={allShoppingListsChecked}
+          isDisabled={!allShoppingListsChecked}
+          modalTitle='Are you sure you want to delete all selected shopping lists'
+          onClick={() => null}
+          onToggle={onSelectAllShoppingLists}
+        />
+      )}
+    </>
+  );
+
   const modalLoader = (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Bars color='#1b5e20' height={40} width={40} />
@@ -172,7 +210,13 @@ const ShoppingLists = (): ReactElement => {
 
   return (
     <>
-      <SectionHeader primaryBtnLabel='Add List' title='Shopping Lists' onPrimaryButtonClick={onOpenCreateModal} />
+      <SectionHeader
+        isDisabled={allShoppingListsChecked}
+        primaryBtnLabel='Add List'
+        title='Shopping Lists'
+        onPrimaryButtonClick={onOpenCreateModal}
+      />
+      {renderCardsHeaderActions}
       {renderAvailableShoppingLists}
       <CreateShoppingListModal
         fullWidth

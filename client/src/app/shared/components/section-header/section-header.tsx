@@ -34,6 +34,7 @@ interface SectionHeaderProps {
    * @example 'Create Copy'
    */
   isShoppingListDetails?: boolean;
+  isDisabled?: boolean;
   onPrimaryButtonClick: () => Promise<void> | void;
   onSecondaryButtonClick?: () => void;
   onGoBack?: () => void;
@@ -44,6 +45,7 @@ const SectionHeader = ({
   primaryBtnLabel,
   secondaryBtnLabel,
   isShoppingListDetails,
+  isDisabled,
   onPrimaryButtonClick,
   onSecondaryButtonClick,
   onGoBack,
@@ -68,7 +70,7 @@ const SectionHeader = ({
           {secondaryBtnLabel}
         </SecondaryButton>
       )}
-      <Button variant='primaryContained' onClick={onPrimaryButtonClick}>
+      <Button disabled={isDisabled} variant='primaryContained' onClick={onPrimaryButtonClick}>
         {primaryBtnLabel}
       </Button>
     </>

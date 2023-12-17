@@ -92,3 +92,17 @@ export const addShoppingListToFavoritesAction = async (id: string): Promise<void
     throw new Error((error as Error).message);
   }
 };
+
+export const selectAllShoppingListAction = async (): Promise<void> => {
+  const updateShoppingLists = useShoppingListsStore.getState().updateShoppingLists;
+
+  try {
+    const updatedShoppingList = await shoppingListsService.selectAllShoppingList();
+
+    if (updatedShoppingList) {
+      updateShoppingLists(updatedShoppingList);
+    }
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};

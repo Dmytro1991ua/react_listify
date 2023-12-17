@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 type HookProps = {
   onClick?: () => void;
-  onToggle?: (value: boolean) => void;
+  onToggle?: (value?: boolean) => void;
 };
 
 type ReturnedHookType = {
@@ -13,7 +13,7 @@ type ReturnedHookType = {
   onDeleteAllItems: () => void;
 };
 
-export const useDeleteAllItemsModal = ({ onClick, onToggle }: HookProps): ReturnedHookType => {
+export const useCardHeaderActions = ({ onClick, onToggle }: HookProps): ReturnedHookType => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const onModalOpen = useCallback(() => setIsModalVisible(true), []);
