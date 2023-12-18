@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { expect, vi } from 'vitest';
 
 import CardsHeaderActions from './cards-header-actions';
-import * as hooks from './hooks/useDeleteAllItemsModal';
+import * as hooks from './hooks/useCardHeaderActions';
 
 describe('<CardsHeaderACtions />', () => {
   const mockDefaultProps = {
@@ -27,7 +27,7 @@ describe('<CardsHeaderACtions />', () => {
   it('should toggle checkbox', () => {
     const mockOnToggleAllItems = vi.fn();
 
-    vi.spyOn(hooks, 'useDeleteAllItemsModal').mockReturnValue({
+    vi.spyOn(hooks, 'useCardHeaderActions').mockReturnValue({
       isModalVisible: false,
       onModalClose: vi.fn(),
       onModalOpen: vi.fn(),
@@ -47,7 +47,7 @@ describe('<CardsHeaderACtions />', () => {
   it('should delete all selected items', () => {
     const mockOnModalOpen = vi.fn();
 
-    vi.spyOn(hooks, 'useDeleteAllItemsModal').mockReturnValue({
+    vi.spyOn(hooks, 'useCardHeaderActions').mockReturnValue({
       isModalVisible: false,
       onModalClose: vi.fn(),
       onModalOpen: mockOnModalOpen,

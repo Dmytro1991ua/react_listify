@@ -9,6 +9,7 @@ import { SpyInstance, expect, vi } from 'vitest';
 import { useShoppingListsModal } from './hooks/useShoppingListsModal';
 import ShoppingLists from './shopping-lists';
 import * as shoppingListsActions from './shopping-lists.actions';
+import { DESELECT_ITEMS_CHECKBOX_LABEl, SELECT_ALL_CHECKBOX_LABEL } from './shopping-lists.contants';
 import { UpdateShoppingListPayload } from './shopping-lists.interfaces';
 import { Currencies } from '../../app.enums';
 import { ShoppingListData } from '../../app.interfaces';
@@ -135,8 +136,8 @@ describe('<ShoppingLists />', () => {
 
     beforeEach(() => {
       vi.resetAllMocks();
-
       vi.spyOn(utils, 'sortedItems').mockReturnValue(defaultSortedShoppingLists);
+
       addShoppingListToFavoritesActionSpy = vi.spyOn(shoppingListsActions, 'addShoppingListToFavoritesAction');
     });
 
@@ -153,6 +154,53 @@ describe('<ShoppingLists />', () => {
 
       await waitFor(() => {
         expect(addShoppingListToFavoritesActionSpy).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe.only('<ShoppingLists/> select all or deselect shopping lists', () => {
+    let selectAllShoppingListsActionSpy: SpyInstance;
+
+    beforeEach(() => {
+      vi.resetAllMocks();
+      vi.spyOn(utils, 'sortedItems').mockReturnValue(defaultSortedShoppingLists);
+
+      selectAllShoppingListsActionSpy = vi.spyOn(shoppingListsActions, 'selectAllShoppingListAction');
+    });
+
+    it('should select all shopping lists for deletion on checkbox click', async () => {
+      vi.spyOn(utils, 'areAllItemsChecked').mockReturnValue(false);
+
+      render(<Component />);
+
+      const checkbox = screen.getByLabelText(SELECT_ALL_CHECKBOX_LABEL);
+
+      expect(checkbox).toBeInTheDocument();
+
+      await act(async () => {
+        user.click(checkbox);
+      });
+
+      await waitFor(() => {
+        expect(selectAllShoppingListsActionSpy).toHaveBeenCalled();
+      });
+    });
+
+    it('should deselect previously selected shopping lists on checkbox click', async () => {
+      vi.spyOn(utils, 'areAllItemsChecked').mockReturnValue(true);
+
+      render(<Component />);
+
+      const checkbox = screen.getByLabelText(DESELECT_ITEMS_CHECKBOX_LABEl);
+
+      expect(checkbox).toBeInTheDocument();
+
+      await act(async () => {
+        user.click(checkbox);
+      });
+
+      await waitFor(() => {
+        expect(selectAllShoppingListsActionSpy).toHaveBeenCalled();
       });
     });
   });
