@@ -14,10 +14,12 @@ import {
   calculateProductItemPrice,
   calculateProductItemsByCheckedSate,
   calculateTotalPrice,
+  getCurrentShoppingList,
   sortedDropdownItems,
   sortedItems,
   toBuyOrPurchasedLabel,
   toggleAllProductItems,
+  toggleIsCheckedPropertyById,
 } from './utils';
 
 describe('sortedItems', () => {
@@ -72,7 +74,7 @@ describe('calculateProductItemsByCheckedSate', () => {
   });
 });
 
-describe('areAllProductItemsChecked', () => {
+describe('areAllItemsChecked', () => {
   it('should return true if all shopping list items are checked within the list', () => {
     expect(areAllItemsChecked(defaultCheckedShoppingListItems)).toEqual(true);
   });
@@ -113,5 +115,22 @@ describe('toBuyOrPurchasedLabel', () => {
 
   it('should return correct Purchased label based on isChecked property while boolean property is true', () => {
     expect(toBuyOrPurchasedLabel(defaultShoppingListItems, true)).toEqual(2);
+  });
+});
+
+describe('getCurrentShoppingList', () => {
+  it('should return a current shopping list byt its id', () => {
+    const result = getCurrentShoppingList(defaultShoppingLists, '2');
+
+    expect(result).toEqual(defaultShoppingLists[1]);
+  });
+});
+
+describe('toggleIsCheckedPropertyById', () => {
+  it('should toggle isChecked property of the item with the provided id', () => {
+    const idToToggle = '1';
+    const updatedShoppingList = toggleIsCheckedPropertyById(defaultShoppingLists, idToToggle);
+
+    expect(updatedShoppingList).toEqual({ ...defaultShoppingLists[0], isChecked: true });
   });
 });

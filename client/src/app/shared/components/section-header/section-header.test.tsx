@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { vi } from 'vitest';
+import { expect, vi } from 'vitest';
 
 import SectionHeader from './section-header';
 
@@ -20,6 +20,7 @@ const defaultProps = {
   primaryBtnLabel: 'Test Primary Button',
   secondaryBtnLabel: 'Test Secondary Button',
   isShoppingListDetails: false,
+  isDisabled: false,
   onPrimaryButtonClick: mockOnPrimaryButtonClick,
   onSecondaryButtonClick: mockOnSecondaryButtonClick,
   onGoBack: mockHistoryGoBack,
@@ -88,5 +89,15 @@ describe('<SectionHeader>', () => {
     await act(async () => user.click(secondaryBtn));
 
     await waitFor(() => expect(mockOnSecondaryButtonClick).toHaveBeenCalledTimes(1));
+  });
+
+  it('should disable primary button when all shopping lists were selected', () => {
+    const isDisabled = true;
+
+    render(<SectionHeader {...defaultProps} isDisabled={isDisabled} />);
+
+    const primaryBtn = screen.getByText(/Test Primary Button/);
+
+    expect(primaryBtn).toHaveAttribute('disabled');
   });
 });
