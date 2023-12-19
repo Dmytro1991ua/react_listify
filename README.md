@@ -74,11 +74,14 @@ The main goal of this project is to keep practicing and improving skills, to mak
 - ##### Ability to see the total price of all items within a specific shopping list and information on how many items were purchased and how many need to be bought via tooltip.
 - ##### Ability to create/update/delete a specific product item within a specific shopping list
 - ##### Ability to select individual product item (selected item appears at the bottom of the list and is sorted by their name) or select all product items at once.
+- ##### Ability to delete all selected product items all together at once
 - ##### Ability to see all items that should be bought or have been already purchased based on selected product items within a widget.
 - ##### Ability to create a copy of a particular shopping list with all product items.
 - ##### Ability to delete a particular shopping list with all product items.
 - ##### Ability to update user name, picture, change password and apply some specific user preferences such as default currency or ability to calculate products price by their quantity within user's Profile
-- ##### Ability to add to and remove a specific shopping list from favorites, etc.
+- ##### Ability to add to and remove a specific shopping list from favorites,
+- ##### Ability to select all shopping lists for further deletion,
+- ##### Ability to delete all selected shopping lists all together at once, etc.
 
 # API
 
@@ -168,6 +171,43 @@ DELETE: /api/shopping-lists/:id - Deletes a particular shopping list by its ID
 Example of returned data:
 
 "6370d06590f20bef1d2af00c" - id of deleted shopping list
+```
+
+```
+PUT: /api/shopping-lists/select-all-shopping-lists - Selects all shopping lists for the further deletion
+```
+
+Example of returned data:
+![Untitled](https://github.com/Dmytro1991ua/react_listify/assets/61331410/268099fd-5785-4a05-83f4-b52f23db6d77)
+
+```
+{
+    "_id": "658166208bcf2cdf0c607ac4",
+    "user": "Xhp3G87YBhaq29QWOWi0WYExxJp1",
+    "name": "Terra Store",
+    "currency": "$",
+    "shoppingListItems": [],
+    "isFavorite": false,
+    "isChecked": true,
+    "createdAt": "2023-12-19T09:45:04.269Z",
+    "updatedAt": "2023-12-19T10:22:19.224Z",
+    "__v": 0
+}
+```
+
+```
+PUT: /api/shopping-lists/delete-all-shopping-lists - Delete all selected shopping lists altogether at once
+```
+
+Example of returned data:
+![Untitled_2](https://github.com/Dmytro1991ua/react_listify/assets/61331410/d812d1bf-f34f-45d6-8a00-4eeef8cf2370)
+
+```
+{
+    "success": true,
+    "message": "All shopping lists have been deleted successfully",
+    "data": []
+}
 ```
 
 ##### Shopping List Details (`/api/shopping-lists`)
@@ -277,6 +317,77 @@ Example of returned data:
 }
 ```
 
+```
+PUT: /api/shopping-lists/:id/select-all-product-items - Selects all product items
+```
+
+Example of returned data:
+
+![Untitled_3](https://github.com/Dmytro1991ua/react_listify/assets/61331410/a0ec06e6-e2a6-4b52-9b9e-fbb9baf2540d)
+
+```
+{
+    "_id": "6581760b8bcf2cdf0c607af0",
+    "user": "Xhp3G87YBhaq29QWOWi0WYExxJp1",
+    "name": "Terra store",
+    "currency": "$",
+    "shoppingListItems": [
+        {
+            "name": "Yogurt",
+            "quantity": 1,
+            "units": "L",
+            "price": 2,
+            "isChecked": true,
+            "_id": "658176548bcf2cdf0c607af2",
+            "createdAt": "2023-12-19T11:32:23.800Z",
+            "updatedAt": "2023-12-19T11:32:23.800Z"
+        },
+        {
+            "name": "Milk",
+            "quantity": 1,
+            "units": "L",
+            "price": 4,
+            "isChecked": true,
+            "_id": "658176608bcf2cdf0c607af8",
+            "createdAt": "2023-12-19T11:32:23.800Z",
+            "updatedAt": "2023-12-19T11:32:23.800Z"
+        }
+    ],
+    "isFavorite": false,
+    "isChecked": false,
+    "createdAt": "2023-12-19T10:52:59.489Z",
+    "updatedAt": "2023-12-19T11:32:23.800Z",
+    "__v": 0
+}
+```
+
+```
+PUT: /api/shopping-lists/:id/delete-all-product-items - Deletes all selected product items
+```
+
+Example of returned data:
+
+![Untitled_4](https://github.com/Dmytro1991ua/react_listify/assets/61331410/ed1964c4-48c8-4a58-adf4-ea6c0d066457)
+
+```
+{
+    "success": true,
+    "message": "All product items have been deleted successfully",
+    "data": {
+        "_id": "6581760b8bcf2cdf0c607af0",
+        "user": "Xhp3G87YBhaq29QWOWi0WYExxJp1",
+        "name": "Terra store",
+        "currency": "$",
+        "shoppingListItems": [],
+        "isFavorite": false,
+        "isChecked": false,
+        "createdAt": "2023-12-19T10:52:59.489Z",
+        "updatedAt": "2023-12-19T11:37:09.763Z",
+        "__v": 0
+    }
+}
+```
+
 # Products views
 
 > Visual presentation of Listify application
@@ -291,6 +402,16 @@ Example of returned data:
   <div align="center">
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201618608-ef976ba6-25ab-465b-9378-5e7e56f4e155.png" />
     <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/7874af6e-ba48-4727-aa1f-cafa2659e96c" />
+ </div>
+ 
+  <div align="center">
+    <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/c94b6928-2d83-4502-8cdf-d47c84256b8a" />
+    <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/cfa69383-0095-4ba6-b8c3-8a959c30b4f3" />
+ </div>
+
+<div align="center">
+    <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/46c0fdb2-5115-48e9-a230-aac668343f00" />
+    <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/236feb02-a4bf-4242-a504-854188d9d202" />
  </div>
 
 ##### Sign-In/Sign-Up/Forgot-password/Reset-password pages
@@ -315,13 +436,15 @@ Example of returned data:
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201664358-11f715b2-613d-4e58-8f79-7e96a7149c44.png" />
     <img width="500" height="auto" src="https://user-images.githubusercontent.com/61331410/201664358-11f715b2-613d-4e58-8f79-7e96a7149c44.png" />
     <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/738ffa7a-8ced-4c95-86c5-2b06da51c3f7" />
+    <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/2273345f-c399-478d-8d2b-31c04f9db408" />
+    <img width="500" height="auto" src="https://github.com/Dmytro1991ua/react_listify/assets/61331410/a7223d3d-eca2-442e-aed4-fa9d79b47a80" />
 </div>
 
 # Tools/libraries/frameworks used
 
 > Client
 
-##### This project was bootstrapped with a help of a new beast in the neighborhood - [Vite](https://github.com/vitejs/vite).
+##### This project was bootstrapped with the help of a new beast in the neighborhood - [Vite](https://github.com/vitejs/vite).
 
 ### State Management
 
