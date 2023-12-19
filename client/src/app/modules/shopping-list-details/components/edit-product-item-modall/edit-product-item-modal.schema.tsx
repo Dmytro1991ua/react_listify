@@ -9,13 +9,13 @@ export const EDIT_SHOPPING_LIST_ITEM_FORM_INITIAL_VALUE = (
 ): EditProductItemFormInitialValues => {
   return {
     name: shoppingListItem?.name ?? 'New Product',
-    quantity: shoppingListItem?.quantity ?? 0,
+    quantity: shoppingListItem?.quantity,
     unit: shoppingListItem?.units ?? ProductUnits.Default,
-    price: shoppingListItem?.price ?? 0,
+    price: shoppingListItem?.price,
   };
 };
 
-export const CREATE_SHOPPING_LIST_FORM_VALIDATION: yup.SchemaOf<EditProductItemFormInitialValues> = yup.object().shape({
+export const EDIT_SHOPPING_LIST_FORM_VALIDATION: yup.SchemaOf<EditProductItemFormInitialValues> = yup.object().shape({
   name: yup.string().label('Name').required(),
   quantity: yup
     .number()

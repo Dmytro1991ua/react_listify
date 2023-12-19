@@ -11,7 +11,11 @@ import {
 import { EditShoppingListFormInitialValues } from './components/edit-shopping-list-modal/edit-shopping-list.modal.interfaces';
 import ShoppingList from './components/shopping-list/shopping-list';
 import { useShoppingListsModal } from './hooks/useShoppingListsModal';
-import { addShoppingListToFavoritesAction, selectAllShoppingListAction } from './shopping-lists.actions';
+import {
+  addShoppingListToFavoritesAction,
+  deleteAllShoppingListsAction,
+  selectAllShoppingListsAction,
+} from './shopping-lists.actions';
 import {
   DESELECT_ITEMS_CHECKBOX_LABEl,
   SELECT_ALL_CHECKBOX_LABEL,
@@ -137,7 +141,15 @@ const ShoppingLists = (): ReactElement => {
 
   async function onSelectAllShoppingLists() {
     try {
-      await selectAllShoppingListAction();
+      await selectAllShoppingListsAction();
+    } catch (e) {
+      throw new Error((e as Error).message);
+    }
+  }
+
+  async function onDeleteAllShoppingLists() {
+    try {
+      await deleteAllShoppingListsAction();
     } catch (e) {
       throw new Error((e as Error).message);
     }
@@ -195,7 +207,7 @@ const ShoppingLists = (): ReactElement => {
           isChecked={allShoppingListsChecked}
           isDisabled={!allShoppingListsChecked}
           modalTitle='Are you sure you want to delete all selected shopping lists'
-          onClick={() => null}
+          onClick={onDeleteAllShoppingLists}
           onToggle={onSelectAllShoppingLists}
         />
       )}

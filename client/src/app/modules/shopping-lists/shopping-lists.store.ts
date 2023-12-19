@@ -15,9 +15,9 @@ const initialState: ShoppingListsStoreState = {
   shoppingListItem: {
     name: '',
     //category
-    quantity: 0,
+    quantity: undefined,
     units: ProductUnits.Default,
-    price: 0,
+    price: undefined,
     isChecked: false,
   },
   shoppingListsLoadingStatus: 'loading',
@@ -66,6 +66,15 @@ export const useShoppingListsStore = create<ShoppingListsStoreState & ShoppingLi
           }),
           false,
           'updateShoppingLists'
+        );
+      },
+      deleteShoppingLists: (payload) => {
+        return set(
+          () => ({
+            shoppingLists: payload,
+          }),
+          false,
+          'deleteShoppingLists'
         );
       },
       selectAllShoppingListItems: ({ id, items }) => {

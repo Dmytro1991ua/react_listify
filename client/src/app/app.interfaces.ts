@@ -26,9 +26,9 @@ export interface ShoppingListItem {
   _id?: string;
   name: string;
   category?: Category;
-  quantity: number;
+  quantity?: number;
   units: ProductUnits | string;
-  price: number;
+  price?: number;
   isChecked?: boolean;
 }
 

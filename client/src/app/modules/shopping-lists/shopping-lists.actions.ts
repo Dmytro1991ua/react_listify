@@ -93,15 +93,34 @@ export const addShoppingListToFavoritesAction = async (id: string): Promise<void
   }
 };
 
-export const selectAllShoppingListAction = async (): Promise<void> => {
+export const selectAllShoppingListsAction = async (): Promise<void> => {
   const updateShoppingLists = useShoppingListsStore.getState().updateShoppingLists;
 
   try {
-    const updatedShoppingList = await shoppingListsService.selectAllShoppingList();
+    const updatedShoppingList = await shoppingListsService.selectAllShoppingLists();
 
     if (updatedShoppingList) {
       updateShoppingLists(updatedShoppingList);
     }
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const deleteAllShoppingListsAction = async (): Promise<void> => {
+  const setShoppingListsLoadingStatus = useShoppingListsStore.getState().setShoppingListsLoadingStatus;
+  const deleteShoppingLists = useShoppingListsStore.getState().deleteShoppingLists;
+
+  setShoppingListsLoadingStatus('loading');
+
+  try {
+    const updatedShoppingList = await shoppingListsService.deleteAllShoppingLists();
+
+    if (updatedShoppingList) {
+      deleteShoppingLists(updatedShoppingList);
+    }
+
+    setShoppingListsLoadingStatus('idle');
   } catch (error) {
     throw new Error((error as Error).message);
   }
