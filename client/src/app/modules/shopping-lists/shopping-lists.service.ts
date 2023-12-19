@@ -100,7 +100,7 @@ class ShoppingListsService {
     }
   }
 
-  async selectAllShoppingList(): Promise<ShoppingListData[] | null> {
+  async selectAllShoppingLists(): Promise<ShoppingListData[] | null> {
     try {
       const response = await AXIOS_CONFIG.put('/api/shopping-lists/select-all-shopping-lists', {});
 
@@ -114,7 +114,26 @@ class ShoppingListsService {
 
       return data;
     } catch (error) {
-      toastService.error(FAILED_UPDATE_SHOPPING_LIST);
+      toastService.error((error as Error).message);
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async deleteAllShoppingLists(): Promise<ShoppingListData[] | null> {
+    try {
+      const response = await AXIOS_CONFIG.put('/api/shopping-lists/delete-all-shopping-lists', {});
+
+      if (!response.data) {
+        return null;
+      }
+
+      toastService.success(response.data.message);
+
+      const { data } = response.data;
+
+      return data;
+    } catch (error) {
+      toastService.error((error as Error).message);
       throw new Error((error as Error).message);
     }
   }

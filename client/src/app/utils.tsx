@@ -100,8 +100,11 @@ export const calculateProductItemsByCheckedSate = (
  * Function checks if all product item were selected (checked)
  * @returns boolean
  */
-export const areAllItemsChecked = <T extends CheckableItem>(items: T[]): boolean =>
-  items.every((item) => item.isChecked);
+export const areAllItemsChecked = <T extends CheckableItem>(items: T[]): boolean => {
+  if (!items.length) return false;
+
+  return items.every((item) => item.isChecked);
+};
 
 /**
  * Function checks if some shopping list items are checked

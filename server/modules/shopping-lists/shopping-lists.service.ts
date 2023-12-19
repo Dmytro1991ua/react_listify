@@ -182,13 +182,11 @@ export class ShoppingListsService {
           "user.uuid": user.uuid,
         });
 
-        res
-          .status(200)
-          .json({
-            success: true,
-            message: "Successfully toggle all shopping lists",
-            data: updatedShoppingLists,
-          });
+        res.status(200).json({
+          success: true,
+          message: "Successfully toggle all shopping lists",
+          data: updatedShoppingLists,
+        });
       } else {
         res.status(401).send("Not authorized");
       }
@@ -219,12 +217,11 @@ export class ShoppingListsService {
       res.status(200).send({
         success: true,
         message: "All shopping lists have been deleted successfully",
-        updatedShoppingLists,
+        data: updatedShoppingLists,
       });
     } catch (err) {
       res.status(409);
       throw new Error((err as Error).message);
     }
   }
-
 }

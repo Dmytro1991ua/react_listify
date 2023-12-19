@@ -158,14 +158,14 @@ describe('<ShoppingLists />', () => {
     });
   });
 
-  describe.only('<ShoppingLists/> select all or deselect shopping lists', () => {
+  describe('<ShoppingLists/> select all or deselect shopping lists', () => {
     let selectAllShoppingListsActionSpy: SpyInstance;
 
     beforeEach(() => {
       vi.resetAllMocks();
       vi.spyOn(utils, 'sortedItems').mockReturnValue(defaultSortedShoppingLists);
 
-      selectAllShoppingListsActionSpy = vi.spyOn(shoppingListsActions, 'selectAllShoppingListAction');
+      selectAllShoppingListsActionSpy = vi.spyOn(shoppingListsActions, 'selectAllShoppingListsAction');
     });
 
     it('should select all shopping lists for deletion on checkbox click', async () => {
