@@ -19,7 +19,7 @@
     "_stylelint": "stylelint \"./src/**/*.styled.tsx\"",
     "lint": "npm run _eslint & npm run _stylelint",
     "lint:fix": "npm run _prettier && npm run _eslint -- --fix && npm run _stylelint -- --fix",
-    "prepare": "cd .. && husky install client/.husky",
+    "prepare": "cd .. && husky install client/.husky || true",
     "pre-commit": "lint-staged",
     "pre-push": "npm run test:no-watch"
   },
